@@ -1,4 +1,3 @@
-
 # DCF - CLI 
 
 디지털 동반자에 지능 컴포넌트를 생성하기 위해서 DCF CLI를 사용한다. DCF CLI는 다양한 기관의 디지털 동반자  지능 컴포넌트를 규격화하여 공통으로 사용 가능하도록 자율지능 디지털 동반자 지능 컴포넌트 구조를 만들어 준다. 
@@ -47,24 +46,27 @@ Password: elwlxjfehdqkswk
     ```
     설정파일의 예는 다음과 같다. 
     > 사용자가 지능컴포넌트를 정의하고자 할 때 규격이 되는 파일, 여러 개의 function을 정의한 yaml 파일
+    
     ```
-      funtions:
-        echo-service: 
-	      runtime: "python3"
-	      maintainer: "KETI<keti@keti.re.kr>"
-	      desc: "This is echo service."
-	      handler:
-	  		name: Handler
-		    dir: ./echo-service 
-		    file: "handler.py"
-		  image: keti.asuscomm.com:5001/echo-service:v1
-      dcf:
-        gateway: keti.asuscomm.com:32222
+    dcf:
+      gateway: keti.asuscomm.com:32222    
+    functions:
+      echo-service:
+        runtime: python3
+        desc: "This is echo service."
+        maintainer: "KETI"
+        handler:
+          dir: ./echo-service
+          file: handler.py
+          name: Handler
+        image: keti.asuscomm.com:5001/echo-service
     ```
-	설정파일의 규격은 다음과 같다.
-    |Field  | Description | Example | 
-    |------------- | -------------| -------------| 
-    |  |지능 컴포넌트의 이름|echo-service|
+    
+    설정파일의 규격은 다음과 같다.
+    
+    | Field  | Description | Example | 
+    |------------- |-------------|-------------| 
+    |  | 지능 컴포넌트의 이름| echo-service|
     |runtime|지능 컴포넌트가 실행될 환경|python3|
     |image|지능 컴포넌트 이미지 이름과 버전<br>(레포지토리인 keti.ausscomm.com:5001은 고정)|keti.asuscomm.com:5001/echo-service:v1|
     |handler|지능 컴포넌트 배포시에 실행되는 엔트리포인트 정보|handler:<br>&nbsp; name: Handler<br>&nbsp; dir: ./echo-service<br>&nbsp; file: "handler.py"|
@@ -86,17 +88,22 @@ Password: elwlxjfehdqkswk
 	    return req.input
 	```
 
-4. __설정파일을 통해 지능컴포넌트를 생성한다.__
+3. __설정파일을 통해 지능컴포넌트를 생성한다.__
   
     ```
     $ dcf function create -f config.yaml
+    Building: echo-service, Image:keti.asuscomm.com:5001/echo-service
+    Pushing: echo-service, Image:keti.asuscomm.com:5001/echo-service
+    Deploying: echo-service
     ``` 
 ### 지능컴포넌트(function) 확인 
   
-- 생성된 지능 컴포넌트가 Ready 상태인지 확인
+생성된 지능 컴포넌트가 Ready 상태인지 확인
 
   ```
-  $ dcf function list 
+  $ dcf function list
+  Function       	Image               	Maintainer     	Invocations	Replicas  	Status    	Description
+  echo-service   	$(repo)/echo-service	KETI           	4         	1         	Ready     	This is echo service    
   ``` 
 
 ### 지능컴포넌트(function) 호출 
@@ -135,4 +142,4 @@ $ dcf runtime list -h
 ```
 
 ## 지능 컴포넌트 개발자를 위한 gRPC API 가이드
-[여기](https://github.com/digitalcompanion-keti/grpc-guide.md)를 눌러주세요.
+[여기](https://github.com/digitalcompanion-keti/grpc-guide.md)를 
