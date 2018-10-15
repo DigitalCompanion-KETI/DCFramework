@@ -142,4 +142,4 @@ $ dcf runtime list -h
 ```
 
 ## 지능 컴포넌트 개발자를 위한 gRPC API 가이드
-[여기](https://github.com/digitalcompanion-keti/grpc-guide.md)를 
+[여기](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/grpc-guide.md)를 눌러주세요.
