@@ -101,7 +101,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/digitalcompanion-keti/dcf/pb"
+    "pb"
     "google.golang.org/grpc"
 )
 
