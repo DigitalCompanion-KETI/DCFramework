@@ -228,6 +228,7 @@ import gateway_pb2
 import gateway_pb2_grpc
 
 def run():
+    # Creating a channel
     channel = grpc.insecure_channel('keti.asuscomm.com:32222')
     # Creating a stub
     stub = gateway_pb2_grpc.GatewayStub(channel)
