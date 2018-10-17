@@ -221,7 +221,7 @@ $ python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. gateway.pro
 
 - 서비스 메소드를 호출한다.
 
-```python
+```
 import grpc
 
 import gateway_pb2
@@ -240,4 +240,186 @@ def run():
 
 if __name__ == '__main__':
     run()
+```
+
+## gRPC for C++
+
+### PREREQUISITES 
+
+  ```
+  $ apt-get install build-essential autoconf libtool pkg-config
+  $ apt-get install libgflags-dev libgtest-dev
+  $ apt-get install clang libc++-dev
+  ```
+
+### Install gRPC 
+
+```
+$ git clone -b v1.15.0 https://github.com/grpc/grpc
+$ git submodule update --init
+$ make
+$ sudo make install
+```
+
+### Install Protocol Buffers
+
+```
+$ cd third_party/protobuf
+$ git submodule update --init --recursive
+$ ./autogen.sh
+$ ./configure
+$ make
+$ make check
+$ sudo make install
+$ sudo ldconfig
+```
+which 명령어를 통해 설치가 올바르게 되었는지 확인한다. 경로가 나오지 않는다면 설치가 제대로 되지 않았다는 뜻이다.
+```
+$ which protoc
+$ which grpc_cpp_plugin
+```
+
+## gRPC 통신 
+
+### 1. Define gRPC service 
+디지털 동반자의 지능 컴포넌트를 호출하기 위해 다음과 같은 gRPC service 정의가 필요하다.
+
+```
+$ vim gateway.proto
+```
+
+```
+syntax = "proto3";
+
+package pb;
+
+service Gateway {
+  rpc Invoke(InvokeServiceRequest) returns(Message) {}
+}
+
+message Message {
+  string Msg = 1;
+}
+
+message InvokeServiceRequest {
+  string Service = 1;
+  bytes Input = 2;
+}
+```
+
+### 2. Generate gRPC service 
+protoc를 통해 gRPC 서버 및 클라이언트 인터페이스를 생성한다. 이 과정은 다음 장에서 나올 Makefile을 사용한다면, 생략이 가능하다.
+
+```
+$ protoc -I. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` gateway.proto
+$ protoc -I. --cpp_out=. gateway.proto
+```
+
+### 3. Create gRPC client 
+다음은 디지털 동반자의 특정 지능 컴포넌트를 호출하는 메소드인 "Invoke"를 사용하는 예제이다. 입력 인자로 사용될 InvokeServiceRequest에 DCF CLI로 생성한 지능 컴포넌트 이름(Service)과 지능 컴포넌트에 전달할 입력 값(Input)을 넣어 Invoke를 호출한다.
+
+
+```
+vim gateway_client.cc
+```
+
+```
+#include <iostream>
+#include <memory>
+#include <string>
+
+#include <grpcpp/grpcpp.h>
+#include "gateway.grpc.pb.h"
+
+using grpc::Channel;
+using grpc::ClientAsyncResponseReader;
+using grpc::ClientContext;
+using grpc::CompletionQueue;
+using grpc::Status;
+using pb::Message;
+using pb::InvokeServiceRequest;
+using pb::Gateway
+
+class GatewayClient {
+    public:
+        GatewayClient(std::shared_ptr<Channel> channel)
+            : stub_(Gateway::NewStub(channel)) {}
+        std::string Invoke(const std::string& service, const std::string& input) {
+            InvokeServiceRequest request;
+            request.set_service(service);
+            request.set_input(input);
+            Message msg;
+            ClientContext context;
+
+            Status status = stub_->Invoke(&context, request, &msg);
+
+            if (status.ok()) {
+                return msg.msg();
+            } else {
+                std::cout << status.error_code() << ": " << status.error_message()
+                << std::endl;
+                return "failed.";
+            }
+        }
+    private:
+        std::unique_ptr<Gateway::Stub> stub_;
+};
+
+int main(int argc, char** argv) {
+    GatewayClient gateway(grpc::CreateChannel(
+                "keti.asuscomm.com:32222", grpc::InsecureChannelCredentials()));
+    std::string service("echo-service");
+    std::string input("hello world!");
+    std::string reply = gateway.Invoke(service, input);
+    std::cout << reply << std::endl;
+
+    return 0;
+}
+```
+
+### 3. Build gRPC client 
+Makefile을 작성하여 클라이언트 코드를 컴파일한다.
+```
+HOST_SYSTEM = $(shell uname | cut -f 1 -d_)
+SYSTEM ?= $(HOST_SYSTEM)
+CXX = g++
+CPPFLAGS += `pkg-config --cflags protobuf grpc`
+CXXFLAGS += -std=c++11
+ifeq ($(SYSTEM),Darwin)
+LDFLAGS += -L/usr/local/lib `pkg-config --libs protobuf grpc++`\
+           -lgrpc++_reflection\
+           -ldl
+else
+LDFLAGS += -L/usr/local/lib `pkg-config --libs protobuf grpc++`\
+           -Wl,--no-as-needed -lgrpc++_reflection -Wl,--as-needed\
+           -ldl
+endif
+PROTOC = protoc
+GRPC_CPP_PLUGIN = grpc_cpp_plugin
+GRPC_CPP_PLUGIN_PATH ?= `which $(GRPC_CPP_PLUGIN)`
+
+PROTOS_PATH = .
+
+vpath %.proto $(PROTOS_PATH)
+
+all: gateway_client
+
+gateway_client: gateway.pb.o gateway.grpc.pb.o gateway_client.o
+        $(CXX) $^ $(LDFLAGS) -o $@
+
+.PRECIOUS: %.grpc.pb.cc
+%.grpc.pb.cc: %.proto
+        $(PROTOC) -I $(PROTOS_PATH) --grpc_out=. --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) $<
+
+.PRECIOUS: %.pb.cc
+%.pb.cc: %.proto
+        $(PROTOC) -I $(PROTOS_PATH) --cpp_out=. $<
+
+clean:
+        rm -f *.o *.pb.cc *.pb.h gateway_client 
+```
+### 4. Run gRPC Client
+```
+make
+./gateway_client
 ```
