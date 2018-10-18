@@ -40,9 +40,9 @@ $ go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
 $ export PATH=$PATH:$GOPATH/bin
 ```
 
-## gRPC 통신 
+### gRPC 통신 
 
-### 1. Define gRPC service 
+#### 1. Define gRPC service 
 디지털 동반자의 지능 컴포넌트를 호출하기 위해 다음과 같은 gRPC service 정의가 필요하다.
 
 ```
@@ -69,7 +69,7 @@ message InvokeServiceRequest {
 }
 ```
 
-### 2. Generate gRPC service 
+#### 2. Generate gRPC service 
 
 ``` 
 $ protoc -I . \
@@ -80,10 +80,10 @@ $ protoc -I . \
 
 - 컴파일을 완료하면 컴파일할 때의 설정값인 ${GOPATH}/src/pb 경로에 gateway.pb.go 파일이 생성된다.
 
-### 3. Create gRPC client 
+#### 3. Create gRPC client 
 다음은 디지털 동반자의 특정 지능 컴포넌트를 호출하는 메소드인 "Invoke"를 사용하는 예제이다. 입력 인자로 사용될 InvokeServiceRequest에 DCF CLI로 생성한 지능 컴포넌트 이름(Service)과 지능 컴포넌트에 전달할 입력 값(Input)을 넣어 Invoke를 호출한다.
 
-> ### For Beginning
+> #### For Beginning
 
 - 구현된 서비스 메소드를 호출하기 위해, 서버와 통신할 수 있는 gRPC 채널을 만든다
 
@@ -175,9 +175,9 @@ $ python -m pip install grpcio --ignore-installed
 $ python -m pip install grpcio-tools googleapis-common-protos
 ```
 
-## gRPC 통신 
+### gRPC 통신 
 
-### 1. Define gRPC service 
+#### 1. Define gRPC service 
 디지털 동반자의 지능 컴포넌트를 호출하기 위해 다음과 같은 gRPC service 정의가 필요하다.
 
 ```
@@ -203,16 +203,16 @@ message InvokeServiceRequest {
 }
 ```
 
-### 2. Generate gRPC service 
+#### 2. Generate gRPC service 
 
 ```
 $ python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. gateway.proto
 ```
 
-### 3. Create gRPC client 
+#### 3. Create gRPC client 
 다음은 디지털 동반자의 특정 지능 컴포넌트를 호출하는 메소드인 "Invoke"를 사용하는 예제이다. 입력 인자로 사용될 InvokeServiceRequest에 DCF CLI로 생성한 지능 컴포넌트 이름(Service)과 지능 컴포넌트에 전달할 입력 값(Input)을 넣어 Invoke를 호출한다.
 
-> ### For Beginning
+> #### For Beginning
 - 구현된 서비스 메소드를 호출하기 위해, 서버와 통신할 수 있는 gRPC 채널을 만든다
 
 - 서비스 메소드를 호출하기 위한 Stub을 만든다
@@ -277,9 +277,9 @@ $ which protoc
 $ which grpc_cpp_plugin
 ```
 
-## gRPC 통신 
+### gRPC 통신 
 
-### 1. Define gRPC service 
+#### 1. Define gRPC service 
 디지털 동반자의 지능 컴포넌트를 호출하기 위해 다음과 같은 gRPC service 정의가 필요하다.
 
 ```
@@ -305,7 +305,7 @@ message InvokeServiceRequest {
 }
 ```
 
-### 2. Generate gRPC service 
+#### 2. Generate gRPC service 
 protoc를 통해 gRPC 서버 및 클라이언트 인터페이스를 생성한다. 이 과정은 다음 장에서 나올 Makefile을 사용한다면, 생략이 가능하다.
 
 ```
@@ -313,7 +313,7 @@ $ protoc -I. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` gatew
 $ protoc -I. --cpp_out=. gateway.proto
 ```
 
-### 3. Create gRPC client 
+#### 3. Create gRPC client 
 다음은 디지털 동반자의 특정 지능 컴포넌트를 호출하는 메소드인 "Invoke"를 사용하는 예제이다. 입력 인자로 사용될 InvokeServiceRequest에 DCF CLI로 생성한 지능 컴포넌트 이름(Service)과 지능 컴포넌트에 전달할 입력 값(Input)을 넣어 Invoke를 호출한다.
 
 
@@ -375,7 +375,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-### 3. Build gRPC client 
+#### 3. Build gRPC client 
 Makefile을 작성하여 클라이언트 코드를 컴파일한다.
 ```
 HOST_SYSTEM = $(shell uname | cut -f 1 -d_)
@@ -416,7 +416,7 @@ gateway_client: gateway.pb.o gateway.grpc.pb.o gateway_client.o
 clean:
         rm -f *.o *.pb.cc *.pb.h gateway_client 
 ```
-### 4. Run gRPC Client
+#### 4. Run gRPC Client
 ```
 make
 ./gateway_client
