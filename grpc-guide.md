@@ -45,7 +45,7 @@ $ export PATH=$PATH:$GOPATH/bin
 ### 1. Define gRPC service 
 디지털 동반자의 지능 컴포넌트를 호출하기 위해 다음과 같은 gRPC service 정의가 필요하다.
 
-  - 파일의 확장자는 [.proto]이고 Service의 이름은 proto 파일의 이름과 같다.
+  - 파일의 확장자는 [.proto]이다.
 
 ```
 $ mkdir -p ${GOPATH}/src/pb
