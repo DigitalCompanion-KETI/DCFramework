@@ -3,6 +3,7 @@
 디지털 동반자에 지능 컴포넌트를 생성하기 위해서 DCF CLI를 사용한다. DCF CLI는 다양한 기관의 디지털 동반자  지능 컴포넌트를 규격화하여 공통으로 사용 가능하도록 자율지능 디지털 동반자 지능 컴포넌트 구조를 만들어 준다. 
 
 ## Requirement
+
 - docker version >= 17.05-ce
 
 ## Get started: Install the CLI 
@@ -18,6 +19,7 @@ $ chmod +x dcf
 $ echo '{"insecure-registries": ["keti.asuscomm.com:5001"]}'>> /etc/docker/daemon.json
 $ service docker restart
 ```
+
 디지털 동반자 레포지토리에 로그인 하기 위해서 'docker login' 명령과 함께 다음과 같은 임시 아이디와 비밀번호를 입력한다.
 
 ```
@@ -28,8 +30,8 @@ Password: elwlxjfehdqkswk
 
 ## Run the CLI 
 
-
 ### 디지털 동반자 지능 컴포넌트(Function) 생성 
+
 다음은 예를 들어 python 런타임 사용시에 절차를 나타낸다.
 
 1. __지원되는 Runtime의 목록을 보여준다.__ 
@@ -39,12 +41,24 @@ Password: elwlxjfehdqkswk
     ```
 	> Runtime: DCF에서 지원해주는 Function 실행 환경
 	
-2. __Runtime을 지정하여 지능컴포넌트(function)를 정의한다.__
-	예를 들어, echo-service라는 지능컴포넌트를 정의할 때 원하는 runtime을 flag를 통해 지정할 수 있다. 초기화(init)가 완료되면 현재 디렉토리에 설정파일(default: config.yaml)과 echo-service라는 폴더가 만들어지고, Python 런타임 사용시, 폴더 안에는 handler.py 파일과 Dockerfile, requirements.txt이 생성된다.
+2. __Runtime을 지정하여 지능컴포넌트(function)를 정의한다.__ 
+
+    예를 들어, echo-service라는 지능컴포넌트를 정의할 때 원하는 runtime을 flag를 통해 지정할 수 있다. 초기화(init)가 완료되면 현재 디렉토리에 설정파일(default: config.yaml)과 echo-service라는 폴더가 만들어지고, Python 런타임 사용시, 폴더 안에는 handler.py 파일과 Dockerfile, requirements.txt이 생성된다.
+
     ```
     $ dcf function init --runtime python3 echo-service
     ```
+    
+    echo-service가 이미 존재하는 지능컴포넌트일 경우 다음과 같은 error가 발생한다.
+    
+    ```
+    Error: Function echo-service already exists in config.yaml file.
+    ```
+    
+    이와 같은 경우에는 지능컴포넌트의 이름을 다른 이름으로 지정하면 된다. 
+    
     설정파일의 예는 다음과 같다. 
+    
     > 사용자가 지능컴포넌트를 정의하고자 할 때 규격이 되는 파일, 여러 개의 function을 정의한 yaml 파일
     
     ```
@@ -96,9 +110,16 @@ Password: elwlxjfehdqkswk
     Pushing: echo-service, Image:keti.asuscomm.com:5001/echo-service
     Deploying: echo-service
     ``` 
+    
 ### 지능컴포넌트(function) 확인 
   
-생성된 지능 컴포넌트가 Ready 상태인지 확인
+Kubernetes에서는 비동기 처리를 하기 때문에 대기열에서 응답을 기다리기 때문에 지능컴포넌트를 생성하고 시간이 지난 후에 해당 지능컴포넌트 Image의 Status가 Ready 상태로 변경된다. 지능컴포넌트를 생성한 시점에서는 Not Ready 상태이고 이 때 지능컴포넌트를 호출하면 다음과 같은 error가 발생한다.
+
+  ```
+  rpc error: code = Internal desc = rpc error: code = DeadlineExceeded desc = context deadline exceeded
+  ```
+
+따라서 지능컴포넌트를 호출하기 전, 지능컴포넌트가 Ready 상태인지 확인을 해야한다.
 
   ```
   $ dcf function list
@@ -115,8 +136,6 @@ Password: elwlxjfehdqkswk
   $ echo "Hello,World!" | dcf function call echo-service | dcf function call echo-service2
   ```  
 
-
-
 ### 생성된 지능컴포넌트(function) 의 정보 확인
 
   ```
@@ -129,9 +148,11 @@ Password: elwlxjfehdqkswk
   ```
   $ dcf function delete -f config.yaml 
   $ dcf function delete echo-service
+  Deleted: echo-service
   ```
   
   ---
+  
 CLI 명령어에 대한 도움말은 다음의 Flag를 통해 실행할 수 있다. 
 
 ```
