@@ -20,7 +20,7 @@
 
 function name이 중복되면 안되므로, DCF CLI를 이용하여 현재 배포되어있는 function name을 확인한다.
 (만약 생성하려는 이름의 function이 deploy되어있다면, function name을 변경한다.)
-```
+```bash
 $ dcf function init --runtime python3 <function name>
 
 ex>
@@ -31,7 +31,7 @@ $ dcf function init --runtime python3 ssd-test
 해당 가이드에서는 대표적인 딥러닝 기반의 Object Detection모델인 SSD의 Tensorflow 구현체를 이용하여 예제를 진행한다.
 이를 위해 먼저 PREREQUISITES의 SSD Tensorflow 구현체를 설치하고 실행한다.
 
-```
+```bash
 # 만든 함수의 경로로 들어가서, 추가 폴더를 생성한다.
 cd <function directory>
 mkdir models
@@ -53,7 +53,7 @@ SSD 구현체는 OpenCV에 의존성을 가지고 있으며, Python에서 OpenCV
 
 함수의 폴더에서 Dockerfile을 다음과 같이 수정한다.
 
-```
+```Dockerfile
 ARG REGISTRY
 ARG WATCHER_VERSION=0.1.0
 
@@ -95,7 +95,7 @@ CMD ["server.py"]
 기존의 모델에서 inference코드를 따로 호출해서 사용할 수 있도록 만들어준다.
 해당 가이드에서는 predict.py라는 스크립트를 SSD 구현체 폴더에서 다음과 같이 만든다.
 
-```
+```python
 import sys
 import os
 import math
@@ -214,7 +214,7 @@ if __name__ == "__main__":
 ### modify handler.py 
 handler.py를 다음과 같이 수정해준다.
 
-```
+```python
 from __future__ import print_function
 import io
 import json
@@ -243,13 +243,13 @@ def Handler(req):
 ```
 
 ### deploy function
-```
+```bash
 dcf function create -f config.yaml -v
 ```
 ### function status check    
 배포된 함수의 상태를 확인한다. 상태가 Ready가 되면, invoke or call 옵션을 이용하여 함수를 테스트한다.
 
-```
+```bash
 watch dcf fucntion list
 ```
 
@@ -257,7 +257,7 @@ watch dcf fucntion list
 
 특정한 Image를 이용해 다음과 같이 함수를 호출한다.
 
-```
+```bash
 cat 000001.jpg | base64 | ./dcf function call ssd-test
 
 >>>
@@ -268,7 +268,7 @@ cat 000001.jpg | base64 | ./dcf function call ssd-test
 함수 수정을 원할 경우, 로컬에서 함수를 수정한 후, 다음과 같은 절차를 거쳐 재배포한다.
 
 1. 함수를 delete한다.
-```
+```bash
 dcf function delete <function name>
 
 # 삭제한 함수가 없어지는 것을 확인
@@ -276,13 +276,13 @@ watch dcf function list
 ```   
 
 2. 함수를 재생성한다.
-```
+```bash
 dcf function create -f config.yaml -v 
 ```
 
 OR
 (수정 시)
-```
+```bash
 dcf function create -f config.yaml -v --update
 ```
 
