@@ -1,166 +1,242 @@
-# DCF - CLI 
+# Digital Companion Framework (DCF)
 
-디지털 동반자에 지능 컴포넌트를 생성하기 위해서 DCF CLI를 사용한다. DCF CLI는 다양한 기관의 디지털 동반자  지능 컴포넌트를 규격화하여 공통으로 사용 가능하도록 자율지능 디지털 동반자 지능 컴포넌트 구조를 만들어 준다. 
+해당 문서는 디지털동반자 프레임워크에 대해서 설명하며, 이를 어떻게 사용하는지 가이드 문서입니다.
 
-## Requirement
 
-- docker version >= 17.05-ce
 
-## Get started: Install the CLI 
+## DCF 소개
 
-```
+
+
+DCF는 FaaS(Function as a Service)의 구조를 따릅니다. 다양한 기관들은 DCF를 이용하여 규격화된 인공지능 모델을 배포할 수 있습니다. 아래 그림은 DCF의 구조에 대한 간략화된 설명입니다.
+
+
+
+각 기관의 개발자들은 `DCF CLI` 를 이용하여 인공지능 모델을 규격화하고, 배포할 수 있습니다. 규격화된 인공지능 모델은 Docker기반으로 배포됩니다.
+
+
+
+이렇게 규격화된 인공지능 모델은 오른쪽에 보이는 하나의 Function이 될 수 있으며, 일반 사용자(유저) 및 DCF를 이용해 상위 어플리케이션을 개발하려는 개발자들은 각 기관이 배포한 Function을 Call하는 것을 통해서 인공지능 모델의 추론 결과를 얻을 수 있습니다.
+
+
+
+![DCF-concept](https://user-images.githubusercontent.com/13328380/47892857-590c2500-de9d-11e8-8989-7821892b1a72.png)
+
+
+
+#### Reference
+
+[1. Apache OpenWhisk - 소개 및 아키텍쳐](https://developer.ibm.com/kr/cloud/2017/12/24/apache-openwhisk-intro-architecture/)
+
+[2. (번역) 서버리스 아키텍처](https://blog.aliencube.org/ko/2016/06/23/serverless-architectures/)
+
+
+
+​    
+
+## DCF 설치
+
+
+
+여기서 DCF를 설치한다는 의미는, DCF CLI를 설치한다는 의미가 됩니다. 
+
+우리는 DCF CLI를 통해서 모든것(인공지능 모델 규격화, 배포)를 진행하게됩니다.
+
+
+
+### 1. Docker 설치
+
+DCF CLI를 설치하기 전에, 먼저 해당 컴퓨터에 Docker가 설치되어있어야합니다.
+
+도커 버전은 17.05-CE버전 이상을 요구합니다.
+
+설치 방법은 [링크](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)의 `Install Docker CE`를 참조하시면 됩니다.
+
+​    
+
+- docker >= 17.05-ce
+
+​    
+
+### 2. DCF CLI 다운로드
+
+[DCF github](https://github.com/DigitalCompanion-KETI/DCFramework)을 참고하여, DCF CLI를 다운받고, 해당 파일의 권한을 수정합니다.
+
+ 
+
+```bash
 $ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v0.1.0/dcf
 $ chmod +x dcf
 ```
 
-## Prerequisites for CLI
+​    
 
-```
+### 3. DCF CLI 설정
+
+DCF 저장소에 로그인하기 위해서 다음과 같이 설정을 해줍니다.
+
+
+
+```bash
 $ echo '{"insecure-registries": ["keti.asuscomm.com:5001"]}'>> /etc/docker/daemon.json
 $ service docker restart
 ```
 
-디지털 동반자 레포지토리에 로그인 하기 위해서 'docker login' 명령과 함께 다음과 같은 임시 아이디와 비밀번호를 입력한다.
-
-```
+```bash
 $ docker login keti.asuscomm.com:5001
 Username: elwlxjfehdqkswk
 Password: elwlxjfehdqkswk
 ```
 
-## Run the CLI 
 
-### 디지털 동반자 지능 컴포넌트(Function) 생성 
 
-다음은 예를 들어 python 런타임 사용시에 절차를 나타낸다.
+설정완료가 다 되면, 다음과 같은 명령어로 설정이 잘 되었는지 확인할 수 있습니다.
 
-1. __지원되는 Runtime의 목록을 보여준다.__ 
-  
-    ```
-    $ dcf runtime list
-    ```
-	> Runtime: DCF에서 지원해주는 Function 실행 환경
-	
-2. __Runtime을 지정하여 지능컴포넌트(function)를 정의한다.__ 
 
-    예를 들어, echo-service라는 지능컴포넌트를 정의할 때 원하는 runtime을 flag를 통해 지정할 수 있다. 초기화(init)가 완료되면 현재 디렉토리에 설정파일(default: config.yaml)과 echo-service라는 폴더가 만들어지고, Python 런타임 사용시, 폴더 안에는 handler.py 파일과 Dockerfile, requirements.txt이 생성된다.
 
-    ```
-    $ dcf function init --runtime python3 echo-service
-    ```
-    
-    echo-service가 이미 존재하는 지능컴포넌트일 경우 다음과 같은 error가 발생한다.
-    
-    ```
-    Error: Function echo-service already exists in config.yaml file.
-    ```
-    
-    이와 같은 경우에는 지능컴포넌트의 이름을 다른 이름으로 지정하면 된다. 
-    
-    설정파일의 예는 다음과 같다. 
-    
-    > 사용자가 지능컴포넌트를 정의하고자 할 때 규격이 되는 파일, 여러 개의 function을 정의한 yaml 파일
-    
-    ```
-    dcf:
-      gateway: keti.asuscomm.com:32222    
-    functions:
-      echo-service:
-        runtime: python3
-        desc: "This is echo service."
-        maintainer: "KETI"
-        handler:
-          dir: ./echo-service
-          file: handler.py
-          name: Handler
-        image: keti.asuscomm.com:5001/echo-service
-    ```
-    
-    설정파일의 규격은 다음과 같다.
-    
-    | Field  | Description | Example | 
-    |------------- |-------------|-------------| 
-    |  | 지능 컴포넌트의 이름| echo-service|
-    |runtime|지능 컴포넌트가 실행될 환경|python3|
-    |image|지능 컴포넌트 이미지 이름과 버전<br>(레포지토리인 keti.ausscomm.com:5001은 고정)|keti.asuscomm.com:5001/echo-service:v1|
-    |handler|지능 컴포넌트 배포시에 실행되는 엔트리포인트 정보|handler:<br>&nbsp; name: Handler<br>&nbsp; dir: ./echo-service<br>&nbsp; file: "handler.py"|
-    |maintainer|(optional)지능 컴포넌트 개발자 또는 유지보수 가능한 사람의 정보|KETI|
-    |desc|(optional)지능 컴포넌트 용도/설명|This is ....|
-    |environment|(optional)런타임 내에서 사용할 환경 변수|environment:<br>&nbsp; - "PATH=/usr/local/bin"|
-    |skip_build|(optional)지능 컴포넌트 빌드 및 레포지토리에 저장 단계 건너뛰기| skip_build: true|
-    |limits|(optional)지능 컴포넌트가 사용할 자원 요청 및 제한| limits:<br>&nbsp; cpu: "1"<br>&nbsp; gpu: "1"<br>&nbsp; memory: "1G"|
-    |build_args|(optional)Dockerfile내에 ARG 값 지정|build_args:<br>&nbsp; - "PYTHON_VERSION=3.7"|
-    
-	requirements.txt 수정을 통해 런타임 내에 설치할 python 패키지 버전을 명시한다. 
-	```
-	scapy==2.4.*
-	tinyec>=0.3.1
-	```
-	handler.py 수정을 통해 지능컴포넌트의 main 함수를 정의한다.
-	```
-	def Handler(req):
-	    return req.input
-	```
-
-3. __설정파일을 통해 지능컴포넌트를 생성한다.__
-  
-    ```
-    $ dcf function create -f config.yaml
-    Building: echo-service, Image:keti.asuscomm.com:5001/echo-service
-    Pushing: echo-service, Image:keti.asuscomm.com:5001/echo-service
-    Deploying: echo-service
-    ``` 
-    
-### 지능컴포넌트(function) 확인 
-  
-Kubernetes에서는 비동기 처리를 하기 때문에 대기열에서 응답을 기다리기 때문에 지능컴포넌트를 생성하고 시간이 지난 후에 해당 지능컴포넌트 Image의 Status가 Ready 상태로 변경된다. 지능컴포넌트를 생성한 시점에서는 Not Ready 상태이고 이 때 지능컴포넌트를 호출하면 다음과 같은 error가 발생한다.
-
-  ```
-  rpc error: code = Internal desc = rpc error: code = DeadlineExceeded desc = context deadline exceeded
-  ```
-
-따라서 지능컴포넌트를 호출하기 전, 지능컴포넌트가 Ready 상태인지 확인을 해야한다.
-
-  ```
-  $ dcf function list
-  Function       	Image               	Maintainer     	Invocations	Replicas  	Status    	Description
-  echo-service   	$(repo)/echo-service	KETI           	4         	1         	Ready     	This is echo service    
-  ``` 
-
-### 지능컴포넌트(function) 호출 
-
-  ```
-  $ dcf function call echo-service 
-  $ echo "Hello,World!" | dcf function call echo-service
-  $ cat "cat.png" | dcf function call echo-service
-  $ echo "Hello,World!" | dcf function call echo-service | dcf function call echo-service2
-  ```  
-
-### 생성된 지능컴포넌트(function) 의 정보 확인
-
-  ```
-  $ dcf function info echo-service
-  ```
-
-### 지능컴포넌트(function) 삭제
-디지털 동반자에 배포된 지능 컴포넌트가 제거된다. 로컬의 설정 파일과 디렉토리는 제거되지 않는다. 필요시에는 수동으로 제거한다.
-
-  ```
-  $ dcf function delete -f config.yaml 
-  $ dcf function delete echo-service
-  Deleted: echo-service
-  ```
-  
-  ---
-  
-CLI 명령어에 대한 도움말은 다음의 Flag를 통해 실행할 수 있다. 
-
-```
-$ dcf function -h 
-$ dcf function init -h 
-$ dcf runtime -h 
-$ dcf runtime list -h 
+```bash
+$ sudo docker info
+>>
+Insecure Registries:
+ keti.asuscomm.com:5001
 ```
 
-## 지능 컴포넌트 개발자를 위한 gRPC API 가이드
-지능 컴포넌트 개발자를 위한 gRPC API 설치 및 사용법은 [gRPC Guide](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/grpc-guide.md)를 참조하길 바랍니다.
+​    
+
+## "Hello DCF"
+
+   
+
+이제 DCF를 통해서, 각 함수 컴포넌트들을 생성하고 배포, 테스트, 삭제까지하는 방법을 설명드리도록 하겠습니다.
+
+​    
+
+### 1. Runtime 지원
+
+DCF의 Runtime 지원 목록은 다음과 같은 명령어로 확인할 수 있습니다.
+
+Runtime 지원이란, 컴포넌트의 function을 어느 언어로 작성할 것이냐에 대한 의미로 이해하면 됩니다.
+
+
+
+```bash
+$ ./dcf runtime list
+
+Supported Runtimes are:
+- python3
+- tensorflow
+- tensorflow-gpu
+- go
+- python2
+```
+
+​    
+
+### 2. 컴포넌트 생성
+
+다음과 같은 명령어로 Python3를 runtime으로 갖는 function을 정의할 수 있다.
+
+
+
+```bash
+$ ./dcf function init --runtime python3 <function name>
+
+ex> ./dcf function init --runtime python3 helloDCF
+```
+
+
+
+위 명령어로 컴포넌트를 정의했다면, 다음과 같은 파일 구조를 확인할 수 있습니다.
+
+
+
+```bash
+<function name>
+├── Dockerfile
+├── handler.py
+└── requirements.txt
+```
+
+
+
+- Dockerfile : 해당 함수의 Docker 컨테이너를 정의합니다.
+- handler.py : DCF에 들어오는 요청이 들어오고 처리되는 스크립트입니다.
+- requirements.txt : 해당 함수의 package dependency를 명시하는 파일입니다.
+
+​    
+
+### 3. 컴포넌트 배포
+
+다음과 같은 명령어를 이용하여 정의한 컴포넌트를 DCF에 배포할 수 있습니다.
+
+만약 배포되는 일련의 과정을 확인하고 싶다면, 해당 명령어 뒤에 `-v`을 추가합니다.
+
+
+
+```bash
+$ ./dcf function create -f config.yaml
+Building: <function name>, Image:keti.asuscomm.com:5001/<function name>
+Pushing: <function name>, Image:keti.asuscomm.com:5001/<function name>
+Deploying: <function name>
+```
+
+​    
+
+### 4. 배포 확인
+
+다음과 같은 명령어를 이용하여 DCF에 컴포넌트가 잘 배포되어있는지 확인할 수 있습니다.
+
+- `Status`가 Ready라면 해당 컴포넌트를 호출할 수 있습니다.
+- `<Function name>` 은 중첩되면 안됩니다.
+
+
+
+```bash
+$ ./dcf function list
+
+Function       	Image               	Maintainer     	Invocations	Replicas  	Status   
+<function name>	$(repo)/<function name>    	               	0         	1      	Ready 
+```
+
+​    
+
+### 5. 컴포넌트 호출
+
+다음과 같은 명령어를 이용하여 DCF의 컴포넌트를 호출할 수 있습니다.
+
+
+
+```bash
+$ ./dcf function call echo-service 
+$ echo "Hello, DCF!" | ./dcf function call echo-service 
+
+Hello, DCF
+```
+
+
+
+handler.py를 확인해보면 다음과 같이 구성되어있는 것을 확인할 수 있습니다.
+
+위의 예제를 설명해보면, `"Hello, DCF!"`라는 입력을 받으면 이를 그대로 return하는 구조로 볼 수 있습니다.
+
+```python3
+def Handler(req):
+    return req
+```
+
+​    
+
+### 6. 컴포넌트 삭제
+
+ 배포된 컴포넌트를 삭제하고 싶다면, 다음과 같은 명령어를 이용하여 삭제할 수 있습니다.
+
+해당 함수삭제 여부는 배포 확인때와 같이 `./dcf function list`를 통해 확인할 수 있습니다. 
+
+
+
+```bash
+./dcf function delete <function name>
+```
+
+
+
