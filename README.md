@@ -2,7 +2,7 @@
 
 해당 문서는 디지털동반자 프레임워크에 대해서 설명하며, 이를 어떻게 사용하는지 가이드 문서입니다.
 
-
+​    
 
 ## DCF 소개
 
@@ -51,8 +51,6 @@ DCF CLI를 설치하기 전에, 먼저 해당 컴퓨터에 Docker가 설치되�
 도커 버전은 17.05-CE버전 이상을 요구합니다.
 
 설치 방법은 [링크](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)의 `Install Docker CE`를 참조하시면 됩니다.
-
-​    
 
 - docker >= 17.05-ce
 
@@ -113,13 +111,15 @@ DCF설치를 완료했다면, 다음과 같은 가이드 문서를 통해서 DCF
 
 [1. Hello DCF](helloDCF.md)
 
-[2. Variety input data format](Variety_input_data_formatmd.md)
+[2. Variety input data format](Variety_input_data_format.md)
 
 [3. SSD(Object Detection) Component](SSD(Object_Detection)_Component_Tutorial.md)
 
 [4. config.yaml 파일 구성](AboutConfig_yaml.md)
 
 [5. gRPC Guide](grpc-guide.md)
+
+[6. Q&A](qna.md)
 
 
 
