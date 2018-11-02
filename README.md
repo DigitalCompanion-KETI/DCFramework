@@ -115,10 +115,12 @@ DCF설치를 완료했다면, 다음과 같은 가이드 문서를 통해서 DCF
 
 [2. Variety input data format](Variety_input_data_formatmd.md)
 
-[3. SSD(Object Detection) Component](SSD_Object_Detection_Component.md)
+[3. SSD(Object Detection) Component](deeplearning-model-deploy-guide.md)
 
 [4. config.yaml 파일 구성](AboutConfig_yaml.md)
 
-[5. gRPC Guide](gRPC_Guide.md)
+[5. gRPC Guide](grpc-guide.md)
+
+
 
 
