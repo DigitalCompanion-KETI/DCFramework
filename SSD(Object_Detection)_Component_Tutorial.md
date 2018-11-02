@@ -1,25 +1,40 @@
-# Deeplearning model deploy Guide 
+# SSD(Object Detection)  Component 
 
-이 가이드는 딥러닝 모델을 DCF를 통해 배포하기 위한 가이드이다. 
-해당 가이드문서는 Object Detection모델을 이용하여 이미지 상의 Object의 Class, Box, Confidence Score를 JSON Format으로 Return 하는 예제이다.
+해당 가이드는 딥러닝 모델 중 Object Detection을 하는 SSD(Single Shot MultiBox Detector)모델을 DCF를 통해 배포하는 튜토리얼 가이드입니다.
 
-배포되는 서비스 예제는 다음과 같은 흐름을 따른다.
 
-1. Image를 base64로 인코딩 (Client)
-2. base64로 받은 Image 데이터를 디코딩(Server)
-3. 디코딩 된 데이터를 Image로 변환(Server)
-4. 변환된 Image를 입력으로 Model 추론
-5. 추론 결과를 JSON으로 변환 및 리턴 
+
+Object Detection 콤포넌트는 아래 그림과 같이 `Image`를 입력으로 받아 이를 `class, confidence score, box coordinates`정보를 `JSON`포맷으로 리턴하는 예제입니다.
+
+
+
+해당 컴포넌트의 논리 흐름은 다음과 같은 흐름을 따릅니다.
+
+1. Image를 base64로 인코딩 (DCF Client)
+2. base64로 받은 Image 데이터를 디코딩 (Component)
+3. 디코딩 된 데이터를 Image로 변환 (Component)
+4. 변환된 Image를 입력으로 Model 추론 (Component)
+5. 추론 결과를 JSON으로 변환 및 리턴 (Component)
+
+
+
+![Deploy Object Detection Model in DCF](https://user-images.githubusercontent.com/13328380/47901830-507b1500-dec4-11e8-9a3d-afba90719b9d.png)
+
+
 
 
 ### PREREQUISITES 
 
 - [SSD Tensorflow 구현체(Tensorflow 1.11.0)](https://github.com/balancap/SSD-Tensorflow)
 
-### Create Python3 function  
 
-function name이 중복되면 안되므로, DCF CLI를 이용하여 현재 배포되어있는 function name을 확인한다.
-(만약 생성하려는 이름의 function이 deploy되어있다면, function name을 변경한다.)
+
+​    
+
+### Create Python3 function Component  
+
+function name이 중복되면 안되므로, DCF CLI를 이용하여 현재 배포되어있는 function name을 확인합니다.
+(만약 생성하려는 이름의 function이 deploy되어있다면, function name을 변경합니다.)
 ```bash
 $ dcf function init --runtime python3 <function name>
 
@@ -27,12 +42,14 @@ ex>
 $ dcf function init --runtime python3 ssd-test
 ```
 
+​    
+
 ### Install SSD 구현체  
-해당 가이드에서는 대표적인 딥러닝 기반의 Object Detection모델인 SSD의 Tensorflow 구현체를 이용하여 예제를 진행한다.
-이를 위해 먼저 PREREQUISITES의 SSD Tensorflow 구현체를 설치하고 실행한다.
+
+해당 가이드에서는 `PREREQUISITES`와 같은 Tensorflow 기반의 SSD 구현체를 이용합니다.이를 위해 먼저 PREREQUISITES의 SSD Tensorflow 구현체를 설치하고 실행합니다.
 
 ```bash
-# 만든 함수의 경로로 들어가서, 추가 폴더를 생성한다.
+# 만든 함수(DCF 컴포넌트)의 경로로 들어가서, 추가 폴더를 생성한다.
 cd <function directory>
 mkdir models
 mkdir ssd
@@ -47,11 +64,16 @@ cd checkpoints
 unzip ssd_300_vgg.ckpt.zip
 ```
 
-### Setting Dockerfile
-SSD 구현체는 OpenCV에 의존성을 가지고 있으며, Python에서 OpenCV를 제대로 사용하려면, 빌드를 해야한다.
-해당 가이드에서는 이미 빌드가 완료되어있는 OpenCV Docker Image를 사용한다.
+​    
 
-함수의 폴더에서 Dockerfile을 다음과 같이 수정한다.
+### Setting Dockerfile
+
+SSD 구현체는 OpenCV에 의존성을 가지고 있으며, Python에서 OpenCV를 제대로 사용하려면, 빌드를 해야한다.
+해당 가이드에서는 이미 빌드가 완료되어있는 OpenCV Docker Image를 사용합니다.
+
+콤포넌트 폴더에서 Dockerfile을 다음과 같이 수정합니다.
+
+
 
 ```Dockerfile
 ARG REGISTRY
@@ -91,9 +113,12 @@ ENTRYPOINT ["python3"]
 CMD ["server.py"]
 ```
 
+​    
+
 ### write new python script for DCF  
-기존의 모델에서 inference코드를 따로 호출해서 사용할 수 있도록 만들어준다.
-해당 가이드에서는 predict.py라는 스크립트를 SSD 구현체 폴더에서 다음과 같이 만든다.
+
+기존의 모델에서 inference코드를 따로 호출해서 사용할 수 있도록 만들어줍니다.
+해당 가이드에서는 predict.py라는 스크립트를 SSD 구현체 폴더에서 다음과 같이 만듭니다.
 
 ```python
 import sys
@@ -211,8 +236,11 @@ if __name__ == "__main__":
     print(predict())
 ```
 
+​    
+
 ### modify handler.py 
-handler.py를 다음과 같이 수정해준다.
+
+handler.py를 다음과 같이 수정해줍니다.
 
 ```python
 from __future__ import print_function
@@ -242,12 +270,22 @@ def Handler(req):
     return result
 ```
 
+​    
+
 ### deploy function
+
+다음과 같은 명령어로 작성이 완료된 함수 컴포넌트를 배포합니다.
+
+Dockerfile이 Image 2개를 사용하므로 배포하는데 시간이 걸릴 수 있습니다.
+
 ```bash
 dcf function create -f config.yaml -v
 ```
+​    
+
 ### function status check    
-배포된 함수의 상태를 확인한다. 상태가 Ready가 되면, invoke or call 옵션을 이용하여 함수를 테스트한다.
+
+배포가 완료되면, 배포된 함수의 상태를 확인합니다. 상태가 Ready가 되면, invoke or call 옵션을 이용하여 함수를 테스트합니다.
 
 ```bash
 watch dcf fucntion list
@@ -255,7 +293,7 @@ watch dcf fucntion list
 
 ### invoke function
 
-특정한 Image를 이용해 다음과 같이 함수를 호출한다.
+특정한 Image를 이용해 다음과 같이 함수를 호출합니다.
 
 ```bash
 cat 000001.jpg | base64 | ./dcf function call ssd-test
@@ -264,8 +302,11 @@ cat 000001.jpg | base64 | ./dcf function call ssd-test
 [{"class": "12", "confidence": "0.9948125", "xmin": "49", "ymin": "233", "xmax": "49", "ymax": "233"}, {"class": "12", "confidence": "0.9948125", "xmin": "49", "ymin": "233", "xmax": "49", "ymax": "233"}]
 ```
 
+​    
+
 ### modification
-함수 수정을 원할 경우, 로컬에서 함수를 수정한 후, 다음과 같은 절차를 거쳐 재배포한다.
+
+함수 수정을 원할 경우, 로컬에서 함수를 수정한 후, 다음과 같은 절차를 거쳐 재배포합니다.
 
 1. 함수를 delete한다.
 ```bash
@@ -273,7 +314,7 @@ dcf function delete <function name>
 
 # 삭제한 함수가 없어지는 것을 확인
 watch dcf function list
-```   
+```
 
 2. 함수를 재생성한다.
 ```bash
