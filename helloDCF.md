@@ -119,7 +119,9 @@ ex> dcf function init --runtime go hello-dcf
 
 > Note
 
-Dockerfile : 해당 함수의 Docker 컨테이너를 정의합니다.
+Dockerfile 
+
+- 해당 함수의 Docker 컨테이너를 정의합니다.
 
 handler.py / handler.go
 
