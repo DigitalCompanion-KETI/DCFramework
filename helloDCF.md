@@ -261,8 +261,8 @@ rpc error: code = Internal desc = rpc error: code = DeadlineExceeded desc = cont
 ```bash
 $ dcf function list
 
-Function       	Image               	Maintainer     	Invocations	Replicas  	Status     Description
-<function name>	$(repo)/<function name>    	         0         	1      	   Ready 
+Function       	Image               	Maintainer     	Invocations	    Replicas    Status     Description
+<function name>	$(repo)/<function name>    	         0         	    1           Ready 
 ```
 
 ​    
@@ -295,11 +295,11 @@ Hello, DCF
 ```bash
 $ dcf function delete <function name>
 $ dcf function list
-Function       	Image               	Maintainer     	Invocations	Replicas  	Status     Description
-<function name>	$(repo)/<function name>    	         0         	1      	   Not Ready 
+Function       	Image               	Maintainer     	Invocations	    Replicas    Status     Description
+<function name>	$(repo)/<function name>    	         0         	    1           Not Ready 
 
 $ dcf function list
-Function       	Image               	Maintainer     	Invocations	Replicas  	Status     Description
+Function       	Image               	Maintainer     	Invocations	    Replicas    Status     Description
 ```
 
 
