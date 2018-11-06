@@ -129,7 +129,7 @@ func main() {
 }
 ```
 
-- 만약 전송하려는 메세지의 크기가 큰 경우, gRPC 채널 생성 시 다음과 같은 옵션을 추가하여 gRPC client를 생성한다. 
+- 만약 전송하려는 파일의 용량이 큰 경우, gRPC 채널 생성 시 다음과 같은 옵션을 추가하여 gRPC client를 생성한다. 
 
 ```
 conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithMaxMsgSize(1024*1024*1024))
@@ -246,7 +246,7 @@ if __name__ == '__main__':
     run()
 ```
 
-- 만약 전송하려는 메세지의 크기가 큰 경우, gRPC 채널 생성 시 다음과 같은 옵션을 추가하여 gRPC client를 생성한다. 
+- 만약 전송하려는 파일의 용량이 큰 경우, gRPC 채널 생성 시 다음과 같은 옵션을 추가하여 gRPC client를 생성한다. 
 
 ```
 channel = grpc.insecure_channel('keti.asuscomm.com:32222', options= [
