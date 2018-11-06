@@ -180,7 +180,7 @@ requirements.txt / Gopkg.toml
   ```
 
 config.yaml 
- 
+
 - 사용자가 지능 컴포넌트를 정의하고자 할 때 규격이 되는 파일이며 여러 개의 지능 컴포넌트를 정의할 수 있습니다. 
 
   ```bash
@@ -209,8 +209,8 @@ config.yaml
 
 - 설정 파일의 규격은 다음과 같습니다.
 
-    | Field  | Description | Example | 
-    |------------- |-------------|-------------| 
+    | Field  | Description | Example |
+    |------------- |-------------|-------------|
     | hello-dcf | 지능 컴포넌트의 이름| hello-dcf|
     |runtime|지능 컴포넌트가 실행될 환경|python3|
     |image|지능 컴포넌트 이미지 이름과 버전<br>(레포지토리인 keti.ausscomm.com:5001은 고정)|keti.asuscomm.com:5001/hello-dcf:v1|
@@ -256,7 +256,7 @@ Deploying: <function name>
 
 Kubernetes에서는 비동기 처리를 하기 때문에 대기열에서 응답을 기다리기 때문에 지능컴포넌트를 생성하고 
 
-시간이 지난 후에 해당 지능컴포넌트 Image의 Status가 Ready 상태로 변경됩니. 
+시간이 지난 후에 해당 지능컴포넌트 Image의 Status가 Ready 상태로 변경됩니다. 
 
 지능컴포넌트를 생성한 시점에서는 Not Ready 상태이고 이 때 지능컴포넌트를 호출하면 다음과 같은 error가 발생합니다.
 
