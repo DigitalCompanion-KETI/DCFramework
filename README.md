@@ -71,6 +71,7 @@ DCF CLI를 설치하기 전에, 먼저 해당 컴퓨터에 Docker가 설치되�
 ```bash
 $ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v0.1.0/dcf
 $ chmod +x dcf
+$ mv dcf /usr/local/bin
 ```
 
 ​    
