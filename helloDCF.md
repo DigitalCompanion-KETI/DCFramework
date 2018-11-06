@@ -152,7 +152,9 @@ handler.py / handler.go
 
 requirements.txt / Gopkg.toml
 
-- 해당 함수의 package dependency를 명시하는 파일입니다. 이는 Runtime에 따라서 종속 패키지를 설치하기 위함이며, 다음과 같이 수정할 수 있습니다.
+- 해당 함수의 package dependency를 명시하는 파일입니다. 이는 Runtime에 따라서 종속 패키지를 설치하기 위함이며, 
+
+  다음과 같이 수정할 수 있습니다.
 
   ```bash
   >> requirements.txt
