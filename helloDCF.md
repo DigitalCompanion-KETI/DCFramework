@@ -250,7 +250,11 @@ Deploying: <function name>
 
 ### 4. 배포 확인
 
-Kubernetes에서는 비동기 처리를 하기 때문에 대기열에서 응답을 기다리기 때문에 지능컴포넌트를 생성하고 시간이 지난 후에 해당 지능컴포넌트 Image의 Status가 Ready 상태로 변경됩니. 지능컴포넌트를 생성한 시점에서는 Not Ready 상태이고 이 때 지능컴포넌트를 호출하면 다음과 같은 error가 발생합니다.
+Kubernetes에서는 비동기 처리를 하기 때문에 대기열에서 응답을 기다리기 때문에 지능컴포넌트를 생성하고 
+
+시간이 지난 후에 해당 지능컴포넌트 Image의 Status가 Ready 상태로 변경됩니. 
+
+지능컴포넌트를 생성한 시점에서는 Not Ready 상태이고 이 때 지능컴포넌트를 호출하면 다음과 같은 error가 발생합니다.
 
 ```bash
 rpc error: code = Internal desc = rpc error: code = DeadlineExceeded desc = context deadline exceeded
@@ -269,7 +273,9 @@ Function       	Image               	Maintainer     	Invocations	    Replicas   
 
 ### 5. 컴포넌트 호출
 
-다음과 같은 명령어를 이용하여 DCF의 컴포넌트를 직접 호출하거나 파이프라이닝을 통해 입력 값을 전달하여 호출할 수 있습니다.
+다음과 같은 명령어를 이용하여 DCF의 컴포넌트를 직접 호출하거나 파이프라이닝을 통해 입력 값을 
+
+전달하여 호출할 수 있습니다.
 
 
 
