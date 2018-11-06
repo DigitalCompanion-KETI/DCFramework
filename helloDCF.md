@@ -69,7 +69,9 @@ Supported Runtimes are:
 
 > Notify
 
-`build_args, build_packages 필드가 추가된 config.yaml 파일을 적용하기 위해서 기존의 지능 컴포넌트 생성 시 생성된 dcf-runtime 디렉토리를 삭제하고 지능 컴포넌트를 새로 생성하여 주시기 바랍니다.`
+- build_args, build_packages 필드가 추가된 config.yaml 파일을 적용하기 위해서 기존의 지능 컴포넌트 생성 시 
+
+  생성된 dcf-runtime 디렉토리를 삭제하고 지능 컴포넌트를 새로 생성하여 주시기 바랍니다.
 
 ```bash
 $ dcf function init --runtime python <function name>
