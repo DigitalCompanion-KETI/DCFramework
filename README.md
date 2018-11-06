@@ -64,13 +64,11 @@ DCF CLI를 설치하기 전에, 먼저 해당 컴퓨터에 Docker가 설치되�
 
 ### 2. DCF CLI 다운로드
 
-### Notify
-
-DCF CLI가 이미 설치되어 있다면, 기존의 설치된 DCF CLI를 삭제하고 새로 받아주시기 바랍니다.
-
 다음과 같은 명령어를 통해 DCF CLI를 다운받고, 해당 파일에 실행 권한을 설정합니다.
 
- 
+> Notify
+
+`지능 컴포넌트 생성 시, 자동으로 생성되는 config.yaml에서 기존에 없던 build_args와 build_packages 필드를 사용하기 위해서 DCF CLI가 이미 설치되어 있다면, 기존의 설치된 DCF CLI를 삭제하고 새로 받아주시기 바랍니다.`
 
 ```bash
 $ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v0.1.0/dcf
