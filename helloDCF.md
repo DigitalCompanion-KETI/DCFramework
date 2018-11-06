@@ -67,7 +67,9 @@ Supported Runtimes are:
 
 다음과 같은 명령어로 Python을 runtime으로 갖는 지능 컴포넌트(function)를 정의할 수 있습니다.
 
+> Notify
 
+`build_args, build_packages 필드가 추가된 config.yaml 파일을 적용하기 위해서 기존의 지능 컴포넌트 생성 시 생성된 dcf-runtime 디렉토리를 삭제하고 지능 컴포넌트를 새로 생성하여 주시기 바랍니다.`
 
 ```bash
 $ dcf function init --runtime python <function name>
