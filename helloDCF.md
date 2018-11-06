@@ -135,10 +135,11 @@ handler.py / handler.go
   def Handler(req):
       return req.input
   ```
-
----
-
+  
+  ---
+  
   ```bash
+  >> handler.go
   package main
 
   import sdk "github.com/digitalcompanion-keti/dcf-watcher/go/pb"
@@ -162,7 +163,7 @@ requirements.txt / Gopkg.toml
   scipy
   ```
 
----
+  ---
 
   ```bash
   >> Gopkg.toml
