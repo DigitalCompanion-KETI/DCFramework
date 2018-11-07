@@ -241,7 +241,13 @@ Function       	Image               	Maintainer     	Invocations	    Replicas   
 
 전달하여 호출할 수 있습니다.
 
+> Note 
 
+
+
+파이프라이닝이란, 명령어의 표준 출력을 프로그램의 입력으로 전환하는 기능을 뜻합니다. 
+
+명령어와 프로그램의 연결은 '|' 기호를 사용합니다. 
 
 ```bash
 $ dcf function call hello-dcf 
