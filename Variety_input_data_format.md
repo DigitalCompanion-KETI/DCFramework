@@ -381,6 +381,7 @@ RUN apt-get update && apt-get install -y  \
         python3-dev \
         python3-numpy \
         python-numpy \
+        libgtk2.0-dev \
 	${ADDITIONAL_PACKAGE} \
     && rm -rf /var/lib/apt/lists/*
 
@@ -453,6 +454,7 @@ import json
 import numpy as np
 import tensorflow as tf
 import PIL
+import os
 
 import cv2
 
@@ -461,33 +463,42 @@ from models.ssd.predict import predict
 
 def Handler(req):
 
-    videodata = req.input
+    videodata = io.BytesIO(req.input).read()
 
-    cap = cv2.VideoCapture(io.BytesIO(videodata))
+    if os.path.isfile("video.mp4"):
+        os.remove("video.mp4")
 
-    if not cap.isOpen():
+    with open("video.mp4", "wb") as f:
+        f.write(videodata)
+    
+
+    cap = cv2.VideoCapture("video.mp4")
+
+    if not cap.isOpened():
         return "[cannot open video file]"
 
     result = dict()
     count = 0
 
     while True:
-        ret, frame = video_capture.read()
+        ret, frame = cap.read()
     
         if ret:
+            if count >= 10:
+                break
+
             frame_result = predict(frame)
             count += 1
             result[str(count)] = frame_result
-        
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
 
         else:
             break
 
-    video_capture.release()
-  
+    cap.release()
     result = json.dumps(result)
+
+    if os.path.isfile("video.mp4"):
+        os.remove("video.mp4")
     
     return result
 
