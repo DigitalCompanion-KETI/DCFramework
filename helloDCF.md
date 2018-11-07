@@ -253,6 +253,7 @@ Function       	Image               	Maintainer     	Invocations	    Replicas   
 입력으로 전환하는 기능입니다. 명령어와 프로그램의 연결은 '|' 기호를 사용합니다. 
 
  
+ 
 - `DCF 컴포넌트를 직접 호출하는 경우`
   
   ```bash
@@ -265,7 +266,9 @@ Function       	Image               	Maintainer     	Invocations	    Replicas   
   Reading from STDIN - hit (Control + D) to stop.
   ```
   
-  위와 같은 화면이 나타나게 되고, 표준 입력으로 넣고자 하는 `Hello, DCF!` 를 입력한 후, Ctrl + D 를 누르게 되면 출력 값이 나타난다.
+  위와 같은 화면이 나타나게 되고, 표준 입력으로 넣고자 하는 `Hello, DCF!` 를 입력한 후, 
+  
+  Ctrl + D 를 누르게 되면 출력 값이 나타납니다.
   
   ```bash
   Reading from STDIN - hit (Control + D) to stop.
@@ -276,7 +279,9 @@ Function       	Image               	Maintainer     	Invocations	    Replicas   
   
 - `DCF 컴포넌트를 파이프라이닝을 통해 호출하는 경우`
 
-  echo "Hello, DCF!" 를 통한 출력의 결과를 '|' 기호와 함께 `hello-dcf` 컴포넌트의 입력으로 전환하여 컴포넌트를 호출합니다.  
+  echo "Hello, DCF!" 를 통한 출력의 결과를 '|' 기호와 함께 
+  
+  `hello-dcf` 컴포넌트의 입력으로 전환하여 컴포넌트를 호출합니다.  
 
   ```bash
   $ echo "Hello, DCF!" | dcf function call hello-dcf
