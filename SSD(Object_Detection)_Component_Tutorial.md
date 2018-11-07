@@ -22,107 +22,273 @@ Object Detection 콤포넌트는 아래 그림과 같이 `Image`를 입력으로
 
 
 
-
-### PREREQUISITES 
-
-- [SSD Tensorflow 구현체(Tensorflow 1.11.0)](https://github.com/balancap/SSD-Tensorflow)
-
-
+튜토리얼 문서는 DCF를 이용하여 SSD model을 구현하는 방법을 순차적으로 기술해놓았으므로, 상단에서 하단으로 가이드 문서를 따라가면 해당 함수 컴포넌트를 생성하고 배포할 수 있습니다.
 
 ​    
 
-### Create Python3 function Component  
+## DCF 함수 컴포넌트 생성
 
-function name이 중복되면 안되므로, DCF CLI를 이용하여 현재 배포되어있는 function name을 확인합니다.
-(만약 생성하려는 이름의 function이 deploy되어있다면, function name을 변경합니다.)
-```bash
-$ dcf function init --runtime python3 <function name>
+먼저 DCF CLI를 이용하여 python 함수 컴포넌트를 생성합니다.
 
-ex>
-$ dcf function init --runtime python3 ssd-test
-```
 
-​    
-
-### Install SSD 구현체  
-
-해당 가이드에서는 `PREREQUISITES`와 같은 Tensorflow 기반의 SSD 구현체를 이용합니다.이를 위해 먼저 PREREQUISITES의 SSD Tensorflow 구현체를 설치하고 실행합니다.
 
 ```bash
-# 만든 함수(DCF 컴포넌트)의 경로로 들어가서, 추가 폴더를 생성한다.
-cd <function directory>
-mkdir models
-mkdir ssd
+$ dcf function init --runtime python ssd-image
 
-# SSD tensorflow 구현체를 다운받는다.
-git init
-git remote add origin https://github.com/balancap/SSD-Tensorflow.git
-git pull origin master
+>>>
+Folder: ssd-image created.
+Function handler created in folder: ssd-image
+Rewrite the function handler code in ssd-image folder
+Config file written: config.yaml
+```
 
-# weights 파일의 압축을 풀어준다.
-cd checkpoints
-unzip ssd_300_vgg.ckpt.zip
+
+
+생성 후에, 다음과 같은 폴더 구조를 확인할 수 있습니다.
+
+
+
+```bash
+ssd-image
+├── Dockerfile
+├── handler.py
+└── requirements.txt
 ```
 
 ​    
 
-### Setting Dockerfile
+## Installing SSD Tensorflow implementation
 
-SSD 구현체는 OpenCV에 의존성을 가지고 있으며, Python에서 OpenCV를 제대로 사용하려면, 빌드를 해야한다.
-해당 가이드에서는 이미 빌드가 완료되어있는 OpenCV Docker Image를 사용합니다.
+​    
 
-콤포넌트 폴더에서 Dockerfile을 다음과 같이 수정합니다.
+### 1. SSD Tensorflow구현체 설치를 위한 폴더 생성
+
+먼저 생성된 python함수 컴포넌트에 다음과 같이 폴더를 생성합니다.
+
+`ssd-image -> models -> ssd`
 
 
 
-```Dockerfile
-ARG REGISTRY
-ARG WATCHER_VERSION=0.1.0
+```bash
+$ cd ssd-image
+$ mkdir models
+$ cd models
+$ mkdir ssd
+```
 
-FROM ${REGISTRY}/watcher:${WATCHER_VERSION}-tensorflow as watcher
-FROM yoanlin/opencv-python3:latest
 
-RUN apt-get update \ 
-    && apt-get install -y libgtk2.0-dev \
-    libglib2.0-0 \
-    build-essential
 
-ARG handler_file=handler.py
-ARG handler_name=Handler
+이렇게 폴더를 만들면, `ssd-image`폴더 계층은 다음과 같아집니다.
 
-ENV HANDLER_DIR=/dcf/handler
-ENV HANDLER_FILE=${HANDLER_DIR}/${handler_file}
-ENV HANDLER_NAME=${handler_name}
-
-COPY --from=watcher /dcf/watcher ${HANDLER_DIR}
-# RUN mkdir -p ${HANDLER_DIR}
-WORKDIR ${HANDLER_DIR}
-COPY . .
-RUN touch ${HANDLER_DIR}/__init__.py
-
-RUN pip install --upgrade pip
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
-
-# Run?
-# RUN cp -r /dcf/watcher/* ${HANDLER_DIR}
-
-HEALTHCHECK --interval=1s CMD [ -e /tmp/.lock ] || exit 1
-
-ENTRYPOINT ["python3"]
-CMD ["server.py"]
+```bash
+ssd-image
+├── Dockerfile
+├── handler.py
+├── models
+│   └── ssd
+└── requirements.txt
 ```
 
 ​    
 
-### write new python script for DCF  
+### 2. Clone SSD Tensorflow Implementation from github
 
-기존의 모델에서 inference코드를 따로 호출해서 사용할 수 있도록 만들어줍니다.
-해당 가이드에서는 predict.py라는 스크립트를 SSD 구현체 폴더에서 다음과 같이 만듭니다.
+​    
+
+#### SSD Tensorflow Implementation Clone
+
+ssd 폴더로 진입하여, [SSD Tensorflow 구현체(Tensorflow 1.11.0)](https://github.com/balancap/SSD-Tensorflow)의 코드를 clone합니다.
+
+
+
+```bash
+$ cd models/ssd
+$ git init
+$ git remote add origin https://github.com/balancap/SSD-Tensorflow.git
+$ git pull origin master
+
+>> 
+Initialized empty Git repository in ../ssd-image/models/ssd/.git/
+remote: Enumerating objects: 809, done.
+remote: Total 809 (delta 0), reused 0 (delta 0), pack-reused 809
+Receiving objects: 100% (809/809), 113.09 MiB | 1.20 MiB/s, done.
+Resolving deltas: 100% (547/547), done.
+From https://github.com/balancap/SSD-Tensorflow
+ * branch            master     -> FETCH_HEAD
+ * [new branch]      master     -> origin/master
+```
+
+
+
+#### Unzip checkpoint file
+
+내려받은 코드계층에서 `checkpoints`폴더 안에 있는 모델의 weights파일을 압축해제해줍니다.
+
+
+
+```bash
+$ cd checkpoints 
+$ unzip ssd_300_vgg.ckpt.zip
+
+>>> 
+Archive:  ssd_300_vgg.ckpt.zip
+  inflating: ssd_300_vgg.ckpt.data-00000-of-00001  
+  inflating: ssd_300_vgg.ckpt.index 
+```
+
+
+
+#### installing dependency package
+
+
+
+**Installing OpenCV**
+
+python dependency package를 설치하기 이전에 먼저 opencv를 빌드합니다.
+
+(만약 이미 Opencv가 Python3에서 사용할 수 있도록 빌드하였다면, 해당 내용은 생략해됴 됩니다.)
+
+
+
+1. Installing OpenCV dependency package
+
+```bash
+$ sudo apt-get update && apt-get install -y build-essential wget tar cmake git unzip yasm pkg-config libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libavformat-dev python3-dev python3-numpy python-dev python-numpy libgtk2.0-dev 
+```
+
+
+
+2. OpenCV Compile && Build
+
+   해당 문서에서는 사용자가 python3.4 버전을 사용하며, OpenCV 3.4.2 버전을 컴파일한다는 것으로 가정하고 진행하였습니다.
+
+   
+
+   (해당 내용은 원하지 않을 경우, 변경하여도 됩니다.)
+
+   ```bash
+   $ wget https://github.com/opencv/opencv/archive/3.4.2.zip \
+   && unzip 3.4.2.zip \
+   && mkdir /opencv-3.4.2/cmake_binary \
+   && cd /opencv-3.4.2/cmake_binary \
+   && cmake -DBUILD_TIFF=ON \
+     -DBUILD_opencv_java=OFF \
+     -DWITH_CUDA=OFF \
+     -DWITH_OPENGL=ON \
+     -DWITH_OPENCL=ON \
+     -DWITH_IPP=ON \
+     -DWITH_TBB=ON \
+     -DWITH_EIGEN=ON \
+     -DWITH_V4L=ON \
+     -DBUILD_TESTS=OFF \
+     -DBUILD_PERF_TESTS=OFF \
+     -DCMAKE_BUILD_TYPE=RELEASE \
+     -DCMAKE_INSTALL_PREFIX=$(python3.4 -c "import sys; print(sys.prefix)") \
+     -DPYTHON_EXECUTABLE=$(which python3.4) \
+     -DPYTHON_INCLUDE_DIR=$(python3.4 -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") \
+     -DPYTHON_PACKAGES_PATH=$(python3.4 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
+     .. \
+   && make install \
+   && rm /${OPENCV_VERSION}.zip \
+   && rm -r /opencv-${OPENCV_VERSION}
+   ```
+
+   ​    
+
+3. OpenCV 설치 확인
+
+   다음과 같은 명령어를 통해서 OpenCV 설치를 확인합니다.
+
+   ```bash
+   $ pkg-config --modversion opencv
+   
+   >>>
+   3.4.2
+   ```
+
+   ​    
+
+4. pyhon3에서 OpenCV Import 확인
+
+   다음과 같은 명령어를 통해서 OpenCV가 Python3에서 import가 되는지 확인합니다.
+
+   ```python
+   import cv2
+   
+   >>
+   Python 3.4 (default, Oct  3 2017, 21:45:48) 
+   [GCC 7.2.0] on linux
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>> import cv2
+   >>> 
+   
+   ```
+
+   
+
+**installing python dependency package**
+
+SSD Implementation 코드를 실행할 수 있도록 python package를 다음과 같은 명령어를 이용하여 설치합니다.
+
+
+
+```bash
+$ pip3 install matplotlib pillow scipy numpy tensorflow==1.11.0 jupter notebook
+```
+
+​    
+
+### 3. Test SSD Tensorflow Implementation
+
+jupyter notebook을 이용하여 설치한 SSD 구현체가 잘 작동하는지 확인합니다.
+
+
+
+```bash
+$ jupyter notebook ./notebooks 
+```
+
+
+
+![jupyter notebook list](https://user-images.githubusercontent.com/13328380/48117789-9d3c6280-e2ad-11e8-9c2a-1a009b58b240.png)
+
+다음과 같은 jupyter notebook에서 `ssd_notebook.ipynb`를 클릭합니다.
+
+클릭하면, 아래 그림과 같은 화면을 볼 수 있으며, 위의 `In [1]`의 오른쪽 박스를 클릭한 후, 차례차례 `shift + enter`키를 치면서 내려갑니다. 
+
+
+
+(`shift + enter`를 누를 때, `In [*]`로 변경되는데, 이는 python이 해당 code block을 실행시키고 있는 것이므로, 해당 `*`이 숫자로 변경되기 전까지는 기다렸다가 `shift+enter`치는 것이 좋습니다.)
+
+
+
+![Jupyter notebook display](https://user-images.githubusercontent.com/13328380/48117918-fa381880-e2ad-11e8-8dd6-295bace24405.png)
+
+
+
+이때, 마지막 코드 블록에서 다음과 같은 화면이 뜬다면, SSD Tensorflow Implementation을 성공적으로 설치한 것입니다.
+
+
+
+![final result](https://user-images.githubusercontent.com/13328380/48118124-a11cb480-e2ae-11e8-9f99-225b122a8107.png)
+
+​    
+
+## Wrapping SSD Prediction function
+
+이제 위에서 설치한 SSD Tensorflow Implementation 코드를 DCF 함수 컴포넌트에서 사용할 수 있도록 추론`prediction`코드만 랩핑해보도록 하겠습니다.
+
+
+
+`ssd`폴더 안에 다음과 같은 추론`prediction`코드인 `prediction.py`를 작성합니다.
+
+
 
 ```python
 import sys
 import os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
 import math
 import random
 
@@ -133,9 +299,9 @@ import cv2
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-from models.ssd.nets import ssd_vgg_300, ssd_common, np_methods
-from models.ssd.preprocessing import ssd_vgg_preprocessing
-from models.ssd.notebooks import visualization
+from nets import ssd_vgg_300, ssd_common, np_methods
+from preprocessing import ssd_vgg_preprocessing
+from notebooks import visualization
 
 def predict(image):
 
@@ -191,17 +357,20 @@ def predict(image):
         rbboxes = np_methods.bboxes_resize(rbbox_img, rbboxes)
         return rclasses, rscores, rbboxes
 
+    None_flag = False
     # Test on some demo image and visualize output.
-    #path = 'models/ssd/demo/'
-    #image_names = sorted(os.listdir(path))
-
-    #img = mpimg.imread(path + image_names[-5])
+    if image is None:
+        None_flag = True
+        path = 'models/ssd/demo/'
+        image_names = sorted(os.listdir(path))
+        image = mpimg.imread(path + image_names[-5])
 
 
     rclasses, rscores, rbboxes =  process_image(image)
 
-    # visualization.bboxes_draw_on_img(img, rclasses, rscores, rbboxes, visualization.colors_plasma)
-    #visualization.plt_bboxes(img, rclasses, rscores, rbboxes)
+    if None_flag:
+        visualization.bboxes_draw_on_img(image, rclasses, rscores, rbboxes, visualization.colors_plasma)
+        visualization.plt_bboxes(image, rclasses, rscores, rbboxes)
 
     height = image.shape[0]
     width = image.shape[1]
@@ -233,17 +402,136 @@ def predict(image):
     return obj
 
 if __name__ == "__main__":
-    print(predict())
+    print(predict(image=None))
 ```
+
+
+
+해당 코드를 작성한 후에, `ssd-image`폴더로 들어와서, python script를 실행하면 다음과 같은 결과를 얻을 수 있습니다.
+
+
+
+```bash
+$ python3 models/ssd/predict.py
+```
+
+
+
+![wrapping_result](https://user-images.githubusercontent.com/13328380/48118733-7f243180-e2b0-11e8-822b-23a325d78fa9.png)
+
+
 
 ​    
 
-### modify handler.py 
+## Dockerfile
 
-handler.py를 다음과 같이 수정해줍니다.
+이제 본격적으로 DCF 함수 컴포넌트를 생성하기 위한 셋팅을 진행하도록 하겠습니다.
+
+DCF 함수 컨테이너가 생성되면서 OpenCV를 설치할 수 있도록, Dockerfile을 다음과 같이 변경해줍니다.
+
+
+
+```dockerfile
+# Argruments from FROM
+ARG PYTHON_VERSION=3.4
+
+FROM python:${PYTHON_VERSION}
+
+ARG ADDITIONAL_PACKAGE
+RUN apt-get update && apt-get install -y  \
+    build-essential \
+    wget \
+    tar \
+        cmake \
+        git \
+        unzip \
+        yasm \
+        pkg-config \
+        libswscale-dev \
+        libtbb2 \
+        libtbb-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libtiff-dev \
+        libavformat-dev \
+        python3-dev \
+        python3-numpy \
+        python-numpy \
+        libgtk2.0-dev \
+    ${ADDITIONAL_PACKAGE} \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV OPENCV_VERSION="3.4.2"
+
+RUN pip3 install numpy
+RUN pip install numpy
+
+RUN wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip \
+&& unzip ${OPENCV_VERSION}.zip \
+&& mkdir /opencv-${OPENCV_VERSION}/cmake_binary \
+&& cd /opencv-${OPENCV_VERSION}/cmake_binary \
+&& cmake -DBUILD_TIFF=ON \
+  -DBUILD_opencv_java=OFF \
+  -DWITH_CUDA=OFF \
+  -DWITH_OPENGL=ON \
+  -DWITH_OPENCL=ON \
+  -DWITH_IPP=ON \
+  -DWITH_TBB=ON \
+  -DWITH_EIGEN=ON \
+  -DWITH_V4L=ON \
+  -DBUILD_TESTS=OFF \
+  -DBUILD_PERF_TESTS=OFF \
+  -DCMAKE_BUILD_TYPE=RELEASE \
+  -DCMAKE_INSTALL_PREFIX=$(python3.4 -c "import sys; print(sys.prefix)") \
+  -DPYTHON_EXECUTABLE=$(which python3.4) \
+  -DPYTHON_INCLUDE_DIR=$(python3.4 -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") \
+  -DPYTHON_PACKAGES_PATH=$(python3.4 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
+  .. \
+&& make install \
+&& rm /${OPENCV_VERSION}.zip \
+&& rm -r /opencv-${OPENCV_VERSION}
+
+ARG WATCHER_VERSION=0.1.0
+ARG handler_file=handler.py
+ARG handler_name=Handler
+
+ENV HANDLER_DIR=/dcf/handler
+ENV HANDLER_FILE=${HANDLER_DIR}/${handler_file}
+ENV HANDLER_NAME=${handler_name}
+
+# Get watcher
+RUN mkdir -p ${HANDLER_DIR}
+WORKDIR ${HANDLER_DIR}
+RUN wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v${WATCHER_VERSION}/watcher${WATCHER_VERSION}-python.tar
+RUN tar xvf watcher${WATCHER_VERSION}-python.tar
+RUN pip install -r requirements.txt
+
+# Copy handler
+COPY . .
+RUN touch ${HANDLER_DIR}/__init__.py
+RUN pip install -r requirements.txt
+
+HEALTHCHECK --interval=1s CMD [ -e /tmp/.lock ] || exit 1
+
+ENTRYPOINT ["python"]
+CMD ["server.py"]
+```
+
+
+
+​    
+
+## handler.py
+
+이제 base64 문자열을 입력으로하여 SSD 모델의 추론 결과를 JSON으로 돌려주는 DCF 함수 컴포넌트의 `handler.py`코드를 다음과 같이 작성해줍니다.
+
+
 
 ```python
 from __future__ import print_function
+import os
+import sys
+sys.path.append("./models/ssd/")
 import io
 import json
 import base64
@@ -255,7 +543,6 @@ from PIL import Image
 from models.ssd.predict import predict
 
 def Handler(req):
-
     base64Str = req.input
     imageData = base64.decodestring(base64Str)
     img = Image.open(io.BytesIO(imageData))
@@ -264,66 +551,61 @@ def Handler(req):
     img = np.array(img)
 
     result = predict(img)
-    result = json.dumps(result)
-    
+    result = json.dumps(result)  
     
     return result
 ```
 
 ​    
 
-### deploy function
+## requirements.txt
 
-다음과 같은 명령어로 작성이 완료된 함수 컴포넌트를 배포합니다.
+DCF 함수 컴포넌트에 설치되어야하는 python dependency package를 `requirements.txt`에 명시해줍니다.
 
-Dockerfile이 Image 2개를 사용하므로 배포하는데 시간이 걸릴 수 있습니다.
+
 
 ```bash
-dcf function create -f config.yaml -v
+numpy
+pillow
+matplotlib
+scipy
+tensorflow==1.11.0
 ```
+
 ​    
 
-### function status check    
+## Deploy
 
-배포가 완료되면, 배포된 함수의 상태를 확인합니다. 상태가 Ready가 되면, invoke or call 옵션을 이용하여 함수를 테스트합니다.
+이제 모든 준비가 끝났으므로, 다음과 같은 명령어를 이용하여 DCF CLI를 통해서 DCF 함수 컴포넌트를 생성해줍니다.
 
-```bash
-watch dcf fucntion list
-```
 
-### invoke function
-
-특정한 Image를 이용해 다음과 같이 함수를 호출합니다.
 
 ```bash
-cat 000001.jpg | base64 | ./dcf function call ssd-test
+$ sudo dcf function create -f config.yaml -v
 
 >>>
-[{"class": "12", "confidence": "0.9948125", "xmin": "49", "ymin": "233", "xmax": "49", "ymax": "233"}, {"class": "12", "confidence": "0.9948125", "xmin": "49", "ymin": "233", "xmax": "49", "ymax": "233"}]
+Building: ssd-image, Image:keti.asuscomm.com:5001/ssd-image
+Sending build context to Docker daemon    327MB
+Step 1/25 : ARG PYTHON_VERSION=3.4
+Step 2/25 : FROM python:${PYTHON_VERSION}
+.
+.
+.
 ```
 
 ​    
 
-### modification
+## Invoke DCF Function
 
-함수 수정을 원할 경우, 로컬에서 함수를 수정한 후, 다음과 같은 절차를 거쳐 재배포합니다.
+Deploy가 완료되었다면, 다음과 같은 명령어를 통해서 이미지를 ssd-image 함수에 입력으로 넣어서, 해당 이미지에 있는 객체의 `클래스`, `클래스의 확률`, `이미지에서의 객체 위치 좌표`를 반환받을 수 있습니다.
 
-1. 함수를 delete한다.
+
+
 ```bash
-dcf function delete <function name>
+$ cat ssd-image/models/ssd/demo/00001.jpg | base64 | ./dcf function call ssd-image
 
-# 삭제한 함수가 없어지는 것을 확인
-watch dcf function list
+>>>
+[{'class': '12', 'confidence': '0.95606905', 'xmin': '135', 'ymin': '221', 'xmax': '135', 'ymax': '221'}, {'class': '12', 'confidence': '0.95606905', 'xmin': '135', 'ymin': '221', 'xmax': '135', 'ymax': '221'}, {'class': '12', 'confidence': '0.95606905', 'xmin': '135', 'ymin': '221', 'xmax': '135', 'ymax': '221'}]
 ```
 
-2. 함수를 재생성한다.
-```bash
-dcf function create -f config.yaml -v 
-```
-
-OR
-(수정 시)
-```bash
-dcf function create -f config.yaml -v --update
-```
-
+​    
