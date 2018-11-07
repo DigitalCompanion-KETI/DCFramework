@@ -19,18 +19,25 @@
 
 
 ```bash
-dcf:
-  gateway: keti.asuscomm.com:32222    
 functions:
-  echo-service:
-    runtime: python3
-    desc: "This is echo service."
+  hello-dcf:
+    runtime: python
+    desc: "This is Hello dcf."
     maintainer: "KETI"
     handler:
-      dir: ./echo-service
+      dir: ./hello-dcf
       file: handler.py
       name: Handler
-    image: keti.asuscomm.com:5001/echo-service
+    image: keti.asuscomm.com:5001/hello-dcf
+    build_args:
+    - PYTHON_VERSION=3.4
+    build_packages:
+      - make
+      - python3-pip
+      - gcc
+      - python-numpy
+dcf:
+  gateway: keti.asuscomm.com:32222
 ```
 ​    
 
