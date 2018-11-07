@@ -181,47 +181,7 @@ requirements.txt / Gopkg.toml
 
 config.yaml 
 
-- 사용자가 지능 컴포넌트를 정의하고자 할 때 규격이 되는 파일이며 여러 개의 지능 컴포넌트를 정의할 수 있습니다. 
-
-  ```bash
-  >> config.yaml
-    
-  functions:
-    hello-dcf:
-      runtime: python
-      desc: "This is Hello dcf."
-      maintainer: "KETI"
-      handler:
-        dir: ./hello-dcf
-        file: handler.py
-        name: Handler
-      image: keti.asuscomm.com:5001/hello-dcf
-      build_args:
-      - PYTHON_VERSION=3.4
-      build_packages:
-        - make
-        - python3-pip
-        - gcc
-        - python-numpy
-  dcf:
-    gateway: keti.asuscomm.com:32222
-  ```
-
-- 설정 파일의 규격은 다음과 같습니다.
-
-    | Field  | Description | Example |
-    |------------- |-------------|-------------|
-    | hello-dcf | 지능 컴포넌트의 이름| hello-dcf|
-    |runtime|지능 컴포넌트가 실행될 환경|python3|
-    |image|지능 컴포넌트 이미지 이름과 버전<br>(레포지토리인 keti.ausscomm.com:5001은 고정)|keti.asuscomm.com:5001/hello-dcf:v1|
-    |handler|지능 컴포넌트 배포시에 실행되는 엔트리포인트 정보|handler:<br>&nbsp; name: Handler<br>&nbsp; dir: ./hello-dcf<br>&nbsp; file: "handler.py"|
-    |maintainer|(optional)지능 컴포넌트 개발자 또는 유지보수 가능한 사람의 정보|KETI|
-    |desc|(optional)지능 컴포넌트 용도/설명|This is ....|
-    |environment|(optional)런타임 내에서 사용할 환경 변수|environment:<br>&nbsp; - "PATH=/usr/local/bin"|
-    |skip_build|(optional)지능 컴포넌트 빌드 및 레포지토리에 저장 단계 건너뛰기| skip_build: true|
-    |limits|(optional)지능 컴포넌트가 사용할 자원 요청 및 제한| limits:<br>&nbsp; cpu: "1"<br>&nbsp; gpu: "1"<br>&nbsp; memory: "1G"|
-    |build_args|Dockerfile내의 ARG 값으로 지정|build_args:<br>&nbsp; - "PYTHON_VERSION=3.4"|
-    |build_packages|Dockerfile내의 apt 패키지 관리자인 ADDITIONAL_PACKAGE 값으로 설정|build_packages:<br>&nbsp; -make<br>&nbsp; -python3-pip<br>&nbsp; -gcc<br>&nbsp; -python-numpy|
+- config.yaml 관련 가이드는 다음 [링크](AboutConfig_yaml.md)에서 확인해주시기 바랍니다. 
 
 > Note
 
