@@ -244,6 +244,9 @@ Function       	Image               	Maintainer     	Invocations	    Replicas   
 > Note 
 
 
+![Pipelining concept](https://commons.wikimedia.org/wiki/File:Stdstreams-notitle.svg.png)
+
+
 
 파이프라이닝이란, 명령어의 표준 출력을 프로그램의 입력으로 전환하는 기능을 뜻합니다. 
 
