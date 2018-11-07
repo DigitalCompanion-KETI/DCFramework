@@ -123,11 +123,11 @@ ex> dcf function init --runtime go hello-dcf
 
 > Note
 
-Dockerfile 
+`Dockerfile`
 
 - 해당 함수의 Docker 컨테이너를 정의합니다.
 
-handler.py / handler.go
+`handler.py / handler.go`
 
 - DCF로 들어오는 요청을 처리해주는 스크립트입니다. 입력되는 요청을 실제로 처리해주는 함수를 정의할 수 있습니다. 
 
@@ -154,7 +154,7 @@ handler.py / handler.go
   }
   ```
 
-requirements.txt / Gopkg.toml
+`requirements.txt / Gopkg.toml`
 
 - 해당 함수의 package dependency를 명시하는 파일입니다. 이는 Runtime에 따라서 종속 패키지를 설치하기 위함이며, 
 
@@ -179,7 +179,7 @@ requirements.txt / Gopkg.toml
   name = "github.com/user/project"
   ```
 
-config.yaml 
+`config.yaml`
 
 - config.yaml 관련 가이드는 다음 [링크](AboutConfig_yaml.md)에서 확인해주시기 바랍니다. 
 
