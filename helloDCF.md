@@ -239,22 +239,54 @@ Function       	Image               	Maintainer     	Invocations	    Replicas   
 
 다음과 같은 명령어를 이용하여 DCF의 컴포넌트를 직접 호출하거나 파이프라이닝을 통해 입력 값을 
 
-전달하여 호출할 수 있습니다.
+전달하여 호출할 수 있습니다. 
+
+
+![pipelining](https://user-images.githubusercontent.com/43867862/48113015-542fe280-e29c-11e8-8bcb-0dca7a993693.png)
 
 > Note 
 
+파이프라이닝이란, 그림과 같이 키보드에서 입력한 특정 표준 입력을 프로세스에 전달해 표준 출력으로 
 
+반환하는 기능을 뜻합니다. 즉, 두 개 이상의 명령을 함께 묶어 출력의 결과를 다른 프로그램의 
 
-파이프라이닝이란, 명령어의 표준 출력을 프로그램의 입력으로 전환하는 기능을 뜻합니다. 
+입력으로 전환하는 기능입니다. 명령어와 프로그램의 연결은 '|' 기호를 사용합니다. 
 
-명령어와 프로그램의 연결은 '|' 기호를 사용합니다. 
+ 
+ 
+- `DCF 컴포넌트를 직접 호출하는 경우`
+  
+  ```bash
+  $ dcf function call hello-dcf
+  ```
 
-```bash
-$ dcf function call hello-dcf 
-$ echo "Hello, DCF!" | dcf function call hello-dcf 
+  다음과 같이 컴포넌트를 호출하게 되면, 
+  
+  ```bash
+  Reading from STDIN - hit (Control + D) to stop.
+  ```
+  
+  위와 같은 화면이 나타나게 되고, 표준 입력으로 넣고자 하는 `Hello, DCF!` 를 입력한 후, 
+  
+  Enter를 치고 Ctrl + D 를 누르게 되면 출력 값이 나타납니다.
+  
+  ```bash
+  Reading from STDIN - hit (Control + D) to stop.
+  Hello, DCF!
+  >> Ctrl + d
+  Hello, DCF!
+  ```
+  
+- `DCF 컴포넌트를 파이프라이닝을 통해 호출하는 경우`
 
-Hello, DCF
-```
+  echo "Hello, DCF!" 를 통한 출력의 결과를 '|' 기호와 함께 
+  
+  `hello-dcf` 컴포넌트의 입력으로 전환하여 컴포넌트를 호출합니다.  
+
+  ```bash
+  $ echo "Hello, DCF!" | dcf function call hello-dcf
+  Hello, DCF!
+  ```
 
 ​    
 
