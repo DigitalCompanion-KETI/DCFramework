@@ -57,3 +57,4 @@ dcf:
 | build_args  | (optional)Dockerfile내에 ARG 값 지정                         | build_args:<br>&nbsp; - "PYTHON_VERSION=3.7"                 |
 | build_packages  | Dockerfile내의 apt 패키지 관리자인 ADDITIONAL_PACKAGE 값으로 설정  | build_packages:<br>&nbsp; -make<br>&nbsp; -python3-pip<br>&nbsp; -gcc<br>&nbsp; -python-numpy                                                            |
 
+- build_package 필드에 패키지를 명시하면 이를 통해 패키지를 설치할 수 있습니다
