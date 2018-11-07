@@ -268,7 +268,7 @@ Function       	Image               	Maintainer     	Invocations	    Replicas   
   
   위와 같은 화면이 나타나게 되고, 표준 입력으로 넣고자 하는 `Hello, DCF!` 를 입력한 후, 
   
-  Ctrl + D 를 누르게 되면 출력 값이 나타납니다.
+  Enter를 치고 Ctrl + D 를 누르게 되면 출력 값이 나타납니다.
   
   ```bash
   Reading from STDIN - hit (Control + D) to stop.
