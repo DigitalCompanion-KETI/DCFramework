@@ -45,26 +45,32 @@ Hello, DCF
 
 
 
+함수 호출은 다음과 같은 방법으로 호출합니다.
+
+
+
+```bash
+cat 000001.jpg | base64 | ./dcf function call ssd-test
+
+>>> 
+[{"class": "12", "confidence": "0.9948125", "xmin": "49", "ymin": "233", "xmax": "49", "ymax": "233"}, {"class": "12", "confidence": "0.9948125", "xmin": "49", "ymin": "233", "xmax": "49", "ymax": "233"}]
+```
+
+​    
+
 ## 3. 음성파일 (*.wav, etc...)
 
-음성 데이터를 입력으로 하는 예제는 다음과 같은 논리 흐름을 따릅니다.
+음성파일을 다루는 방법을 `send-wav`함수를 생성하는 튜토리얼로 설명드리도록 하겠습니다.
 
+`send-wav` 함수는 다음과 같은 방법으로 음성파일을 전달하고, 해당 음성파일이 잘 갔는지 리턴값을 보고 확인합니다.
 
-
-1. *,wav파일을 전송
-2. 함수 코드 실행
-3. 리턴
-
-
-
-음성파일을 다루는 방법을 `send-wav`튜토리얼로 설명드리도록 하겠습니다.
-
-`send-wav` 함수는 다음과 같은 방법으로 음성파일이 잘 갔는지 확인합니다.
+음성파일은 [다음 링크](https://www.loc.gov/collections/edison-company-motion-pictures-and-sound-recordings/?q=edrs%2057007r)에서 다운로드 받을 수 있습니다.
 
 
 
 - Local device에서 음성데이터의 STFT 결과를 확인
 - STFT Image를 반환하는 함수를 만든 후, 결과를 확인
+- Local device와 함수 호출 결과의 이미지 결과값이 같은지 확인
 
 
 
@@ -81,7 +87,7 @@ Hello, DCF
 
 ### requirements.txt
 
-`requirements.txt`파일은 다음과 같이 작성합니다.
+`requirements.txt`파일은 다음과 같습니다.
 
 
 
@@ -98,6 +104,8 @@ pillow
 
 함수 스크립트는 다음과 같습니다.
 
+해당 함수 스크립트는 [해당 링크](http://www.frank-zalkow.de/en/code-snippets/create-audio-spectrograms-with-python.html?i=1)를 참고헀습니다.
+
 
 
 ```python
@@ -110,6 +118,7 @@ import numpy as np
 import matplotlib as m
 from PIL import Image
 
+# 함수에서는 디스플레이가 불가능하니, 디스플레이 옵션을 사용하지 않게 변경해줍니다.
 if os.environ.get('DISPLAY','') == '':
     print('no display found. Using non-interactive Agg backend')
     m.use('Agg')
@@ -165,6 +174,7 @@ def logscale_spec(spec, sr=44100, factor=20.):
 
 """ plot spectrogram"""
 def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
+    # 받은 audio raw bytes파일을 wav.read함수를 이용하여 load
     samplerate, samples = wav.read(io.BytesIO(audiopath))
 
     s = stft(samples, binsize)
@@ -193,13 +203,19 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
 
 
 def Handler(req):
+    # 입력값을 받아, 그대로 plotstft 함수로 전달
     rawwav = req.input
     image = plotstft(rawwav)
     
+    # numpy image를 PIL.Image객체로 변환
     im = Image.fromarray(image.astype("uint8"))
     rawBytes = io.BytesIO()
+    
+    # PIL Image를 PNG 포맷으로 변환
     im.save(rawBytes, "PNG")
     rawBytes.seek(0)  # return to the start of the file
+    
+    # PNG포맷으로 변환된 이미지를 base64 문자열로 인코딩
     base64Str = base64.b64encode(rawBytes.read()).decode("utf-8")
 
 
@@ -295,12 +311,15 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
 
     return image
 
+# 음성파일의 위치를 입력값으로 plotstft 함수 호출
 image = plotstft("57007r.wav")
 
+# STFT 결과 이미지 확인
 plt.figure()
 plt.imshow(image)
 plt.show()
 
+# 해당 이미지를 base64 문자열로 인코딩 후, 결과 확인
 im = Image.fromarray(image.astype("uint8"))
 rawBytes = io.BytesIO()
 im.save(rawBytes, "PNG")
@@ -311,11 +330,31 @@ print(base64.b64encode(rawBytes.read()).decode("utf-8"))
 
 
 
+### test.py 결과 확인
+
+다음과 같은 명령어로 test.py파일을 실행해볼 수 있습니다.
+
+
+
+```bash
+python3 test.py
+```
+
+
+
+**결과**
+
+![result.jpg](https://user-images.githubusercontent.com/13328380/48113924-42503e80-e2a0-11e8-9681-6cd87bd61f4f.jpg)
+
+
+
 ### config.yaml
 
 `send-wav`함수의 `config.yaml` 구성입니다.
 
 
+
+`libfreetype6-dev`, `libpng12-dev` package가 필요하므로, `build_packages`에 명시해줍니다.
 
 ```bash
   send-wav:
@@ -334,22 +373,55 @@ print(base64.b64encode(rawBytes.read()).decode("utf-8"))
 
 
 
+### 함수 호출
+
+다음과 같이 셋팅을 완료하고 함수를 배포했다면, 다음과 같이 음성파일을 전달하여 결과값을 확인할 수 있습니다.
+
+
+
+```bash
+$ cat 57007r.wav | ./dcf function call send-wav
+
+>>
+iVBORw ... Jggg==
+```
+
+
+
+### 결과 확인
+
+결과값으로 온 문자열 값을 모두 복사해서 [다음 사이트](https://codebeautify.org/base64-to-image-converter)에서 base64 문자열을 이미지로 복원해서 확인할 수 있습니다.
+
+
+
+**결과**
+
+![function result.jpg](https://user-images.githubusercontent.com/13328380/48114112-171a1f00-e2a1-11e8-9347-fd31f7324577.png)_
+
+
+
+
+
 ## 동영상 파일 (*.avi, *.mp4, etc)
 
 동영상 파일을 전송해 분석하는 `ssd-video`함수를 생성하는 예제입니다.
 
 `ssd-video`함수는 [3. SSD(Object Detection) Component](SSD(Object_Detection)_Component_Tutorial.md) 예제 기반으로 만들어져있습니다.
 
+따라서 해당 예제에서는 SSD 모델을 설정하는 방법은 생략하며, 변경된 `Dockerfile`과 `Handler.py`에 대해서만 설명하겠습니다.
+
 
 
 `ssd-video`함수는 다음과 같은 논리흐름을 따릅니다.
 
-
-
 1. 비디오 파일을 전송
-2. 비디오 파일로부터 매 프레임을 받아서 SSD모델을 이용해 프레임에 대한 추론
+2. 비디오 파일로부터 10번째 프레임까지만 받아서 SSD모델을 이용해 프레임에 대한 추론
 3. 추론된 결과를 json 파일로 통합
 4. 통합된 json 결과를 리턴
+
+
+
+동영상 파일은 [다음 링크](https://videos.pexels.com/videos/view-of-the-lake-and-mountains-from-a-park-1466209)에서 다운받을 수 있습니다.
 
 
 
@@ -502,5 +574,22 @@ def Handler(req):
     
     return result
 
+```
+
+
+
+### 함수 호출
+
+
+
+`ssd-video`함수에 대해서 셋팅 및 배포를 완료하였다면, 다음과 같은 명령어로 함수를 호출할 수 있습니다.
+
+
+
+```bash
+$ cat Pexels\ Videos\ 1466209.mp4 | ./dcf function call ssd-video
+
+>>
+{"8": [{"confidence": "0.6046466", "xmax": "718", "ymax": "379", "ymin": "379", "xmin": "718", "class": "15"}, {"confidence": "0.6046466", "xmax": "718", "ymax": "379", "ymin": "379", "xmin": "718", "class": "15"}, {"confidence": "0.6046466", "xmax": "718", "ymax": "379", "ymin": "379", "xmin": "718", "class": "15"}, {"confidence": "0.6046466", "xmax": "718", "ymax": "379", "ymin": "379", "xmin": "718", "class": "15"}], "4": [{"confidence": "0.6336566", "xmax": "722", "ymax": "383", "ymin": "383", "xmin": "722", "class": "15"}, {"confidence": "0.6336566", "xmax": "722", "ymax": "383", "ymin": "383", "xmin": "722", "class": "15"}, {"confidence": "0.6336566", "xmax": "722", "ymax": "383", "ymin": "383", "xmin": "722", "class": "15"}], "10": [{"confidence": "0.7154824", "xmax": "527", "ymax": "368", "ymin": "368", "xmin": "527", "class": "15"}, {"confidence": "0.7154824", "xmax": "527", "ymax": "368", "ymin": "368", "xmin": "527", "class": "15"}, {"confidence": "0.7154824", "xmax": "527", "ymax": "368", "ymin": "368", "xmin": "527", "class": "15"}], "1": [{"confidence": "0.88071", "xmax": "726", "ymax": "385", "ymin": "385", "xmin": "726", "class": "15"}, {"confidence": "0.88071", "xmax": "726", "ymax": "385", "ymin": "385", "xmin": "726", "class": "15"}, {"confidence": "0.88071", "xmax": "726", "ymax": "385", "ymin": "385", "xmin": "726", "class": "15"}], "7": [{"confidence": "0.6155173", "xmax": "513", "ymax": "335", "ymin": "335", "xmin": "513", "class": "15"}, {"confidence": "0.6155173", "xmax": "513", "ymax": "335", "ymin": "335", "xmin": "513", "class": "15"}, {"confidence": "0.6155173", "xmax": "513", "ymax": "335", "ymin": "335", "xmin": "513", "class": "15"}], "9": [{"confidence": "0.5337455", "xmax": "707", "ymax": "361", "ymin": "361", "xmin": "707", "class": "15"}, {"confidence": "0.5337455", "xmax": "707", "ymax": "361", "ymin": "361", "xmin": "707", "class": "15"}, {"confidence": "0.5337455", "xmax": "707", "ymax": "361", "ymin": "361", "xmin": "707", "class": "15"}, {"confidence": "0.5337455", "xmax": "707", "ymax": "361", "ymin": "361", "xmin": "707", "class": "15"}], "2": [{"confidence": "0.8497871", "xmax": "726", "ymax": "384", "ymin": "384", "xmin": "726", "class": "15"}, {"confidence": "0.8497871", "xmax": "726", "ymax": "384", "ymin": "384", "xmin": "726", "class": "15"}, {"confidence": "0.8497871", "xmax": "726", "ymax": "384", "ymin": "384", "xmin": "726", "class": "15"}], "6": [{"confidence": "0.60376704", "xmax": "719", "ymax": "392", "ymin": "392", "xmin": "719", "class": "15"}, {"confidence": "0.60376704", "xmax": "719", "ymax": "392", "ymin": "392", "xmin": "719", "class": "15"}, {"confidence": "0.60376704", "xmax": "719", "ymax": "392", "ymin": "392", "xmin": "719", "class": "15"}], "3": [{"confidence": "0.73087525", "xmax": "524", "ymax": "519", "ymin": "519", "xmin": "524", "class": "2"}, {"confidence": "0.73087525", "xmax": "524", "ymax": "519", "ymin": "519", "xmin": "524", "class": "2"}, {"confidence": "0.73087525", "xmax": "524", "ymax": "519", "ymin": "519", "xmin": "524", "class": "2"}], "5": [{"confidence": "0.75017697", "xmax": "723", "ymax": "388", "ymin": "388", "xmin": "723", "class": "15"}, {"confidence": "0.75017697", "xmax": "723", "ymax": "388", "ymin": "388", "xmin": "723", "class": "15"}, {"confidence": "0.75017697", "xmax": "723", "ymax": "388", "ymin": "388", "xmin": "723", "class": "15"}]}
 ```
 
