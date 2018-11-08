@@ -68,8 +68,8 @@ cat 000001.jpg | base64 | dcf function call ssd-test
 
 > Note
 
-`STFT(Short Time Fourier Transform)`란 시간의 경과에 따라 변하는 로컬 영역 신호의 정현파 주파수 및 위상 내용을
-결정하는데 사용되는 푸리에 변환입니다. 
+> `STFT(Short Time Fourier Transform)`란 시간의 경과에 따라 변하는 로컬 영역 신호의 정현파 주파수 및 위상 내용을
+> 결정하는데 사용되는 푸리에 변환입니다. 
 
 
 `send-wav` 함수는 다음과 같은 논리 흐름을 따릅니다.
