@@ -417,7 +417,7 @@ if __name__ == "__main__":
 
 ```bash
 $ cd ../../
-$ python3 models/ssd/predict.py
+$ python3 models/ssd/prediction.py
 ```
 
 
