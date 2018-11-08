@@ -432,6 +432,9 @@ base64 문자열을 이미지로 복원해서 확인할 수 있습니다.
 `ssd-video`함수는 [3. SSD(Object Detection) Component](SSD(Object_Detection)_Component_Tutorial.md) 예제 기반으로 만들어져있습니다.
 따라서 해당 예제에서는 SSD 모델을 설정하는 방법은 동일하며, 변경된 `Dockerfile`과 `Handler.py`에 대해서만 설명하겠습니다.
 
+`ssd-video` 폴더의 계층은 다음과 같습니다. 
+models 디렉토리 설정은 [3. SSD(Object Detection) Component](SSD(Object_Detection)_Component_Tutorial.md) 예제와 동일합니다. 
+
 ```bash
 ssd-video
 ├── Dockerfile
@@ -442,15 +445,11 @@ ssd-video
 ```
 
 
-
 `ssd-video`함수는 다음과 같은 논리흐름을 따릅니다.
 
 1. 비디오 파일을 전송
-
 2. 비디오 파일로부터 10번째 프레임까지만 받아서 SSD모델을 이용해 프레임에 대한 추론
-
 3. 추론된 결과를 json 파일로 통합
-
 4. 통합된 json 결과를 리턴
 
 
@@ -607,7 +606,6 @@ def Handler(req):
         os.remove("video.mp4")
     
     return result
-
 ```
 
 
@@ -621,7 +619,7 @@ def Handler(req):
 
 
 ```bash
-$ cat Pexels\ Videos\ 1466209.mp4 | ./dcf function call ssd-video
+$ cat Pexels\ Videos\ 1466209.mp4 | dcf function call ssd-video
 
 >>
 {"8": [{"confidence": "0.6046466", "xmax": "718", "ymax": "379", "ymin": "379", "xmin": "718", "class": "15"}, {"confidence": "0.6046466", "xmax": "718", "ymax": "379", "ymin": "379", "xmin": "718", "class": "15"}, {"confidence": "0.6046466", "xmax": "718", "ymax": "379", "ymin": "379", "xmin": "718", "class": "15"}, {"confidence": "0.6046466", "xmax": "718", "ymax": "379", "ymin": "379", "xmin": "718", "class": "15"}], "4": [{"confidence": "0.6336566", "xmax": "722", "ymax": "383", "ymin": "383", "xmin": "722", "class": "15"}, {"confidence": "0.6336566", "xmax": "722", "ymax": "383", "ymin": "383", "xmin": "722", "class": "15"}, {"confidence": "0.6336566", "xmax": "722", "ymax": "383", "ymin": "383", "xmin": "722", "class": "15"}], "10": [{"confidence": "0.7154824", "xmax": "527", "ymax": "368", "ymin": "368", "xmin": "527", "class": "15"}, {"confidence": "0.7154824", "xmax": "527", "ymax": "368", "ymin": "368", "xmin": "527", "class": "15"}, {"confidence": "0.7154824", "xmax": "527", "ymax": "368", "ymin": "368", "xmin": "527", "class": "15"}], "1": [{"confidence": "0.88071", "xmax": "726", "ymax": "385", "ymin": "385", "xmin": "726", "class": "15"}, {"confidence": "0.88071", "xmax": "726", "ymax": "385", "ymin": "385", "xmin": "726", "class": "15"}, {"confidence": "0.88071", "xmax": "726", "ymax": "385", "ymin": "385", "xmin": "726", "class": "15"}], "7": [{"confidence": "0.6155173", "xmax": "513", "ymax": "335", "ymin": "335", "xmin": "513", "class": "15"}, {"confidence": "0.6155173", "xmax": "513", "ymax": "335", "ymin": "335", "xmin": "513", "class": "15"}, {"confidence": "0.6155173", "xmax": "513", "ymax": "335", "ymin": "335", "xmin": "513", "class": "15"}], "9": [{"confidence": "0.5337455", "xmax": "707", "ymax": "361", "ymin": "361", "xmin": "707", "class": "15"}, {"confidence": "0.5337455", "xmax": "707", "ymax": "361", "ymin": "361", "xmin": "707", "class": "15"}, {"confidence": "0.5337455", "xmax": "707", "ymax": "361", "ymin": "361", "xmin": "707", "class": "15"}, {"confidence": "0.5337455", "xmax": "707", "ymax": "361", "ymin": "361", "xmin": "707", "class": "15"}], "2": [{"confidence": "0.8497871", "xmax": "726", "ymax": "384", "ymin": "384", "xmin": "726", "class": "15"}, {"confidence": "0.8497871", "xmax": "726", "ymax": "384", "ymin": "384", "xmin": "726", "class": "15"}, {"confidence": "0.8497871", "xmax": "726", "ymax": "384", "ymin": "384", "xmin": "726", "class": "15"}], "6": [{"confidence": "0.60376704", "xmax": "719", "ymax": "392", "ymin": "392", "xmin": "719", "class": "15"}, {"confidence": "0.60376704", "xmax": "719", "ymax": "392", "ymin": "392", "xmin": "719", "class": "15"}, {"confidence": "0.60376704", "xmax": "719", "ymax": "392", "ymin": "392", "xmin": "719", "class": "15"}], "3": [{"confidence": "0.73087525", "xmax": "524", "ymax": "519", "ymin": "519", "xmin": "524", "class": "2"}, {"confidence": "0.73087525", "xmax": "524", "ymax": "519", "ymin": "519", "xmin": "524", "class": "2"}, {"confidence": "0.73087525", "xmax": "524", "ymax": "519", "ymin": "519", "xmin": "524", "class": "2"}], "5": [{"confidence": "0.75017697", "xmax": "723", "ymax": "388", "ymin": "388", "xmin": "723", "class": "15"}, {"confidence": "0.75017697", "xmax": "723", "ymax": "388", "ymin": "388", "xmin": "723", "class": "15"}, {"confidence": "0.75017697", "xmax": "723", "ymax": "388", "ymin": "388", "xmin": "723", "class": "15"}]}
