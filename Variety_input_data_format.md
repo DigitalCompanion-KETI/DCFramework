@@ -60,11 +60,11 @@ cat 000001.jpg | base64 | dcf function call ssd-test
 
 ## 3. 음성파일 (*.wav, etc...)
 
-음성파일을 다루는 방법 `send-wav`함수를 생성하는 튜토리얼로 설명드리도록 하겠습니다.
+음성파일을 다루는 방법은 `send-wav`함수를 생성하는 튜토리얼로 설명드리도록 하겠습니다.
 
 `send-wav` 함수는 다음과 같은 방법으로 음성파일을 전달하고, 해당 음성파일이 잘 갔는지 리턴값을 보고 확인합니다.
 
-음성파일은 [다음 링크](https://www.loc.gov/collections/edison-company-motion-pictures-and-sound-recordings/?q=edrs%2057007r)에서 다운로드 받을 수 있습니다.
+음성파일은 [다음 링크](https://www.loc.gov/item/00694083/)에서 다운로드 받을 수 있습니다.
 
 
 
@@ -72,6 +72,11 @@ cat 000001.jpg | base64 | dcf function call ssd-test
 - STFT Image를 반환하는 함수를 만든 후, 결과를 확인
 - Local device와 함수 호출 결과의 이미지 결과값이 같은지 확인
 
+
+> Note
+
+`STFT(Short Time Fourier Transform)`이란 시간의 경과에 따라 변하는 로컬 영역 신호의 정현파 주파수 및 위상 내용을 
+결정하는데 사용되는 푸리에 변환입니다. 
 
 
 `send-wav` 함수는 다음과 같은 논리 흐름을 따릅니다.
@@ -87,7 +92,8 @@ cat 000001.jpg | base64 | dcf function call ssd-test
 
 ### requirements.txt
 
-`requirements.txt`파일은 다음과 같습니다.
+DCF에 음성파일을 전달하고 문자열을 리턴받기 까지의 과정을 수행하기 위해 
+우선 `requirements.txt`파일에 다음과 같이 설치가 요구되는 패키지를 작성합니다. 
 
 
 
@@ -102,9 +108,9 @@ pillow
 
 ### handler.py
 
-함수 스크립트는 다음과 같습니다.
+음성파일을 통해 문자열을 리턴하기 까지의 동작이 실행되는 함수 스크립트는 다음과 같습니다.
 
-해당 함수 스크립트는 [해당 링크](http://www.frank-zalkow.de/en/code-snippets/create-audio-spectrograms-with-python.html?i=1)를 참고습니다.
+해당 함수 스크립트는 [해당 링크](http://www.frank-zalkow.de/en/code-snippets/create-audio-spectrograms-with-python.html?i=1)를 참고하였습니다.
 
 
 
@@ -222,17 +228,39 @@ def Handler(req):
     return base64Str
 ```
 
+> Note
 
+```python
+import matplotlib as m
+
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    m.use('Agg')
+```
+
+위와 같이 `matplotlib` 패키지를 import 하지 않고 조건문을 작성하지 않으면 다음과 같은 에러가 발생합니다. 
+이는 함수에서는 디스플레이가 불가능하기 때문에 발생하는 에러이기 때문에, 
+디스플레이 옵션을 사용하지 않게 변경을 해야 음성파일을 통한 문자열을 리턴받을 수 있습니다.
+
+```bash
+>> Error
+
+_tkinter.TclError: couldn't connect to display "localhost:10.0"
+```
 
 ### test.py 
 
 로컬 디바이스에서 음성데이터를 확인할 수 있는 파이썬 스크립트 함수입니다.
+이는 `handler.py` 스크립트의 결과를 로컬 디바이스에서 확인해보기 위함입니다. 
+다음의 스크립트를 원하는 디렉토리에 생성한 후, 로컬 디바이스에서 실행합니다. 
 
 
 
 ```python
 import io
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import scipy.io.wavfile as wav
 from numpy.lib import stride_tricks
@@ -354,11 +382,12 @@ python3 test.py
 
 
 
-`libfreetype6-dev`, `libpng12-dev` package가 필요하므로, `build_packages`에 명시해줍니다.
+`libfreetype6-dev`, `libpng-dev` package가 필요하므로, `build_packages`에 명시해줍니다.
 
 ```bash
+functions
   send-wav:
-    runtime: python3
+    runtime: python
     desc: ""
     maintainer: ""
     handler:
@@ -366,9 +395,11 @@ python3 test.py
       file: handler.py
       name: Handler
     image: keti.asuscomm.com:5001/send-wav
+    build_args:
+    - PYTHON_VERSION=3.4
     build_packages:
     - libfreetype6-dev
-    - libpng12-dev
+    - libpng-dev
 ```
 
 
@@ -380,7 +411,7 @@ python3 test.py
 
 
 ```bash
-$ cat 57007r.wav | ./dcf function call send-wav
+$ cat 57007r.wav | dcf function call send-wav
 
 >>
 iVBORw ... Jggg==
