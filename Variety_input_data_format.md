@@ -554,12 +554,15 @@ CMD ["server.py"]
 
 ```python
 from __future__ import print_function
+import os
+import sys
+sys.path.append("./models/ssd")
 import io
 import json
 import numpy as np
 import tensorflow as tf
 import PIL
-import os
+
 
 import cv2
 
