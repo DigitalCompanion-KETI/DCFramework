@@ -429,10 +429,17 @@ base64 문자열을 이미지로 복원해서 확인할 수 있습니다.
 ## 동영상 파일 (*.avi, *.mp4, etc)
 
 동영상 파일을 전송해 분석하는 `ssd-video`함수를 생성하는 예제입니다.
-
 `ssd-video`함수는 [3. SSD(Object Detection) Component](SSD(Object_Detection)_Component_Tutorial.md) 예제 기반으로 만들어져있습니다.
+따라서 해당 예제에서는 SSD 모델을 설정하는 방법은 동일하며, 변경된 `Dockerfile`과 `Handler.py`에 대해서만 설명하겠습니다.
 
-따라서 해당 예제에서는 SSD 모델을 설정하는 방법은 생략하며, 변경된 `Dockerfile`과 `Handler.py`에 대해서만 설명하겠습니다.
+```bash
+ssd-video
+├── Dockerfile
+├── handler.py
+├── models
+│   └── ssd
+└── requirements.txt
+```
 
 
 
