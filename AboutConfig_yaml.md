@@ -54,7 +54,7 @@ dcf:
 | environment | (optional)런타임 내에서 사용할 환경 변수                     | environment:<br>&nbsp; - "PATH=/usr/local/bin"               |
 | skip_build  | (optional)지능 컴포넌트 빌드 및 레포지토리에 저장 단계 건너뛰기 | skip_build: true                                             |
 | limits      | (optional)지능 컴포넌트가 사용할 자원 요청 및 제한           | limits:<br>&nbsp; cpu: "1"<br>&nbsp; gpu: "1"<br>&nbsp; memory: "1G" |
-| build_args  | (optional)Dockerfile내에 ARG 값 지정                         | build_args:<br>&nbsp; - "PYTHON_VERSION=3.7"                 |
-| build_packages  | Dockerfile내의 apt 패키지 관리자인 ADDITIONAL_PACKAGE 값으로 설정  | build_packages:<br>&nbsp; -make<br>&nbsp; -python3-pip<br>&nbsp; -gcc<br>&nbsp; -python-numpy                                                            |
+| build_args  | Dockerfile내에 ARG 값 지정                         | build_args:<br>&nbsp; - "PYTHON_VERSION=3.7"                 |
+| build_packages  | Dockerfile내의 apt 패키지 관리자인 ADDITIONAL_PACKAGE 값으로 설정 (이 필드를 통해 원하는 패키지를 설치할 수 있습니다.)  | build_packages:<br>&nbsp; -make<br>&nbsp; -python3-pip<br>&nbsp; -gcc<br>&nbsp; -python-numpy                                                            |
 
-- build_package 필드에 패키지를 명시하면 이를 통해 패키지를 설치할 수 있습니다
+
