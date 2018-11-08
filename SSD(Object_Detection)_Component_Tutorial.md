@@ -146,7 +146,7 @@ Archive:  ssd_300_vgg.ckpt.zip
 
 python dependency package를 설치하기 이전에 먼저 opencv를 빌드합니다.
 
-(만약 이미 Opencv가 Python3에서 사용할 수 있도록 빌드하였다면, 해당 내용은 생략해됴 됩니다.)
+(만약 이미 Opencv가 Python3에서 사용할 수 있도록 빌드하였다면, 해당 내용은 생략해도 됩니다.)
 
 
 
@@ -233,7 +233,7 @@ SSD Implementation 코드를 실행할 수 있도록 python package를 다음과
 
 
 ```bash
-$ pip3 install matplotlib pillow scipy numpy tensorflow==1.11.0 jupter notebook
+$ pip3 install matplotlib pillow scipy numpy tensorflow==1.11.0 jupyter notebook
 ```
 
 ​    
@@ -600,7 +600,7 @@ Deploy가 완료되었다면, 다음과 같은 명령어를 통해서 이미지�
 
 
 ```bash
-$ cat ssd-image/models/ssd/demo/00001.jpg | base64 | ./dcf function call ssd-image
+$ cat ssd-image/models/ssd/demo/00001.jpg | base64 | dcf function call ssd-image
 
 >>>
 [{'class': '12', 'confidence': '0.95606905', 'xmin': '135', 'ymin': '221', 'xmax': '135', 'ymax': '221'}, {'class': '12', 'confidence': '0.95606905', 'xmin': '135', 'ymin': '221', 'xmax': '135', 'ymax': '221'}, {'class': '12', 'confidence': '0.95606905', 'xmin': '135', 'ymin': '221', 'xmax': '135', 'ymax': '221'}]
