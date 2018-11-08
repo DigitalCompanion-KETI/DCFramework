@@ -104,7 +104,7 @@ pillow
 
 함수 스크립트는 다음과 같습니다.
 
-해당 함수 스크립트는 [해당 링크](http://www.frank-zalkow.de/en/code-snippets/create-audio-spectrograms-with-python.html?i=1)를 참고헀습니다.
+해당 함수 스크립트는 [해당 링크](http://www.frank-zalkow.de/en/code-snippets/create-audio-spectrograms-with-python.html?i=1)를 참고습니다.
 
 
 
