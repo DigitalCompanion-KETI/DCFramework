@@ -67,7 +67,7 @@ cat 000001.jpg | base64 | dcf function call ssd-test
 
 
 > Note
-
+>
 > `STFT(Short Time Fourier Transform)`란 시간의 경과에 따라 변하는 로컬 영역 신호의 정현파 주파수 및 위상 내용을
 > 결정하는데 사용되는 푸리에 변환입니다. 
 
@@ -231,9 +231,9 @@ if os.environ.get('DISPLAY','') == '':
     m.use('Agg')
 ```
 
-위와 같이 `matplotlib` 패키지를 import 하지 않고 조건문을 작성하지 않으면 다음과 같은 에러가 발생합니다. 
-이는 함수에서는 디스플레이가 불가능하기 때문에 발생하는 에러이기 때문에, 
-디스플레이 옵션을 사용하지 않게 변경을 해야 음성파일을 통한 문자열을 리턴받을 수 있습니다.
+> 위와 같이 `matplotlib` 패키지를 import 하지 않고 조건문을 작성하지 않으면 다음과 같은 에러가 발생합니다. 
+> 이는 함수에서는 디스플레이가 불가능하기 때문에 발생하는 에러이기 때문에, 
+> 디스플레이 옵션을 사용하지 않게 변경을 해야 음성파일을 통한 문자열을 리턴받을 수 있습니다.
 
 ```bash
 >> Error
@@ -348,7 +348,6 @@ rawBytes.seek(0)  # return to the start of the file
 print(base64.b64encode(rawBytes.read()).decode("utf-8"))
 
 ```
-
 
 
 ### test.py 결과 확인
