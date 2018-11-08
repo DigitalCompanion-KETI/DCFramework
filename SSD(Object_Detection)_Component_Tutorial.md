@@ -276,11 +276,11 @@ $ jupyter notebook ./notebooks
 
 ## Wrapping SSD Prediction function
 
-이제 위에서 설치한 SSD Tensorflow Implementation 코드를 DCF 함수 컴포넌트에서 사용할 수 있도록 추론`prediction`코드만 랩핑해보도록 하겠습니다.
+이제 위에서 설치한 SSD Tensorflow Implementation 코드를 DCF 함수 컴포넌트에서 사용할 수 있도록 추론`predict`코드만 랩핑해보도록 하겠습니다.
 
 
 
-`ssd`폴더 안에 다음과 같은 추론`prediction`코드인 `prediction.py`를 작성합니다.
+`ssd`폴더 안에 다음과 같은 추론`predict`코드인 `predict.py`를 작성합니다.
 
 ```bash
 $ cd models/ssd
@@ -608,10 +608,10 @@ Deploy가 완료되었다면, 다음과 같은 명령어를 통해서 이미지�
 
 
 ```bash
-$ cat ssd-image/models/ssd/demo/00001.jpg | base64 | dcf function call ssd-image
+$ cat ssd-image/models/ssd/demo/000001.jpg | base64 | dcf function call ssd-image
 
 >>>
-[{'class': '12', 'confidence': '0.95606905', 'xmin': '135', 'ymin': '221', 'xmax': '135', 'ymax': '221'}, {'class': '12', 'confidence': '0.95606905', 'xmin': '135', 'ymin': '221', 'xmax': '135', 'ymax': '221'}, {'class': '12', 'confidence': '0.95606905', 'xmin': '135', 'ymin': '221', 'xmax': '135', 'ymax': '221'}]
+[{"ymin": "233", "xmin": "49", "ymax": "233", "xmax": "49", "class": "12", "confidence": "0.9948125"}, {"ymin": "233", "xmin": "49", "ymax": "233", "xmax": "49", "class": "12", "confidence": "0.9948125"}]
 ```
 
 ​    
