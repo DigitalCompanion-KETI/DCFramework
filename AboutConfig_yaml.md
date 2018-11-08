@@ -14,7 +14,11 @@
 
 ## config.yaml 파일 구성
 
-`config.yaml`파일의 구성은 다음과 같습니다.
+> Note
+
+`config.yaml`파일의 구성은 다음과 같습니다. `list.yml` 에서 정의된 Runtime 버전의 기본값을 변경하고자 하는 경우, 
+
+`build_args` 필드에 원하는 버전을 기입하면 됩니다.
 
 
 
