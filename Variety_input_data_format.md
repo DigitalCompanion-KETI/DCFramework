@@ -50,7 +50,7 @@ Hello, DCF
 
 
 ```bash
-cat 000001.jpg | base64 | ./dcf function call ssd-test
+cat 000001.jpg | base64 | dcf function call ssd-test
 
 >>> 
 [{"class": "12", "confidence": "0.9948125", "xmin": "49", "ymin": "233", "xmax": "49", "ymax": "233"}, {"class": "12", "confidence": "0.9948125", "xmin": "49", "ymin": "233", "xmax": "49", "ymax": "233"}]
