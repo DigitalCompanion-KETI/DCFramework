@@ -28,9 +28,9 @@ Supported Runtimes are:
 - go
 ```
 
-- 지능 컴포넌트 생성 시, `dcf-runtime`이라는 디렉토리가 생성되고, 디렉토리 내부의 list.yml 파일에서 
+- 지능 컴포넌트 생성 시, `dcf-runtime`이라는 디렉토리가 생성되고, 디렉토리 내부의 list.yml 파일에는 
 
-  runtime의 버전에 대한 정보를 기입할 수 있습니다. 이는 유동적으로 runtime의 버전을 지원하기 위함입니다.
+  runtime의 버전에 대한 정보가 명시되어 있습니다. 이는 지능 컴포넌트 Runtime의 기본 값입니다. 
 
   ```bash
   >> list.yml
@@ -181,7 +181,7 @@ ex> dcf function init --runtime go hello-dcf
 
 `config.yaml`
 
-- config.yaml 관련 가이드는 다음 [링크](AboutConfig_yaml.md)에서 확인해주시기 바랍니다. 
+- config.yaml 관련 가이드는 다음 [About Config.yaml](AboutConfig_yaml.md)에서 확인해주시기 바랍니다. 
 
 > Note
 
