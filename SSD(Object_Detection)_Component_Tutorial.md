@@ -282,7 +282,10 @@ $ jupyter notebook ./notebooks
 
 `ssd`폴더 안에 다음과 같은 추론`prediction`코드인 `prediction.py`를 작성합니다.
 
-
+```bash
+$ cd models/ssd
+$ vim prediction.py
+```
 
 ```python
 import sys
@@ -294,6 +297,9 @@ import numpy as np
 import tensorflow as tf
 import cv2
 
+# optional
+# import matplotlib
+# matplotlib.use('Agg")
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
@@ -410,6 +416,7 @@ if __name__ == "__main__":
 
 
 ```bash
+$ cd ../../
 $ python3 models/ssd/predict.py
 ```
 
@@ -579,6 +586,7 @@ tensorflow==1.11.0
 
 
 ```bash
+$ cd ../
 $ sudo dcf function create -f config.yaml -v
 
 >>>
