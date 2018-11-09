@@ -123,7 +123,7 @@ Digest: sha256:ef14a52ee8bacfa498b46ef1620ae3da16b0cbda8286b1f0a1a81aa71ac3a818
 
 
 
-**함수별 *.yaml 파일 생성**
+**함수별 yaml 파일 생성**
 
 ```bash
 $ dcf function init test --runtime python -f test.yaml
@@ -173,7 +173,7 @@ $ dcf function create -f test.yaml -v
 $ dcf function create -f config.yaml test2
 ```
 
-​    ​    
+​        
 
 ##  config.yaml 규격
 
