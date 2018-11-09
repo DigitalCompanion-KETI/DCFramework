@@ -41,9 +41,9 @@ functions:
 dcf:
   gateway: keti.asuscomm.com:32222
 ```
+​    
 
-
-###  build_args 필드 변경값 확인
+## build_args 필드 변경 확인
 
 `build_args`필드에 버전변경을 한 것을 확인하려면 함수 컴포넌트를 배포시에 배포 로그를 확인하면 알 수 있습니다.
 
