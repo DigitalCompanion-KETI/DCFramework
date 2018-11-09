@@ -16,9 +16,7 @@
 
 > Note
 
-`config.yaml`파일의 구성은 다음과 같습니다. `list.yml` 에서 정의된 Runtime 버전의 기본값을 변경하고자 하는 경우, 
-
-`build_args` 필드에 원하는 버전을 기입하면 됩니다.
+`config.yaml`파일의 구성은 다음과 같습니다. `list.yml` 에서 정의된 Runtime 버전의 기본값을 변경하고자 하는 경우, `build_args` 필드에 원하는 버전을 기입하면 됩니다.
 
 
 
@@ -43,6 +41,70 @@ functions:
 dcf:
   gateway: keti.asuscomm.com:32222
 ```
+
+
+###  build_args 필드 변경값 확인
+
+`build_args`필드에 버전변경을 한 것을 확인하려면 함수 컴포넌트를 배포시에 배포 로그를 확인하면 알 수 있습니다.
+
+
+
+test라는 이름의 함수 컴포넌트를 python3.5 패키지를 사용하기 위해서 config.yaml파일을 다음과 같이 수정했을 때, 배포시 나타나는 로그에서 docker image의 버전을 확인할 수 있습니다.
+
+
+
+**config.yaml**
+
+```yaml
+functions:
+  hello-dcf:
+    runtime: python
+    desc: "This is test."
+    maintainer: "KETI"
+    handler:
+      dir: ./test
+      file: handler.py
+      name: Handler
+    image: keti.asuscomm.com:5001/test
+    build_args:
+    - PYTHON_VERSION=3.5
+    build_packages:
+      - make
+      - python3-pip
+      - gcc
+      - python-numpy
+dcf:
+  gateway: keti.asuscomm.com:32222
+```
+
+​    
+
+**deploy**
+
+```bash
+$ dcf function create -f config.yaml -v
+
+>>
+Building: test, Image:keti.asuscomm.com:5001/test
+Sending build context to Docker daemon  4.096kB
+Step 1/21 : ARG PYTHON_VERSION=3.4
+Step 2/21 : FROM python:${PYTHON_VERSION}
+3.5: Pulling from library/python
+bc9ab73e5b14: Already exists
+193a6306c92a: Already exists
+e5c3f8c317dc: Already exists
+a587a86c9dcb: Already exists
+72744d0a318b: Already exists
+6598fc9d11d1: Pull complete
+74d2ee7772b2: Pull complete
+ab2e66176e69: Pull complete
+2c4175ee7cad: Pull complete
+Digest: sha256:ef14a52ee8bacfa498b46ef1620ae3da16b0cbda8286b1f0a1a81aa71ac3a818
+"Status: Downloaded newer image for python:3.5 -> 해당부분에서 build_args가 적용되었는지 확인"
+```
+
+
+
 ​    
 
 ##  config.yaml 규격

@@ -10,7 +10,7 @@
 
 DCF의 Runtime 지원 목록은 다음과 같은 명령어로 확인할 수 있습니다.
 
-> Note
+> Notify
 
 Runtime 이란, DCF에서 지원해주는 지능 컴포넌트의 실행 환경 입니다. 
 
