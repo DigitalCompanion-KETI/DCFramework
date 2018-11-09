@@ -420,7 +420,7 @@ base64 문자열을 이미지로 복원해서 확인할 수 있습니다.
 
 **결과**
 
-![function result.jpg](https://user-images.githubusercontent.com/13328380/48114112-171a1f00-e2a1-11e8-9347-fd31f7324577.png)_
+![function result.jpg](https://user-images.githubusercontent.com/13328380/48114112-171a1f00-e2a1-11e8-9347-fd31f7324577.png)
 
 
 
@@ -455,9 +455,12 @@ ssd-video
 
 
 동영상 파일은 [다음 링크](https://videos.pexels.com/videos/view-of-the-lake-and-mountains-from-a-park-1466209)에서 다운받을 수 있습니다.
-
-
-
+    
+> Note
+>
+> 현재는 함수 컴포넌트에서 처리시간이 20분을 초과하게 되면 함수 내부적으로 데드라인 에러를 발생시키면서 실행을 중단하게 됩니다.
+> 따라서 함수의 실행시간이 20분을 초과하는 예제는 실행할 수 없습니다.
+    
 ### Dockerfile
 
 ```dockerfile
