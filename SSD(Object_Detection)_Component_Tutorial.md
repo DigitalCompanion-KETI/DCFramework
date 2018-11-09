@@ -284,7 +284,7 @@ $ jupyter notebook ./notebooks
 
 ```bash
 $ cd models/ssd
-$ vim prediction.py
+$ vim predict.py
 ```
 
 ```python
@@ -297,9 +297,8 @@ import numpy as np
 import tensorflow as tf
 import cv2
 
-# optional
-# import matplotlib
-# matplotlib.use('Agg")
+import matplotlib
+matplotlib.use('Agg")
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
