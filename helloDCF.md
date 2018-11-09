@@ -20,7 +20,7 @@ Runtime에서 `tensorflow-gpu`의 경우에는 아직 DCF에서 GPU를 지원하
 
 
 ```bash
-$ ./dcf runtime list
+$ dcf runtime list
 
 Supported Runtimes are:
 - python
@@ -277,7 +277,7 @@ Log:
 입력으로 전환하는 기능입니다. 명령어와 프로그램의 연결은 '|' 기호를 사용합니다. 
 
  
- 
+
 - `DCF 컴포넌트를 직접 호출하는 경우`
   
   ```bash
