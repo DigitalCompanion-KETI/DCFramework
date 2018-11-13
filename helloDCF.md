@@ -196,6 +196,31 @@ Error: Function hello-dcf already exists in config.yaml file.
 
 ​    
 
+#### 2-1. 함수 컴포넌트 생성시, 각 컴포넌트별 `*.yaml`파일 생성
+
+함수 컴포넌트 생성은 기본적으로 `config.yaml` 파일에 모두 정의되게 됩니다. 만약 이를 개별적인 함수 컴포넌트로 관리하고 싶다면 `*.yaml`파일을 컴포넌트 생성시 분리해서 만들 수 있습니다.
+
+
+
+방법은 함수 컴포넌트 생성시 `-f`옵션과 함께, `yaml`파일의 이름을 확장자와 같이 적어주면 됩니다.
+
+
+
+**함수별 yaml 파일 생성**
+
+```bash
+$ dcf function init test --runtime python -f test.yaml
+
+>>
+.
+├── dcf
+├── dcf-runtime
+├── test
+└── test.yaml
+```
+
+​    
+
 ### 3. 컴포넌트 배포
 
 다음과 같은 명령어를 이용하여 config.yaml 파일을 통해 정의한 컴포넌트를 DCF에 배포할 수 있습니다.
@@ -209,6 +234,53 @@ $ dcf function create -f config.yaml
 Building: <function name>, Image:keti.asuscomm.com:5001/<function name>
 Pushing: <function name>, Image:keti.asuscomm.com:5001/<function name>
 Deploying: <function name>
+```
+
+
+
+#### 3-1. 각 컴포넌트 `*.yaml`파일을 이용하여 배포
+
+
+
+위의 `2-1. 함수 컴포넌트 생성시, 각 컴포넌트별 *.yaml파일 생성`으로 만들어진 각 함수컴포넌트별 `*.yaml`파일을 이용하여 배포하려면 다음과 같은 명령어를 이용하면 됩니다.
+
+
+
+**개별 함수 deploy**
+
+```bash
+$ dcf function create -f test.yaml -v
+```
+
+
+
+#### 3-2. `config.yaml`을 이용하여 특정 함수만 배포
+
+
+
+만약 아래와 같이 여러가지 함수 컴포넌트가 존재하고 여러가지 함수 컴포넌트에 대한 configuration 정보가 단일 `config.yaml`에 명시되어있다고 가정하겠습니다.
+
+
+
+```bash
+.
+├── AboutConfig_yaml.md
+├── config.yaml
+├── dcf
+├── dcf-runtime
+├── test1
+├── test2
+└── test3
+```
+
+
+
+이런 경우에 어떤 특정 함수만 배포하고싶은 경우(예를들어 `test1`만 배포하고 싶을 시) 다음과 같은 명령어를 이용하여 특정 함수만 배포할 수 있습니다.
+
+
+
+```bash
+$ dcf function create -f config.yaml test2
 ```
 
 ​    
@@ -253,11 +325,7 @@ Name: ssd-video-test
 Log:
 ```
 
-
-
-​
-
-
+​    
 
 ### 6. 컴포넌트 호출
 
@@ -333,6 +401,4 @@ Function       	Image               	Maintainer     	Invocations	    Replicas   
 $ dcf function list
 Function       	Image               	Maintainer     	Invocations	    Replicas    Status     Description
 ```
-
-
 
