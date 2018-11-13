@@ -402,7 +402,7 @@ $ dcf function list
 Function       	Image               	Maintainer     	Invocations	    Replicas    Status     Description
 ```
 
-
+​    
 
 
 ### 8. 재배포
