@@ -402,3 +402,45 @@ $ dcf function list
 Function       	Image               	Maintainer     	Invocations	    Replicas    Status     Description
 ```
 
+
+
+
+### 8. 재배포
+
+함수컴포넌트를 재배포하는 방법은 2가지 방법이 있습니다.
+
+1. 함수 컴포넌트 삭제 후 배포
+2. 함수 컴포넌트가 배포되어있는 상태에서의 업데이트
+
+
+
+여기서는 `2`번의 경우만 설명하도록하겠습니다.
+
+특정한 함수 컴포넌트가 배포되어있는 상황에서 코드 일부만 수정하여 재배포할 경우에는 `--update`옵션을 통해서 재배포 할 수 있으며, 명령어는 다음과 같습니다.
+
+(해당 경우에는 기존에 배포되어있는 함수 컴포넌트 삭제 없이 사용합니다.)
+
+
+
+```bash
+$ dcf function create -f config.yaml --update -v
+
+>>
+Building: <function name>, Image:keti.asuscomm.com:5001/<function name>
+Sending build context to Docker daemon  4.096kB
+Step 1/21 : ARG PYTHON_VERSION=3.4
+Step 2/21 : FROM python:${PYTHON_VERSION}
+ ---> 43953693c77b
+Step 3/21 : ARG ADDITIONAL_PACKAGE
+ ---> Using cache
+ ---> 6eeb15a249e8
+Step 4/21 : RUN apt-get update && apt-get install -y  	build-essential 	wget 	tar 	${ADDITIONAL_PACKAGE}     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> 030982f91e38
+Step 5/21 : ARG WATCHER_VERSION=0.1.0
+ ---> Using cache
+ ---> 2ef584b13dcd
+Step 6/21 : ARG handler_file=handler.py
+...
+```
+
