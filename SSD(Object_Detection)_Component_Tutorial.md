@@ -298,7 +298,7 @@ import tensorflow as tf
 import cv2
 
 import matplotlib
-matplotlib.use('Agg")
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
