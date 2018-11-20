@@ -40,6 +40,7 @@ weigths파일도 초기에만 load 후, 지속적으로 load된 weigths를 사�
 
 현재 DCF는 Docker Image를 직접 전달해서 배포할 수 있게 지원하고 있지 않습니다.
 
+
 #### 6. 사내 내부망의 방화벽으로 인한 `dcf-cli` timeout 발생시, 방화벽 해제대상 IP & PORT
 IP : keti1.asuscomm.com 혹은 keti.asuscomm.com
 PORT : 5001
