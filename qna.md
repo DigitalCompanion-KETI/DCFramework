@@ -25,11 +25,10 @@ DCF는 FaaS기반의 프레임워크이므로, invoke(함수 컴포넌트 호출
 weigths파일도 초기에만 load 후, 지속적으로 load된 weigths를 사용하는 방식이 아니므로, weights를 지속적으로 load해주셔야하며, 변수 및 인스턴스가 비동기식으로 자원 해제가 되므로, 꼭 weights sharing option을 체크해주셔야합니다. (Tensorflow 같은 경우에는 tf.AUTO_REUSE 옵션을 꼭 필수로 선택해주셔야합니다.)
 
 
-
 - 해당 내용에 대한 지원 여부는 내부적으로 논의 중입니다.
 
-​    
 
+​    
 #### 4. 컴파일을 해야지만 사용가능한 패키지의 경우는 어떻게 처리할 수 있는지 
 
 현재 DCF는 requirements.txt로 모든 것을 설치할 수 있다면, 개발자는 간단하게 딥러닝 모델을 올리고, 배포할 수 있는 구조를 가지고 있으나, 직접 컴파일을 해서 사용해야만 하는 패키지의 경우에는 Dockerfile을 수정해주셔야합니다. 해당 내용에 대해서는 [튜토리얼 문서(SSD(Object Detection) Component](../SSD(Object_Detection)_Component_Tutorial.md))에서 제공하고 있으니 이를 참고하시면 됩니다.
