@@ -379,7 +379,6 @@ def predict(image):
     width = image.shape[1]
     colors = dict()
 
-    obj_info = dict()
     obj = list()
     for i in range(rclasses.shape[0]):
         cls_id = int(rclasses[i])
@@ -387,6 +386,8 @@ def predict(image):
             score = rscores[i]
             if cls_id not in colors:
                 colors[cls_id] = (random.random(), random.random(), random.random())
+            
+            obj_info = dict()
             ymin = int(rbboxes[i, 0] * height)
             xmin = int(rbboxes[i, 1] * width)
             ymax = int(rbboxes[i, 2] * height)
