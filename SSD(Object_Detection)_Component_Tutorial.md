@@ -399,8 +399,8 @@ def predict(image):
             obj_info["confidence"] = str(score)
             obj_info["xmin"] = str(xmin)
             obj_info["ymin"] = str(ymin)
-            obj_info["xmax"] = str(xmin)
-            obj_info["ymax"] = str(ymin)
+            obj_info["xmax"] = str(xmax)
+            obj_info["ymax"] = str(ymax)
             obj.append(obj_info)
     
     return obj
