@@ -133,11 +133,13 @@ DCF설치를 완료했다면, 다음과 같은 가이드 문서를 통해서 DCF
 
 [3. SSD(Object Detection) Component](SSD(Object_Detection)_Component_Tutorial.md)
 
-[4. config.yaml 파일 구성](AboutConfig_yaml.md)
+[4. Python Client Example](Python_Client_Example.md)
 
-[5. gRPC Guide](grpc-guide.md)
+[5. config.yaml 파일 구성](AboutConfig_yaml.md)
 
-[6. Q&A](qna.md)
+[6. gRPC Guide](grpc-guide.md)
+
+[7. Q&A](qna.md)
 
 
 
