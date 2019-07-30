@@ -36,13 +36,13 @@ DCF는 FaaS(Function as a Service)의 구조를 따릅니다. 다양한 기관�
 
 ## DCF 설치
 
-설치과정은 개발자와 사용자에 따라 분류됩니다.
+설치과정은 *개발자*와 *사용자*에 따라 분류됩니다.
 
-
+<br>
+<br>
 
 [개발자를 위한 가이드라인](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2330/Developer/README.md) <br> : DCF 개발 환경 구축과 DCF 컴파일 과정을 설명합니다.
 
-<br>
 <br>
 
 [사용자를 위한 가이드라인](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2330/User/README.md) <br> : DCF CLI 설치와 DCF 사용법을 설명합니다.
