@@ -1,7 +1,3 @@
-# Digital Companion Framework (DCF)
-
-​    
-
 ## Install DCF for user
 
 
