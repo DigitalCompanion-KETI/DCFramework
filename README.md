@@ -4,7 +4,7 @@
 
 ​    
 
-## DCF 소개
+## DCF Introduce
 
 
 
@@ -34,9 +34,9 @@ DCF는 FaaS(Function as a Service)의 구조를 따릅니다. 다양한 기관�
 
 ​    
 
-## DCF 설치
+## DCF Guide
 
-설치과정은 **개발자**와 **사용자**에 따라 분류됩니다.
+**개발자**와 **사용자**에 따라 분류됩니다.
 
 
 <br>
