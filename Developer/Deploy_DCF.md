@@ -1,10 +1,10 @@
 # Deploy DCF
 
-DCF(Digital Companion Framework) 컴파일을 완료하였다면, 이제 DCF를 배포해보자
+DCF(Digital Companion Framework) 컴파일을 완료하였다면, DCF를 배포하겠습니다.
 
 # Deploy
 
-아래 명령어를 이용하여 **DCF**를 배포한다
+아래 명령어를 이용하여 **DCF**를 배포합니다
 
     $ cd $GOPATH/scr/github.com/digitalcompanion-keti/dcf
     $ kubectl apply -f ./namespaces.yml
@@ -26,11 +26,11 @@ DCF(Digital Companion Framework) 컴파일을 완료하였다면, 이제 DCF를 
     kube-system   kubernetes-dashboard-d7c9687c7-k7rzn   1/1     Running   13         4h10m
     kube-system   storage-provisioner                    1/1     Running   13         4h10m
 
-- `STATUS`가 **Running**이 아닌 경우에는 [링크](https://kubernetes.io/ko/docs/reference/kubectl/cheatsheet/)를 참조하여 포드의 로그를 확인한다
+- `STATUS`가 **Running**이 아닌 경우에는 [링크](https://kubernetes.io/ko/docs/reference/kubectl/cheatsheet/)를 참조하여 포드의 로그를 확인합니다
 
 # Verify Deploy
 
-`dcf-cli`를 이용해 `echo`함수를 배포하여 `dcf`의 작동을 테스트한다
+`dcf-cli`를 이용해 `echo`함수를 배포하여 `dcf`의 작동을 테스트합니다
 
 ## Create folder for CLI testing
 
@@ -44,7 +44,7 @@ DCF(Digital Companion Framework) 컴파일을 완료하였다면, 이제 DCF를 
 ## Create DCF function
 
 - 함수를 배포하기 위해 함수의 initalization을 진행(runtime 설정, 함수 이름 설정 및 config.yaml 파일 생성)
-- `<RUNTIME NAME> `은 `go`  ,`python`을 지원한다 
+- `<RUNTIME NAME> `은 `go`  ,`python`을 지원합니다. 
 
 ```bash
 $ dcf-cli function init <FUNCTION NAME> --runtime <RUNTIME NAME> 
@@ -60,9 +60,9 @@ $ cd <FUNCTION NAME>
 
 ## Configure `config.yaml`
 
-* `config.yaml` 에서  `gpu`  값으로 사용할 gpu의 사용 개수를 정할 수 있다. 
+* `config.yaml` 에서  `gpu`  값으로 사용할 gpu의 사용 개수를 정할 수 있습니다. 
 
-* `gpu : ""`  으로 옵션을 줄 경우,  cpu로 해당 함수가 할당된다.
+* `gpu : ""`  으로 옵션을 줄 경우,  cpu로 해당 함수가 할당됩니다.
   
       $ cd config.yaml
       >>
@@ -96,7 +96,7 @@ $ cd <FUNCTION NAME>
   
   Image: keti.asuscomm.com:5001/echo built in local, successfully.
   ```
-* `Python` 의 경우, 도커 라이브러리 연동문제로 에러가 발생한다.  따라서 해당 함수 폴더의 `requirements.txt` 에 사용할 라이브러리를 명시하고 함수 빌드를 실행한다.
+* `Python` 의 경우, 도커 라이브러리 연동문제로 에러가 발생합니다.  따라서 해당 함수 폴더의 `requirements.txt` 에 사용할 라이브러리를 명시하고 함수 빌드를 실행합시다.
   
   ```
   $ ls
@@ -124,7 +124,7 @@ $ cd <FUNCTION NAME>
 
 ## Confirm DCF function list
 
-- Kubernetes에 배포가 완료된 함수의 목록 확인한다. 서버에 배포가 완료되기까지 수 초가 소요되며  `Status`  값을 통해 확인한다. `Ready ` 상태가 되면 정상적으로 배포가 완료된 것이다.
+- Kubernetes에 배포가 완료된 함수의 목록 확인합니다. 서버에 배포가 완료되기까지 수 초가 소요되며  `Status`  값을 통해 확인합니다. `Ready ` 상태가 되면 정상적으로 배포가 완료되었습니다.
   
   ```bash
     $ dcf-cli function list
