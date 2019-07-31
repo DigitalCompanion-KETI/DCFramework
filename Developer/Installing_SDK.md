@@ -151,7 +151,7 @@ Insecure Registries:
 ```
 
 ### Check Login to docker registry
-
+ 
 도커 레지스트리에 로그인이 잘 되는지 확인합니다
 
 ```
