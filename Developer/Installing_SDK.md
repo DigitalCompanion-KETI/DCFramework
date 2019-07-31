@@ -1,16 +1,16 @@
 # Installing SDK
 
- DCF(Digital Companion Framework) 개발 환경을 위한 VM, Minikube, kubectl,  Docker을 설치한다.
+ DCF(Digital Companion Framework) 개발 환경을 위한 VM, Minikube, kubectl,  Docker을 설치하겠습니다.
 
 ## Installing VM
 
-미니쿠베를 시작하기 전, [버츄얼박스](https://www.virtualbox.org/)를 설치하여 미니쿠베가 사용할 수 있는 가상머신을 설치한다.  사용하고 있는 OS가 Mac과 리눅스 환경이라면,  가상머신 설치를 생략한다.
+미니쿠베를 시작하기 전, [버츄얼박스](https://www.virtualbox.org/)를 설치하여 미니쿠베가 사용할 수 있는 가상머신을 설치합니다.  사용하고 있는 OS가 Mac과 리눅스 환경이라면,  가상머신 설치를 생략합니다
 
 # Installing Minikube
 
-미니쿠베(Minikube)는 쿠버네티스(Kubernetes)처럼 클러스터를 구성하지 않고 단일 컴퓨팅환경(노트북, 데스크탑 등)에서 쿠버네티스 환경을 만들어준다.
+미니쿠베(Minikube)는 쿠버네티스(Kubernetes)처럼 클러스터를 구성하지 않고 단일 컴퓨팅환경(노트북, 데스크탑 등)에서 쿠버네티스 환경을 만들어줍니다.
 
-본 가이드에선 MacOs와 Ubuntu18.04를 기준으로 테스트하여 작성하였다.
+본 가이드에선 MacOs와 Ubuntu18.04를 기준으로 테스트하여 작성하였습니다.
 
 ## MacOS
 
@@ -24,25 +24,25 @@
 
 # Start Minikube
 
-가상머신 미설치 사용자의 경우, 아래와 같은 명령어로 미니쿠베를 시작한다
+가상머신 미설치 사용자의 경우, 아래와 같은 명령어로 미니쿠베를 시작합니다.
 
     $ sudo minikube start --insecure-registry="<IP ADDRESS>:<PORT>"
 
-- `<IP ADDRESS>:<PORT>` : 앞으로 생성할 도커 레지스트리 서버의 주소와 포트번호를 적어준다. 본 가이드에서는 호스트 OS(VM)의 IP와 포트번호,  5000으로 작성하였다
-- 가상머신에서 미니쿠베를 사용하는 경우, `--vm-driver` 옵션을 `none`으로 설정하여 시작한다
+- `<IP ADDRESS>:<PORT>` : 앞으로 생성할 도커 레지스트리 서버의 주소와 포트번호를 적어줍니다. 본 가이드에서는 호스트 OS(VM)의 IP와 포트번호,  5000으로 작성하였습니다
+- 가상머신에서 미니쿠베를 사용하는 경우, `--vm-driver` 옵션을 `none`으로 설정하여 시작합니다
   
         $ echo export CHANGE_MINIKUBE_NONE_USER=true >> ~/.bashrc
         $ sudo minikube start --vm-driver=none --insecure-registry="<IP ADDRESS>:<PORT>"
 
-`~/.kube`,  `~/.minikube` 폴더의 권한을 `$USER`로 변경한다
+`~/.kube`,  `~/.minikube` 폴더의 권한을 `$USER`로 변경합니다
 
     $ sudo chown -R $USER ~/.kube ~/.minikube
 
 # Installing kubectl
 
-`kubectl`은 쿠버네티스를 제어하기 위한 명령 줄 인터페이스이다
+`kubectl`은 쿠버네티스를 제어하기 위한 명령 줄 인터페이스입니다
 
-아래와 같은 명령어로 kubectl을 설치한다
+아래와 같은 명령어로 kubectl을 설치합니다
 
 ## MacOS
 
@@ -74,7 +74,7 @@
 
 ## CrashLoopBackOff Error
 
-버츄얼박스에서 미니쿠베를 실행할 경우 아래와 같이 에러가 발생할 수 있다.
+버츄얼박스에서 미니쿠베를 실행할 경우 아래와 같이 에러가 발생할 수 있습니다.
 
     $ kubectl get pods --all-namespaces
     >>
@@ -89,13 +89,11 @@
     kube-system   kube-scheduler-minikube            1/1     Running            0          2m51s
     kube-system   storage-provisioner                1/1     Running            0          3m53s
 
-아래 명령어로 이를 해결할 수 있다.
-
-**CoreDns configmap** 수정한다. 아래 명령어를 실행 후, `loop`라는 단어를 삭제한다
+그럴 경우, **CoreDns configmap**을 수정하여 해결할 수 있습니다.  먼저 아래 명령어를 실행 후, `loop`라는 단어를 삭제하겠습니다.
 
     $ kubectl -n kube-system edit configmap coredns
 
-기존 포드를 삭제하고 새로운 설정이 적용된 포드를 생성한다
+또한 기존 포드를 삭제하고 새로운 설정이 적용된 포드를 생성하여 재확인하시면 됩니다.
 
     kubectl -n kube-system delete pod -l k8s-app=kube-dns
 
@@ -103,7 +101,7 @@
 
 ### Docker-CE
 
-* 우분투 18.04 기준으로 테스트하였다
+* 우분투 18.04 기준으로 테스트하였습니다.
 
 ```
 $ sudo apt-get remove docker docker-engine docker.io containerd runc
@@ -136,14 +134,14 @@ $ sudo apt-get install apache2-utils
 
 ### Start docker registry
 
-`Insecure registry`란 docker image를 push & pull 하기 위한 개인 저장소(private registry)이다.  사용자가 build한 docker image를 dcf 저장소에 저장하기 위해 다음과 같이 설정을 해주고 docker를 재시작한다.
+`Insecure registry`란 docker image를 push & pull 하기 위한 개인 저장소(private registry)입니다.  사용자가 build한 docker image를 dcf 저장소에 저장하기 위해 다음과 같이 설정을 해주고 docker를 재시작합시다.
 
 ```
 $ echo '{"insecure-registries": ["keti.asuscomm.com:5001"]}'>> /etc/docker/daemon.json
 $ service docker restart
 ```
 
-Docker 재시작 후, 다음과 같은 명령어로 설정을 확인한다.
+Docker 재시작 후, 다음과 같은 명령어로 설정을 확인합니다.
 
 ```
 $ sudo docker info
@@ -154,7 +152,7 @@ Insecure Registries:
 
 ### Check Login to docker registry
 
-도커 레지스트리에 로그인이 잘 되는지 확인한다
+도커 레지스트리에 로그인이 잘 되는지 확인합니다
 
 ```
 $ docker login keti.asuscomm.com:5001
