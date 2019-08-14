@@ -62,11 +62,6 @@ Go 설치를 확인합니다.
     
     $ export PATH=$PATH:/usr/local/bin
 
-### Protoc-gen-go
-
-    $ cd $GOPATH/src/github.com/golang/protobuf/protoc-gen-go
-    $ git checkout tags/v1.2.0 -b v1.2.0
-    $ go install
 
 ### gRPC tools
 
@@ -78,6 +73,12 @@ Go 설치를 확인합니다.
     # $ go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
     # $ export PATH=$PATH:$GOPATH/bin
 
+### Protoc-gen-go
+
+    $ cd $GOPATH/src/github.com/golang/protobuf/protoc-gen-go
+    $ git checkout tags/v1.2.0 -b v1.2.0
+    $ go install
+    
 ### dep
 
     $ go get -u github.com/golang/dep/cmd/dep
