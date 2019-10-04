@@ -1,50 +1,65 @@
-# Digital Companion Framework (DCF)
+# DCF - Digital Companion Framework
 
-해당 문서는 디지털동반자 프레임워크에 대해서 설명하며, 이를 어떻게 사용하는지에 대한 가이드 문서입니다.
+![43632999](https://user-images.githubusercontent.com/13328380/66203965-9e0b8d80-e6e4-11e9-948d-9faa71a5d97c.png)
 
-​    
+---
 
-## DCF Introduce
-
-
-
-DCF는 FaaS(Function as a Service)의 구조를 따릅니다. 다양한 기관들은 DCF를 이용하여 규격화된 인공지능 모델을 배포할 수 있습니다. 아래 그림은 DCF의 구조에 대한 간략화된 설명입니다.
+디지털 동반자 프레임워크는 인공지능 모델을 배포하기 위한 서버리스 프레임워크 입니다. 
 
 
 
-각 기관의 개발자들은 `DCF CLI` 를 이용하여 인공지능 모델을 규격화하고, 배포할 수 있습니다. 규격화된 인공지능 모델은 Docker기반으로 배포됩니다.
+#### Highlights
+
+- 엔비디아 도커(Nvidia-Docker)를 이용한 인공지능 모델 패키징 지원
+- RESTful / gRPC 프로토콜 지원
+- 스트리밍 구조 지원
+- 함수 실행 테스트 지원
+- CLI를 이용한 쉬운 함수 배포
+- Auto-Scale 지원
 
 
 
-이렇게 규격화된 인공지능 모델은 오른쪽에 보이는 하나의 Function이 될 수 있으며, 일반 사용자(유저) 및 DCF를 이용해 상위 어플리케이션을 개발하려는 개발자들은 각 기관이 배포한 Function을 Call하는 것을 통해서 인공지능 모델의 추론 결과를 얻을 수 있습니다.
+## Overview
+
+### Architecture
+
+![Architecture](https://user-images.githubusercontent.com/13328380/66216078-c1900180-e6ff-11e9-943b-463c55ddec3b.png)
 
 
 
-![DCF-concept](https://user-images.githubusercontent.com/13328380/47892857-590c2500-de9d-11e8-8989-7821892b1a72.png)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi  nullam vehicula ipsum. In massa tempor nec feugiat nisl pretium fusce id velit. Quam adipiscing vitae proin sagittis nisl rhoncus. Bibendum at  varius vel pharetra vel turpis nunc. Tincidunt tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Parturient montes nascetur  ridiculus mus. Felis imperdiet proin fermentum leo vel orci porta non. Ipsum a arcu cursus vitae congue. Dui ut ornare lectus sit. Tristique et egestas quis ipsum suspendisse ultrices gravida dictum. Aliquet  sagittis id consectetur purus. Sollicitudin aliquam ultrices sagittisorci a scelerisque purus. Lobortis mattis aliquam faucibus purus in massa. Curabitur vitae nunc sed velit dignissim sodales. Urna cursus eget nunc scelerisque viverra mauris in. Dignissim cras tincidunt lobortis feugiat. Est velit egestas dui id. Ut tellus elementum sagittis vitae et leo. Nullam ac tortor vitae purus.
+
+### Runtime
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi  nullam vehicula ipsum. In massa tempor nec feugiat nisl pretium fusce id velit. Quam adipiscing vitae proin sagittis nisl rhoncus. Bibendum at  varius vel pharetra vel turpis nunc. Tincidunt tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Parturient montes nascetur  ridiculus mus. Felis imperdiet proin fermentum leo vel orci porta non. Ipsum a arcu cursus vitae congue. Dui ut ornare lectus sit. Tristique et egestas quis ipsum suspendisse ultrices gravida dictum. Aliquet  sagittis id consectetur purus. Sollicitudin aliquam ultrices sagittisorci a scelerisque purus. Lobortis mattis aliquam faucibus purus in massa. Curabitur vitae nunc sed velit dignissim sodales. Urna cursus eget nunc scelerisque viverra mauris in. Dignissim cras tincidunt lobortis feugiat. Est velit egestas dui id. Ut tellus elementum sagittis vitae et leo. Nullam ac tortor vitae purus.
+
+### Supported GPU
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi  nullam vehicula ipsum. In massa tempor nec feugiat nisl pretium fusce id velit. Quam adipiscing vitae proin sagittis nisl rhoncus. Bibendum at  varius vel pharetra vel turpis nunc. Tincidunt tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Parturient montes nascetur  ridiculus mus. Felis imperdiet proin fermentum leo vel orci porta non. Ipsum a arcu cursus vitae congue. Dui ut ornare lectus sit. Tristique et egestas quis ipsum suspendisse ultrices gravida dictum. Aliquet  sagittis id consectetur purus. Sollicitudin aliquam ultrices sagittisorci a scelerisque purus. Lobortis mattis aliquam faucibus purus in massa. Curabitur vitae nunc sed velit dignissim sodales. Urna cursus eget nunc scelerisque viverra mauris in. Dignissim cras tincidunt lobortis feugiat. Est velit egestas dui id. Ut tellus elementum sagittis vitae et leo. Nullam ac tortor vitae purus.
 
 
 
-#### Reference
+## Get Started
 
-[1. Apache OpenWhisk - 소개 및 아키텍쳐](https://developer.ibm.com/kr/cloud/2017/12/24/apache-openwhisk-intro-architecture/)
+- DCF-CLI; DCF Command Line Interface
 
-[2. (번역) 서버리스 아키텍처](https://blog.aliencube.org/ko/2016/06/23/serverless-architectures/)
+  디지털 동반자 프레임워크에서 제공하는 CLI를 이용해 함수를 생성 / 빌드 / 테스트 / 배포 / 실행합니다.
 
+  - Examples
+    - Text
+      1. Hello DCF
+    - Image
+      1. Object Detection(SSD; Single Shot Multi Detector)
+    - Voice
+      1. STFT (Short Time Fourier Transform)
+    - Streaming
+      1. Transfer Video
 
+- DCF Package
 
-​    
+  디지털 동반자 프레임워크의 파이썬 패키지를 이용해서 파이썬에서 디지털 동반자 프레임워크를 사용합니다
 
-## DCF Guide
+- Installation
 
-DCF 설치과정과 목적에 따라 **개발자**와 **사용자**로 분류됩니다.
-
-
-
-
-[개발자를 위한 가이드라인](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2330/Developer/README.md) <br> : DCF 개발 환경 구축과 컴파일 과정을 설명합니다.
-
-
-
-[사용자를 위한 가이드라인](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2330/User/README.md) <br> : DCF CLI 설치와 사용법을 설명합니다.
-
+  디지털 동반자 프레임워크를 미니쿠베(Minikube)를 이용하여 컴퓨터에 설치합니다.
 
