@@ -1,8 +1,14 @@
 # DCF - Digital Companion Framework
 
+```
+<p align="center"> 
+<img src="...">
+</p>
+```
 
-
-![43632999](https://user-images.githubusercontent.com/13328380/66203965-9e0b8d80-e6e4-11e9-948d-9faa71a5d97c.png?style=centerme)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/13328380/66203965-9e0b8d80-e6e4-11e9-948d-9faa71a5d97c.png?style=centerme"/>
+</p>
 
 ---
 
