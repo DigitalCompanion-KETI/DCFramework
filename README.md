@@ -8,8 +8,6 @@
 
 디지털 동반자 프레임워크는 인공지능 모델을 배포하기 위한 서버리스 프레임워크 입니다. 
 
-
-
 #### Highlights
 
 - 엔비디아 도커(Nvidia-Docker)를 이용한 인공지능 모델 패키징 지원
@@ -19,8 +17,6 @@
 - CLI를 이용한 쉬운 함수 배포
 - Auto-Scale 지원
 
-
-
 ## Overview of Digital Companion Framework
 
 ### Architecture
@@ -29,39 +25,114 @@
 
 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi  nullam vehicula ipsum. In massa tempor nec feugiat nisl pretium fusce id velit. Quam adipiscing vitae proin sagittis nisl rhoncus. Bibendum at  varius vel pharetra vel turpis nunc. Tincidunt tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Parturient montes nascetur  ridiculus mus. Felis imperdiet proin fermentum leo vel orci porta non. Ipsum a arcu cursus vitae congue. Dui ut ornare lectus sit. Tristique et egestas quis ipsum suspendisse ultrices gravida dictum. Aliquet  sagittis id consectetur purus. Sollicitudin aliquam ultrices sagittisorci a scelerisque purus. Lobortis mattis aliquam faucibus purus in massa. Curabitur vitae nunc sed velit dignissim sodales. Urna cursus eget nunc scelerisque viverra mauris in. Dignissim cras tincidunt lobortis feugiat. Est velit egestas dui id. Ut tellus elementum sagittis vitae et leo. Nullam ac tortor vitae purus.
+##### Gateway
+
+게이트웨이는 HTTP, gRPC 요청을 받아 모두 gRPC 요청으로 변경하며 요청에 따라 여러 작업을 수행한다. 주로 노드들 사이에 배포된 여러 함수들을 찾아서 호출하고 결과값을 반환해주는 역활을 하며 각 함수의 호출 수를 카운트한다.
+
+
+
+##### Watcher
+
+와처는 노드에 배포되어있는 함수 그 자체이다. 와처는 사용자가 작성한 외부 함수를 로드(load)하여 구동되며 사용자 요청을 기다린다. 사용자의 요청이 게이트웨이로 들어와서 와처가 호출되면 와처는 외부 함수를 호출하여 결과값을 반환한다.
+
+
 
 ### Runtime
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi  nullam vehicula ipsum. In massa tempor nec feugiat nisl pretium fusce id velit. Quam adipiscing vitae proin sagittis nisl rhoncus. Bibendum at  varius vel pharetra vel turpis nunc. Tincidunt tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Parturient montes nascetur  ridiculus mus. Felis imperdiet proin fermentum leo vel orci porta non. Ipsum a arcu cursus vitae congue. Dui ut ornare lectus sit. Tristique et egestas quis ipsum suspendisse ultrices gravida dictum. Aliquet  sagittis id consectetur purus. Sollicitudin aliquam ultrices sagittisorci a scelerisque purus. Lobortis mattis aliquam faucibus purus in massa. Curabitur vitae nunc sed velit dignissim sodales. Urna cursus eget nunc scelerisque viverra mauris in. Dignissim cras tincidunt lobortis feugiat. Est velit egestas dui id. Ut tellus elementum sagittis vitae et leo. Nullam ac tortor vitae purus.
+디지털 동반자 프레임워크는 함수의 런타임으로 아래와 같은 언어를 지원하며 함수를 생성 시 런타임을 명시한다.
+
+- Golang
+
+- Python3.6
+
+
+
+**Golang example**
+
+```bash
+$ dcf-cli function init echo --runtime go
+```
+
+**Python example**
+
+```bash
+$ dcf-cli function init echo --runtime python
+```
+
+
 
 ### Supported GPU
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi  nullam vehicula ipsum. In massa tempor nec feugiat nisl pretium fusce id velit. Quam adipiscing vitae proin sagittis nisl rhoncus. Bibendum at  varius vel pharetra vel turpis nunc. Tincidunt tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Parturient montes nascetur  ridiculus mus. Felis imperdiet proin fermentum leo vel orci porta non. Ipsum a arcu cursus vitae congue. Dui ut ornare lectus sit. Tristique et egestas quis ipsum suspendisse ultrices gravida dictum. Aliquet  sagittis id consectetur purus. Sollicitudin aliquam ultrices sagittisorci a scelerisque purus. Lobortis mattis aliquam faucibus purus in massa. Curabitur vitae nunc sed velit dignissim sodales. Urna cursus eget nunc scelerisque viverra mauris in. Dignissim cras tincidunt lobortis feugiat. Est velit egestas dui id. Ut tellus elementum sagittis vitae et leo. Nullam ac tortor vitae purus.
+클러스터 각 노드에 엔비디아 그래픽 드라이버가 설치되어있다면 디지털 동반자 프레임워크는 GPU를 함수에서 사용할 수 있게 지원한다. 
+
+> 전자부품연구원 휴먼IT센터의 클러스터 환경을 이용하는 경우 GPU 사용량에 대해서 전자부품연구원과 협의 후에 사용해야한다.
+
+
+
+#### GPU configuration of Function
+
+디지털 동반자 프레임워크에서 함수를 생성하면 만들어지는 **config.yaml**에서 GPU 관련 옵션을 변경하여 GPU 자원을 할당받을 수 있다.
+
+```yaml
+functions:
+  echo:
+    runtime: python
+    desc: ""
+    maintainer: ""
+    handler:
+      dir: ./src
+      file: ""
+      name: Handler
+    docker_registry: keti.asuscomm.com:5001
+    image: keti.asuscomm.com:5001/echo
+    limits:
+      memory: ""
+      cpu: ""
+      gpu: ""
+    build_args:
+    - CUDA_VERSION=9.0
+    - CUDNN_VERSION=7.4.1.5
+    - UBUNTU_VERSION=16.04
+dcf:
+  gateway: keti.asuscomm.com:32222
+```
+
+**Option of GPU**
+
+| Option                   | Description |
+| ------------------------ | ----------- |
+| limits.gpu               | 지원하는 GPU 개수 |
+| build_args.CUDNN_VERSION | CUDA 버전     |
+| build_args.CUDA_VERSION  | CuDNN 버전    |
 
 
 
 ## Get Started
 
-- DCF-CLI; DCF Command Line Interface
+- CLI installation
 
-  디지털 동반자 프레임워크에서 제공하는 CLI를 이용해 함수를 생성 / 빌드 / 테스트 / 배포 / 실행합니다.
+- Usage DCF-CLI
 
-  - Examples
-    - Text
-      1. Hello DCF
-    - Image
-      1. Object Detection(SSD; Single Shot Multi Detector)
-    - Voice
-      1. STFT (Short Time Fourier Transform)
-    - Streaming
-      1. Transfer Video
+  - runtime list
 
-- DCF Package
+  - Create function
 
-  디지털 동반자 프레임워크의 파이썬 패키지를 이용해서 파이썬에서 디지털 동반자 프레임워크를 사용합니다
+  - Write handler
 
-- Installation
+  - Build function
 
-  디지털 동반자 프레임워크를 미니쿠베(Minikube)를 이용하여 컴퓨터에 설치합니다.
+  - Test function
 
+  - Deploy function
+
+  - Invoke function
+
+  - Log of function
+
+  - change gateway address
+
+- Python package(dcfgrpc)
+
+- More Examples
+
+- Installation DCF in own environment
