@@ -25,41 +25,25 @@
 
 
 
-##### Gateway
+#### Gateway
 
 게이트웨이는 HTTP, gRPC 요청을 받아 모두 gRPC 요청으로 변경하며 요청에 따라 여러 작업을 수행한다. 주로 노드들 사이에 배포된 여러 함수들을 찾아서 호출하고 결과값을 반환해주는 역활을 하며 각 함수의 호출 수를 카운트한다.
 
 
 
-##### Watcher
+#### Watcher
 
 와처는 노드에 배포되어있는 함수 그 자체이다. 와처는 사용자가 작성한 외부 함수를 로드(load)하여 구동되며 사용자 요청을 기다린다. 사용자의 요청이 게이트웨이로 들어와서 와처가 호출되면 와처는 외부 함수를 호출하여 결과값을 반환한다.
 
 
 
-### Runtime
+#### Runtime
 
-디지털 동반자 프레임워크는 함수의 런타임으로 아래와 같은 언어를 지원하며 함수를 생성 시 런타임을 명시한다.
+디지털 동반자 프레임워크는 함수의 런타임으로 아래와 같은 언어를 지원한다
 
 - Golang
 
 - Python3.6
-
-
-
-**Golang example**
-
-```bash
-$ dcf-cli function init echo --runtime go
-```
-
-**Python example**
-
-```bash
-$ dcf-cli function init echo --runtime python
-```
-
-
 
 ### Supported GPU
 
@@ -109,11 +93,9 @@ dcf:
 
 ## Get Started
 
-- CLI installation
-
-- Usage DCF-CLI
-
-  - runtime list
+- DCF-CLI
+  - installation
+  - Inquire runtime list
 
   - Create function
 
@@ -129,10 +111,6 @@ dcf:
 
   - Log of function
 
-  - change gateway address
-
 - Python package(dcfgrpc)
-
 - More Examples
-
 - Installation DCF in own environment
