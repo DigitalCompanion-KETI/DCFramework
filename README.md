@@ -1,50 +1,111 @@
-# Digital Companion Framework (DCF)
+# DCF - Digital Companion Framework
 
-해당 문서는 디지털동반자 프레임워크에 대해서 설명하며, 이를 어떻게 사용하는지에 대한 가이드 문서입니다.
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/13328380/66203965-9e0b8d80-e6e4-11e9-948d-9faa71a5d97c.png?style=centerme"/>
+</p>
 
-​    
+---
 
-## DCF Introduce
+디지털 동반자 프레임워크는 인공지능 모델을 배포하기 위한 서버리스 프레임워크 입니다. 
 
+#### Highlights
 
-
-DCF는 FaaS(Function as a Service)의 구조를 따릅니다. 다양한 기관들은 DCF를 이용하여 규격화된 인공지능 모델을 배포할 수 있습니다. 아래 그림은 DCF의 구조에 대한 간략화된 설명입니다.
-
-
-
-각 기관의 개발자들은 `DCF CLI` 를 이용하여 인공지능 모델을 규격화하고, 배포할 수 있습니다. 규격화된 인공지능 모델은 Docker기반으로 배포됩니다.
-
-
-
-이렇게 규격화된 인공지능 모델은 오른쪽에 보이는 하나의 Function이 될 수 있으며, 일반 사용자(유저) 및 DCF를 이용해 상위 어플리케이션을 개발하려는 개발자들은 각 기관이 배포한 Function을 Call하는 것을 통해서 인공지능 모델의 추론 결과를 얻을 수 있습니다.
-
-
-
-![DCF-concept](https://user-images.githubusercontent.com/13328380/47892857-590c2500-de9d-11e8-8989-7821892b1a72.png)
+- 엔비디아 도커(Nvidia-Docker)를 이용한 인공지능 모델 패키징 지원
+- RESTful / gRPC 프로토콜 지원
+- 스트리밍 구조 지원
+- 함수 실행 테스트 지원
+- CLI를 이용한 쉬운 함수 배포
+- Auto-Scale 지원
 
 
 
-#### Reference
+## Overview of Digital Companion Framework
 
-[1. Apache OpenWhisk - 소개 및 아키텍쳐](https://developer.ibm.com/kr/cloud/2017/12/24/apache-openwhisk-intro-architecture/)
-
-[2. (번역) 서버리스 아키텍처](https://blog.aliencube.org/ko/2016/06/23/serverless-architectures/)
+![Architecture](https://user-images.githubusercontent.com/13328380/66216078-c1900180-e6ff-11e9-943b-463c55ddec3b.png)
 
 
 
-​    
+### Gateway
 
-## DCF Guide
-
-DCF 설치과정과 목적에 따라 **개발자**와 **사용자**로 분류됩니다.
+게이트웨이는 HTTP, gRPC 요청을 받아 모두 gRPC 요청으로 변경하며 요청에 따라 여러 작업을 수행한다. 주로 노드들 사이에 배포된 여러 함수들을 찾아서 호출하고 결과값을 반환해주는 역활을 하며 각 함수의 호출 수를 카운트한다.
 
 
 
+### Watcher
 
-[개발자를 위한 가이드라인](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2330/Developer/README.md) <br> : DCF 개발 환경 구축과 컴파일 과정을 설명합니다.
-
-
-
-[사용자를 위한 가이드라인](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2330/User/README.md) <br> : DCF CLI 설치와 사용법을 설명합니다.
+와처는 노드에 배포되어있는 함수 그 자체이다. 와처는 사용자가 작성한 외부 함수를 로드(load)하여 구동되며 사용자 요청을 기다린다. 사용자의 요청이 게이트웨이로 들어와서 와처가 호출되면 와처는 외부 함수를 호출하여 결과값을 반환한다.
 
 
+
+### Runtime
+
+디지털 동반자 프레임워크는 함수의 런타임으로 아래와 같은 언어를 지원한다
+
+- Golang
+- Python3.6
+
+
+
+## GPU Supported
+
+클러스터 각 노드에 엔비디아 그래픽 드라이버가 설치되어있다면 디지털 동반자 프레임워크는 GPU를 함수에서 사용할 수 있게 지원한다. 
+
+> 전자부품연구원 휴먼IT센터의 클러스터 환경을 이용하는 경우 GPU 사용량에 대해서 전자부품연구원과 협의 후에 사용해야한다.
+
+
+
+### GPU configuration of Function
+
+디지털 동반자 프레임워크에서 함수를 생성하면 만들어지는 **config.yaml**에서 GPU 관련 옵션을 변경하여 GPU 자원을 할당받을 수 있다.
+
+```yaml
+functions:
+  echo:
+    runtime: python
+    desc: ""
+    maintainer: ""
+    handler:
+      dir: ./src
+      file: ""
+      name: Handler
+    docker_registry: keti.asuscomm.com:5001
+    image: keti.asuscomm.com:5001/echo
+    limits:
+      memory: ""
+      cpu: ""
+      gpu: ""
+    build_args:
+    - CUDA_VERSION=9.0
+    - CUDNN_VERSION=7.4.1.5
+    - UBUNTU_VERSION=16.04
+dcf:
+  gateway: keti.asuscomm.com:32222
+```
+
+**Option of GPU**
+
+| Option                   | Description |
+| ------------------------ | ----------- |
+| limits.gpu               | 지원하는 GPU 개수 |
+| build_args.CUDNN_VERSION | CUDA 버전     |
+| build_args.CUDA_VERSION  | CuDNN 버전    |
+
+
+
+## Get Started
+
+- [DCF-CLI](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#dcf-cli)
+  - [1. installation](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#1-installation)
+  - [2. Inquire runtime list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#2-inquire-runtime-list)
+  - [3. Create function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#3-create-function)
+  - [4. Write handler](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#4-write-handler)
+  - [5. Build function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#5-build-function)
+  - [6. Test function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#6-test-function)
+  - [7. Deploy function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#7-deploy-function)
+  - [8. Function list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#8-function-list)
+  - [9. Invoke function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#9-invoke-function)
+  - [10. Log of function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#10-log-of-function)
+
+- Python package(dcfgrpc)
+- More Examples
+- Installation DCF in own environment
