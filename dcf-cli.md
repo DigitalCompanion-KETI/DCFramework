@@ -32,7 +32,7 @@ $ mv dcf-cli /usr/bin
 
 ### 1.2 Compile from source
 
-#### 1.2.1 Prerequiesites
+#### 1.2.1 Prerequisites
 
 ##### Golang
 
