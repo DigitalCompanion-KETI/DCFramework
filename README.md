@@ -94,18 +94,24 @@ dcf:
 
 ## Get Started
 
-- [DCF-CLI](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#dcf-cli)
-  - [1. installation](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#1-installation)
-  - [2. Inquire runtime list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#2-inquire-runtime-list)
-  - [3. Create function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#3-create-function)
-  - [4. Write handler](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#4-write-handler)
-  - [5. Build function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#5-build-function)
-  - [6. Test function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#6-test-function)
-  - [7. Deploy function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#7-deploy-function)
-  - [8. Function list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#8-function-list)
-  - [9. Invoke function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#9-invoke-function)
-  - [10. Log of function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#10-log-of-function)
-
+- [DCF-CLI](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md)
+  - [1. installation](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#1-installation)
+  - [2. Inquire runtime list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#2-inquire-runtime-list)
+  - [3. Create function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#3-create-function)
+  - [4. Write handler](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#4-write-handler)
+  - [5. Build function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#5-build-function)
+  - [6. Test function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#6-test-function)
+  - [7. Deploy function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#7-deploy-function)
+  - [8. Function list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#8-function-list)
+  - [9. Invoke function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#9-invoke-function)
+  - [10. Log of function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#10-log-of-function)
 - Python package(dcfgrpc)
-- More Examples
+- [More Examples](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md)
+  - [Hello DCF](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#hello-dcf)
+  - [Object Detection using SSD; Single Shot Multibox-Detector with GPU](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#object-detection-using-ssd-single-shot-multibox-detector-with-gpu)
+  - [STFT; Short Time Fourier Transform](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#stft-short-time-fourier-transform)
+  - Streaming
+    - Text
+    - Video
+    - Audio
 - Installation DCF in own environment
