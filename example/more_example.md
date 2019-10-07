@@ -174,7 +174,7 @@ $ git clone https://github.com/balancap/SSD-Tensorflow.git ssd
 checkpoint 폴더 안에 있는 모델의 가중치 파일을 압축해제한다.
 
 ```bash
-$ cd ssd/checkpoint
+$ cd ssd/checkpoints
 $ unzip ssd_300_vgg.ckpt.zip
 >>>
 Archive:  ssd_300_vgg.ckpt.zip
@@ -257,6 +257,7 @@ cd ../.. && \
 rm ${OPENCV_VERSION}.zip && \
 rm -r opencv-${OPENCV_VERSION}
 
+ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 ...
 ```
 
@@ -302,7 +303,7 @@ dcf:
 
 ```bash
 $ cd ssd-gpu/src/models/ssd
-$ vim prediction.py
+$ vim predict.py
 ```
 
 ```python
@@ -509,7 +510,7 @@ Step 2/47 : ARG REGISTRY
 빌드한 함수를 테스트한다
 
 ```bash
-$ cat ssd-gpu/src/models/ssd/demo/000001.jpg | base64 | dcf-cli function run ssd-gpu
+$ cat src/models/ssd/demo/000001.jpg | base64 | dcf-cli function run ssd-gpu
 >>>
 [{"ymin": "233", "xmin": "49", "ymax": "233", "xmax": "49", "class": "12", "confidence": "0.9948125"}, {"ymin": "233", "xmin": "49", "ymax": "233", "xmax": "49", "class": "12", "confidence": "0.9948125"}]
 ```
