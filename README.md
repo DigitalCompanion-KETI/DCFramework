@@ -93,23 +93,23 @@ dcf:
 
 ## Get Started
 
-- DCF-CLI
-  - installation
-  - Inquire runtime list
+- [DCF-CLI](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#dcf-cli)
+  - [installation](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#1-installation)
+  - [Inquire runtime list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#2-inquire-runtime-list)
 
-  - Create function
+  - [Create function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#3-create-function)
 
-  - Write handler
+  - [Write handler](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#4-write-handler)
 
-  - Build function
+  - [Build function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#5-build-function)
 
-  - Test function
+  - [Test function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#6-test-function)
 
-  - Deploy function
+  - [Deploy function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#7-deploy-function)
 
-  - Invoke function
+  - [Invoke function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#8-invoke-function)
 
-  - Log of function
+  - [Log of function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#9-log-of-function)
 
 - Python package(dcfgrpc)
 - More Examples
