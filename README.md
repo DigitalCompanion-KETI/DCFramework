@@ -17,35 +17,36 @@
 - CLI를 이용한 쉬운 함수 배포
 - Auto-Scale 지원
 
-## Overview of Digital Companion Framework
 
-### Architecture
+
+## Overview of Digital Companion Framework
 
 ![Architecture](https://user-images.githubusercontent.com/13328380/66216078-c1900180-e6ff-11e9-943b-463c55ddec3b.png)
 
 
 
-#### Gateway
+### Gateway
 
 게이트웨이는 HTTP, gRPC 요청을 받아 모두 gRPC 요청으로 변경하며 요청에 따라 여러 작업을 수행한다. 주로 노드들 사이에 배포된 여러 함수들을 찾아서 호출하고 결과값을 반환해주는 역활을 하며 각 함수의 호출 수를 카운트한다.
 
 
 
-#### Watcher
+### Watcher
 
 와처는 노드에 배포되어있는 함수 그 자체이다. 와처는 사용자가 작성한 외부 함수를 로드(load)하여 구동되며 사용자 요청을 기다린다. 사용자의 요청이 게이트웨이로 들어와서 와처가 호출되면 와처는 외부 함수를 호출하여 결과값을 반환한다.
 
 
 
-#### Runtime
+### Runtime
 
 디지털 동반자 프레임워크는 함수의 런타임으로 아래와 같은 언어를 지원한다
 
 - Golang
-
 - Python3.6
 
-### Supported GPU
+
+
+## GPU Supported
 
 클러스터 각 노드에 엔비디아 그래픽 드라이버가 설치되어있다면 디지털 동반자 프레임워크는 GPU를 함수에서 사용할 수 있게 지원한다. 
 
@@ -53,7 +54,7 @@
 
 
 
-#### GPU configuration of Function
+### GPU configuration of Function
 
 디지털 동반자 프레임워크에서 함수를 생성하면 만들어지는 **config.yaml**에서 GPU 관련 옵션을 변경하여 GPU 자원을 할당받을 수 있다.
 
@@ -94,22 +95,16 @@ dcf:
 ## Get Started
 
 - [DCF-CLI](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#dcf-cli)
-  - [installation](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#1-installation)
-  - [Inquire runtime list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#2-inquire-runtime-list)
-
-  - [Create function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#3-create-function)
-
-  - [Write handler](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#4-write-handler)
-
-  - [Build function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#5-build-function)
-
-  - [Test function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#6-test-function)
-
-  - [Deploy function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#7-deploy-function)
-
-  - [Invoke function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#8-invoke-function)
-
-  - [Log of function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#9-log-of-function)
+  - [1. installation](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#1-installation)
+  - [2. Inquire runtime list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#2-inquire-runtime-list)
+- [3. Create function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#3-create-function)
+  - [4. Write handler](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#4-write-handler)
+- [5. Build function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#5-build-function)
+  - [6. Test function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#6-test-function)
+- [7. Deploy function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#7-deploy-function)
+  - [8. Function list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#8-function-list)
+- [9. Invoke function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#9-invoke-function)
+  - [10. Log of function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/feature/%2337/dcf-cli.md#10-log-of-function)
 
 - Python package(dcfgrpc)
 - More Examples
