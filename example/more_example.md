@@ -12,7 +12,7 @@
   - Video
   - Audio
 
-
+<br/>
 
 ## Hello DCF
 
@@ -595,7 +595,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 #### handler.py
 
-아래와 같이 `handler.py` 파일을 작성합니다.
+아래와 같이 `handler.py` 파일을 작성한다
 
 ```python
 # -*- coding: utf-8 -*-
@@ -607,7 +607,7 @@ import numpy as np
 import matplotlib as m
 from PIL import Image
 
-# 함수에서는 디스플레이가 불가능하니, 디스플레이 옵션을 사용하지 않게 변경해줍니다.
+# 함수에서는 디스플레이가 불가능하니, 디스플레이 옵션을 사용하지 않게 변경해준다
 if os.environ.get('DISPLAY','') == '':
     print('no display found. Using non-interactive Agg backend')
     m.use('Agg')
@@ -758,42 +758,3 @@ iVBORw......XqWY4HTbaj+3/xNf634UHr7xLvnzb2f/zL8Cdf6j14yamriQAAAABJRU5ErkJggg==
 출력된 결과를 Base64 디코딩하여 이미지를 확인해보면 아래와 같은 이미지를 확인할 수 있다. Base64 디코딩은 [여기](https://codebeautify.org/base64-to-image-converter)에서 할 수 있다.
 
 ![stft](https://user-images.githubusercontent.com/13328380/48114112-171a1f00-e2a1-11e8-9347-fd31f7324577.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
