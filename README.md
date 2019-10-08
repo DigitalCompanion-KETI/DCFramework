@@ -102,6 +102,6 @@ dcf:
 
 #### TODO
 
-- [] Python package(dcfgrpc)
+-[] Python package(dcfgrpc)
 
-- [] Installation DCF in own environment
+-[] Installation DCF in own environment
