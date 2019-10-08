@@ -2,8 +2,6 @@
 
 본 장에서는 Streaming  기능을 위한 통신 Architecture와 Protobuf 컴파일 방법을 소개한다. 
 
-
-
 ### Architecture
 
 DCF 플랫폼의 스트리밍 통신 환경은 gRPC 를 통해 구현되었다. gRPC는 HTTP2 기반의 프로토콜로 개발 언어의 호환성과 빠른 속도로 마이크로 서비스간 통신에 권장되는 프로토콜이다. 현재 gRPC 에서 제공하는 통신 환경은 4가지가 있으며 다음과 같다.
@@ -14,8 +12,6 @@ DCF 플랫폼의 스트리밍 통신 환경은 gRPC 를 통해 구현되었다. 
 - Server Streaming RPC, 클라이언트가 서버로 통신 요청을 보내 스트림 포트 정보를 얻는다. 이 스트림 포트를 통해 서버에서 응답받는 스트리밍 데이터들을 처리한다.
 - Client Streaming RPC, 클라이언트가 서버를 통해 스트리밍 데이터를 서버로 전송한다. 클라이언트가 메시지 작성이 끝나면 서버가 메시지를 읽고 응답을 보낼까지 기다린다.
 - Bi-Directional Streaming RPC, read/write stream을 양방향으로 스트리밍 데이터를 보낼 수 있다. 두 개의 stream이 독립적으로 동작하기 때문에 서버/클라이언트는 순서에 관계없이 교대로 읽기/쓰기 처리가 가능하다.
-  
-  
 
 현재 DCF 플랫폼 내 통신 환경은 Unary, Bi-Directional Streaming을 제공 중이며 Sever Streaming 을 구현 중이다.
 
@@ -51,20 +47,14 @@ python -m grpc_tools.protoc -I${GOPATH}/src/github.com/digitalcompanion-keti/pb 
 
 컴파일 후 실행 폴더 내 `gateway_pb2.py` 와 `gateway_pb2_gprc.py` 이 생성된다.
 
-
-
 ### Streaming Example
 
 DCF 플랫폼의 Streaming 을 위한 예제를 소개한다. `python client` 와 `Hanlder.py `함수를 구현할 것이며 구성은 다음과 같다.
 
-
-
-Bi-Directional Streaming RPC for Video 
-
-[개발중] Server Streaming RPC with Stateful
+- [Bi-Directional Streaming RPC for Video](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/streaming/video)
 
 
 
+#### TODO
 
-
-
+- [ ] Server Streaming RPC with Stateful
