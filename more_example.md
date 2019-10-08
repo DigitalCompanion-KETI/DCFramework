@@ -749,7 +749,7 @@ Step 2/47 : ARG REGISTRY
 빌드한 함수를 테스트한다. 
 
 ```bash
-$ cat 57007r.wav | dcf function call stft
+$ cat 57007r.wav | dcf-cli function invoke stft
 >>
 iVBORw......XqWY4HTbaj+3/xNf634UHr7xLvnzb2f/zL8Cdf6j14yamriQAAAABJRU5ErkJggg==
 ```
