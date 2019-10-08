@@ -35,7 +35,23 @@ Config file written: config.yaml
 아래와 같이 `handler.py`를 작성한다.
 
 ```python
+import numpy as np 
+import cv2 
 
+def Handler(req):
+    # Bytes -> frame 
+    nparr = np.frombuffer(req.input, np.uint8)
+    frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+    
+    """
+    frame 데이터 처리 
+    """
+
+    # Frame -> Bytes
+    res = cv2.imencode('.jpg', frame)[1].tostring()
+
+    return res
 ```
 
 #### requirements.txt
