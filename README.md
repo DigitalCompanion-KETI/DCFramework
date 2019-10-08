@@ -92,7 +92,7 @@ dcf:
   - [9. Invoke function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#9-invoke-function)
   - [10. Log of function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#10-log-of-function)
 - Python package(dcfgrpc)
-- [More Examples](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md)
+- More Examples
   - [Hello DCF](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#hello-dcf)
   - [Object Detection using SSD; Single Shot Multibox-Detector with GPU](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#object-detection-using-ssd-single-shot-multibox-detector-with-gpu)
   - [STFT; Short Time Fourier Transform](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#stft-short-time-fourier-transform)
