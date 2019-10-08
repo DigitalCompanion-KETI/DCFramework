@@ -378,5 +378,3 @@ $ cat src/models/ssd/demo/000001.jpg | base64 | dcf-cli function run ssd-gpu
 >>>
 [{"ymin": "233", "xmin": "49", "ymax": "233", "xmax": "49", "class": "12", "confidence": "0.9948125"}, {"ymin": "233", "xmin": "49", "ymax": "233", "xmax": "49", "class": "12", "confidence": "0.9948125"}]
 ```
-
-## 
