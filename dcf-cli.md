@@ -61,7 +61,18 @@ $ go env
 
 #### 1.2.2 Compile
 
-##### 1.2.2.1 DCF-CLI Clone from Github
+##### 1.2.2.1 pb Clone from Github
+
+디지털 동반자 프레임워크 GitHub에서 pb를 클론받는다.
+
+```bash
+$ cd $GOPATH/src/github.com
+$ git clone https://github.com/DigitalCompanion-KETI/pb.git
+```
+
+
+
+##### 1.2.2.2 DCF-CLI Clone from Github
 
 디지털 동반자 프레임워크 GitHub에서 DCF-CLI를 클론받고 디렉토리에 진입한다.
 
@@ -72,7 +83,9 @@ $ git clone https://github.com/digitalcompanion-keti/dcf-cli.git
 $ go get https://github.com/digitalcompanion-keti/dcf-cli
 ```
 
-##### 1.2.2.2 Build DCF-CLI
+
+
+##### 1.2.2.3 Build DCF-CLI
 
 아래 명령어를 이용하여 DCF-CLI를 빌드한다.
 
@@ -80,6 +93,8 @@ $ go get https://github.com/digitalcompanion-keti/dcf-cli
 $ go build
 $ go install
 ```
+
+
 
 ## 2 Inquire runtime list
 
@@ -205,7 +220,7 @@ abcdb1a22c59: Preparing
 ```bash
 $ dcf-cli function list
 Function           Image                   Maintainer         Invocations    Replicas      Status        Description                             
-echo               $(repo)/echo                               0             1             Ready 
+echo               $(repo)/echo                               0             1             Ready
 ```
 
 ## 9 Invoke function
