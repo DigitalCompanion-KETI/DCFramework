@@ -91,13 +91,17 @@ dcf:
   - [8. Function list](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#8-function-list)
   - [9. Invoke function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#9-invoke-function)
   - [10. Log of function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#10-log-of-function)
-- Python package(dcfgrpc)
-- More Examples
-  - [Hello DCF](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#hello-dcf)
-  - [Object Detection using SSD; Single Shot Multibox-Detector with GPU](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#object-detection-using-ssd-single-shot-multibox-detector-with-gpu)
-  - [STFT; Short Time Fourier Transform](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#stft-short-time-fourier-transform)
-  - [Streaming](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#streaming)
-    - [Web Cam & Video Fileo](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#streaming-example-for-video)
-    - Audio
-    - Text [개발 중]
-- Installation DCF in own environment
+- [More Examples](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples)
+  - [Hello DCF](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/hello_dcf)
+  - [Object Detection using SSD; Single Shot Multibox-Detector with GPU](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/object_detection)
+  - [STFT; Short Time Fourier Transform](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/stft)
+  - [Streaming](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/streaming)
+    - [Web Cam & Video Fileo](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/streaming/video)
+
+
+
+#### TODO
+
+[] Python package(dcfgrpc)
+
+[] Installation DCF in own environment
