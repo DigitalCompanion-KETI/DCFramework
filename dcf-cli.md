@@ -10,8 +10,6 @@ DCF-CLI는 터미널을 이용해서 DCF와 다음과 같은 작업을 할 수 �
 - 함수 호출
 - 함수 로그 확인
 
-
-
 ## 1 Installation
 
 DCF-CLI를 설치하는 방법은 아래와 같이 두가지 방법으로 설치할 수 있다.
@@ -19,16 +17,12 @@ DCF-CLI를 설치하는 방법은 아래와 같이 두가지 방법으로 설치
 - 컴파일 되어있는 바이너리 파일 다운로드
 - 소스코드로 부터 다운로드
 
-
-
 ### 1.1 Download Binary
 
 ```bash
 $ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v1.0.0/dcf-cli
 $ mv dcf-cli /usr/bin
 ```
-
-
 
 ### 1.2 Compile from source
 
@@ -45,8 +39,6 @@ $ sudo tar -xvf go1.12.5.linux-amd64.tar.gz
 $ sudo mv go /usr/local
 ```
 
-
-
 `~/.bashrc`파일을 수정하여 환경변수 설정을 진행 및 적용한다
 
 ```bash
@@ -60,16 +52,12 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 $ source ~/.bash
 ```
 
-
-
 환경 변수 설정을 완료했다면 Go 설치를 확인한다.
 
 ```bash
 $ go version
 $ go env
 ```
-
-
 
 #### 1.2.2 Compile
 
@@ -84,8 +72,6 @@ $ git clone https://github.com/digitalcompanion-keti/dcf-cli.git
 $ go get https://github.com/digitalcompanion-keti/dcf-cli
 ```
 
-
-
 ##### 1.2.2.2 Build DCF-CLI
 
 아래 명령어를 이용하여 DCF-CLI를 빌드한다.
@@ -95,9 +81,7 @@ $ go build
 $ go install
 ```
 
-
-
-##  2 Inquire runtime list
+## 2 Inquire runtime list
 
 디지털 동반자 프레임워크는 함수 런타임으로 Python과 GO를 지원한다. 
 
@@ -110,8 +94,6 @@ Supported Runtimes are:
 - python
 - go
 ```
-
-
 
 ## 3 Create function
 
@@ -126,9 +108,7 @@ Rewrite the function handler code in echo/src directory
 Config file written: config.yaml
 ```
 
-
-
-## 4 Write handler 
+## 4 Write handler
 
 DCF-CLI를 이용하여 함수를 만들었다면 `src/handler.py`에  `Handler`라는 클래스가 작성되어있음을 확인할 수 있다. 사용자 정의 함수는 `Handler`클래스의 내부에 작성한다.
 
@@ -143,8 +123,6 @@ class Handler:
     def __call__(self, req):
         return req.input
 ```
-
-
 
 ## 5 Build function
 
@@ -170,8 +148,6 @@ Step 12/45 : ARG UBUNTU_VERSION=16.04
 Step 13/45 : ARG CUDA_VERSION_BACKUP=${CUDA_VERSION}
 ...
 ```
-
-
 
 ## 6 Test function
 
@@ -200,10 +176,7 @@ Call echo in user's local
 Handler request: Hello
 
 Handler reply: Hello
-
 ```
-
-
 
 ## 7 Deploy function
 
@@ -225,19 +198,15 @@ abcdb1a22c59: Preparing
 ...
 ```
 
-
-
 ## 8 Function list
 
 함수를 배포했다면 `list`라는 명령어를 이용하여 디지털 동반자 프레임워크에 배포되어있는 함수를 확인할 수 있다. 함수의 상태(Status)가 준비(Ready) 상태라면 함수를 호출할 수 있다. 만약 함수가 긴 시간동안 준비되지 않음(Not Ready)를 유지한다면 **10. Log of function**을 참고하여 함수가 배포되지 않는 이유를 확인할 수 있다.
 
 ```bash
 $ dcf-cli function list
-Function       	Image               	Maintainer     	Invocations	Replicas  	Status    	Description                             
-echo           	$(repo)/echo        	               	0         	1         	Ready 
+Function           Image                   Maintainer         Invocations    Replicas      Status        Description                             
+echo               $(repo)/echo                               0             1             Ready 
 ```
-
-
 
 ## 9 Invoke function
 
@@ -250,8 +219,6 @@ $ echo "Hello DCF" | dcf-cli invoke [function name]
 Hello, DCF
 ```
 
-
-
 ## 10 Log of function
 
 배포된 함수가 올바르게 작동하지 않는다면 `log`명령어를 사용하여 함수의 로그 정보를 확인할 수 있다.
@@ -261,4 +228,3 @@ $ dcf-cli function log [function name]
 >>> dcf-cli function log echo
 Error: did not get log: rpc error: code = Internal desc = the server rejected our request for an unknown reason (get pods echo-77446d455f-kpqlc)
 ```
-

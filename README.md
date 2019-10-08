@@ -17,25 +17,17 @@
 - CLI를 이용한 쉬운 함수 배포
 - Auto-Scale 지원
 
-
-
 ## Overview of Digital Companion Framework
 
 ![Architecture](https://user-images.githubusercontent.com/13328380/66216078-c1900180-e6ff-11e9-943b-463c55ddec3b.png)
-
-
 
 ### Gateway
 
 게이트웨이는 HTTP, gRPC 요청을 받아 모두 gRPC 요청으로 변경하며 요청에 따라 여러 작업을 수행한다. 주로 노드들 사이에 배포된 여러 함수들을 찾아서 호출하고 결과값을 반환해주는 역활을 하며 각 함수의 호출 수를 카운트한다.
 
-
-
 ### Watcher
 
 와처는 노드에 배포되어있는 함수 그 자체이다. 와처는 사용자가 작성한 외부 함수를 로드(load)하여 구동되며 사용자 요청을 기다린다. 사용자의 요청이 게이트웨이로 들어와서 와처가 호출되면 와처는 외부 함수를 호출하여 결과값을 반환한다.
-
-
 
 ### Runtime
 
@@ -44,15 +36,11 @@
 - Golang
 - Python3.6
 
-
-
 ## GPU Supported
 
 클러스터 각 노드에 엔비디아 그래픽 드라이버가 설치되어있다면 디지털 동반자 프레임워크는 GPU를 함수에서 사용할 수 있게 지원한다. 
 
 > 전자부품연구원 휴먼IT센터의 클러스터 환경을 이용하는 경우 GPU 사용량에 대해서 전자부품연구원과 협의 후에 사용해야한다.
-
-
 
 ### GPU configuration of Function
 
@@ -90,8 +78,6 @@ dcf:
 | build_args.CUDNN_VERSION | CUDA 버전     |
 | build_args.CUDA_VERSION  | CuDNN 버전    |
 
-
-
 ## Get Started
 
 - [DCF-CLI](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md)
@@ -106,12 +92,12 @@ dcf:
   - [9. Invoke function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#9-invoke-function)
   - [10. Log of function](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md#10-log-of-function)
 - Python package(dcfgrpc)
-- [More Examples](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md)
+- More Examples
   - [Hello DCF](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#hello-dcf)
   - [Object Detection using SSD; Single Shot Multibox-Detector with GPU](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#object-detection-using-ssd-single-shot-multibox-detector-with-gpu)
   - [STFT; Short Time Fourier Transform](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#stft-short-time-fourier-transform)
-  - Streaming
-    - Text
-    - Video
+  - [Streaming](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#streaming)
+    - [Web Cam & Video Fileo](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/more_example.md#streaming-example-for-video)
     - Audio
+    - Text [개발 중]
 - Installation DCF in own environment
