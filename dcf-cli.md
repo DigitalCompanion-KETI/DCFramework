@@ -67,7 +67,9 @@ $ go env
 
 ```bash
 $ cd $GOPATH/src/github.com
-$ git clone https://github.com/DigitalCompanion-KETI/pb.git
+$ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v1.0.0/pb-master.zip
+$ unzip pb-master.zip
+$ mv pb-master pb
 ```
 
 
@@ -78,9 +80,9 @@ $ git clone https://github.com/DigitalCompanion-KETI/pb.git
 
 ```bash
 $ cd $GOPATH/src/github.com
-$ git clone https://github.com/digitalcompanion-keti/dcf-cli.git
-# OR
-$ go get https://github.com/digitalcompanion-keti/dcf-cli
+$ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v1.0.0/dcf-cli-master.zip
+$ unzip dcf-cli-master.zip
+$ mv dcf-cli-master dcf-cli
 ```
 
 
