@@ -63,7 +63,7 @@ $ go env
 
 ##### 1.2.2.1 pb Clone from Github
 
-디지털 동반자 프레임워크 GitHub에서 pb를 클론받는다.
+디지털 동반자 프레임워크의 pb 저장소를 다운받는다.
 
 ```bash
 $ cd $GOPATH/src/github.com
@@ -76,7 +76,7 @@ $ mv pb-master pb
 
 ##### 1.2.2.2 DCF-CLI Clone from Github
 
-디지털 동반자 프레임워크 GitHub에서 DCF-CLI를 클론받고 디렉토리에 진입한다.
+디지털 동반자 프레임워크 DCF-CLI 저장소를 다운받는다.
 
 ```bash
 $ cd $GOPATH/src/github.com
