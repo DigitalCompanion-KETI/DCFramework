@@ -96,6 +96,60 @@ $ go install
 
 
 
+### 1.3 Docker Private Registry Configuration
+
+디지털 동반자 프레임워크의 도커 저장소에 로그인하기 위한 설정을 진행한다
+
+
+
+#### 1.3.1 Insecure Registry
+
+ `daemon.json`파일을 아래와 같이 작성한다
+
+```bash
+$ sudo vim /etc/docker/daemon.json
+```
+
+```json
+{
+    "insecure-registries": ["keti.asuscomm.com:5001"]
+}
+```
+
+
+
+작성한 후 Docker를 재시작한다
+
+```bash
+$ sudo service docker restart
+```
+
+
+
+Insecure registry 등록이 잘 되어있는지 아래 명령어로 확인한다
+
+```bash
+$ sudo docker info
+>>
+Insecure Registries:
+ keti.asuscomm.com:5001
+```
+
+
+
+#### 1.3.2 Docker Login
+
+디지털 동반자 프레임워크 도커 저장소에 로그인한다
+
+```bash
+$ docker login keti.asuscomm.com:5001
+>>
+Username: elwlxjfehdqkswk
+Password: elwlxjfehdqkswk
+```
+
+
+
 ## 2 Inquire runtime list
 
 디지털 동반자 프레임워크는 함수 런타임으로 Python과 GO를 지원한다. 
