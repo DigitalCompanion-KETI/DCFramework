@@ -63,10 +63,15 @@ $ go env
 
 ##### 1.2.2.1 pb Clone from Github
 
+먼저 해당 디렉토리가 없는지 확인하고 디렉토리를 생성한다.
+```bash
+$ mkdir $GOPATH/src/github.com/digitalcompanion-keti
+```
+
 디지털 동반자 프레임워크의 pb 저장소를 다운받는다.
 
 ```bash
-$ cd $GOPATH/src/github.com
+$ cd $GOPATH/src/github.com/digitalcompanion-keti
 $ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v1.0.0/pb-master.zip
 $ unzip pb-master.zip
 $ mv pb-master pb
@@ -79,7 +84,7 @@ $ mv pb-master pb
 디지털 동반자 프레임워크 DCF-CLI 저장소를 다운받는다.
 
 ```bash
-$ cd $GOPATH/src/github.com
+$ cd $GOPATH/src/github.com/digitalcompanion-keti
 $ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v1.0.0/dcf-cli-master.zip
 $ unzip dcf-cli-master.zip
 $ mv dcf-cli-master dcf-cli
@@ -92,6 +97,7 @@ $ mv dcf-cli-master dcf-cli
 아래 명령어를 이용하여 DCF-CLI를 빌드한다.
 
 ```bash
+$ cd dcf-cli
 $ go build
 $ go install
 ```
