@@ -291,8 +291,8 @@ echo               $(repo)/echo                               0             1   
 
 ```bash
 $ dcf-cli function list
-$ echo "Hello DCF" | dcf-cli invoke [function name]
->>> echo "Hello DCF" | dcf-cli invoke echo
+$ echo "Hello DCF" | dcf-cli function invoke [function name]
+>>> echo "Hello DCF" | dcf-cli function invoke echo
 Hello, DCF
 ```
 
