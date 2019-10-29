@@ -198,7 +198,7 @@ pillow
 작성한 함수를 빌드한다
 
 ```bash
-$ dcf-cli function builf -f config.yaml -v
+$ dcf-cli function build -f config.yaml -v
 >>>
 Building function (stft) ...
 Sending build context to Docker daemon  325.8MB
