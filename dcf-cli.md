@@ -49,7 +49,7 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-$ source ~/.bash
+$ source ~/.bashrc
 ```
 
 환경 변수 설정을 완료했다면 Go 설치를 확인한다.
@@ -65,7 +65,7 @@ $ go env
 
 먼저 해당 디렉토리가 없는지 확인하고 디렉토리를 생성한다.
 ```bash
-$ mkdir $GOPATH/src/github.com/digitalcompanion-keti
+$ mkdir -p $GOPATH/src/github.com/digitalcompanion-keti
 ```
 
 디지털 동반자 프레임워크의 pb 저장소를 다운받는다.
