@@ -84,6 +84,7 @@ if os.environ.get('DISPLAY','') == '':
 
 import matplotlib.pyplot as plt
 import scipy.io.wavfile as wav
+#import wavio as wav
 from numpy.lib import stride_tricks
 
 
@@ -134,7 +135,7 @@ def logscale_spec(spec, sr=44100, factor=20.):
 """ plot spectrogram"""
 def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
     # 받은 audio raw bytes파일을 wav.read함수를 이용하여 load
-    samplerate, samples = wav.read(io.BytesIO(audiopath))
+    samplerate, samples = wav.read(io.BytesIO(audiopath), mmap=True)
 
     s = stft(samples, binsize)
 
@@ -179,7 +180,7 @@ class Handler:
 
         # PNG포맷으로 변환된 이미지를 base64 문자열로 인코딩
         base64Str = base64.b64encode(rawBytes.read()).decode("utf-8")
-        return base64Str    
+        return base64Str
 ```
 
 #### requirements.txt
@@ -187,7 +188,7 @@ class Handler:
 필요한 패키지 파일을 requirements.txt에 명시한다
 
 ```bash
-numpy
+numpy==1.16.4
 matplotlib
 scipy
 pillow
