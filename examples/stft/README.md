@@ -1,6 +1,6 @@
 ## STFT; Short Time Fourier Transform
 
-STFT 예제는 `*.wav`파일을 전송하고 결과값으로 STFT; Short Time Fourier Transform을 거친 영상을 결과값으로 받는 예제이다. 본 예제에서 사용할 음성 파일은 [링크](https://www.loc.gov/item/00694083/)에서 다운로드 할 수 있다.
+STFT 예제는 `*.wav`파일을 전송하고 결과값으로 STFT; Short Time Fourier Transform을 거친 영상을 결과값으로 받는 예제이다. 본 예제에서 사용할 음성 파일은 [링크](http://www.deusx.com/audio/gunreload33.wav)에서 다운로드 할 수 있다.
 
 함수의 구동 순서는 아래와 같다.
 
