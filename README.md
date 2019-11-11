@@ -78,6 +78,26 @@ dcf:
 | build_args.CUDNN_VERSION | CUDA 버전     |
 | build_args.CUDA_VERSION  | CuDNN 버전    |
 
+### GPU configuration of Version
+
+GPU를 구동하기 위한 CUDA toolkit, Driver 및 GPU 아키텍처 버전은 밑의 표를 참고하고나 [링크](%5Bhttps://github.com/NVIDIA/nvidia-docker/wiki/CUDA#requirements%5D(https://github.com/NVIDIA/nvidia-docker/wiki/CUDA#requirements)에서 확인한다.
+
+| CUDA toolkit version | Driver version         | GPU architecture                                                                                        |
+| -------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------- |
+| 6.5                  | >= 340.29              | >= 2.0 (Fermi)                                                                                          |
+| 7.0                  | >= 346.46              | >= 2.0 (Fermi)                                                                                          |
+| 7.5                  | >= 352.39              | >= 2.0 (Fermi)                                                                                          |
+| 8.0                  | == 361.93 or >= 375.51 | == 6.0 (P100)                                                                                           |
+| 8.0                  | >= 367.48              | >= 2.0 (Fermi)                                                                                          |
+| 9.0                  | >= 384.81              | >= 3.0 (Kepler)                                                                                         |
+| 9.1                  | >= 387.26              | >= 3.0 (Kepler)                                                                                         |
+| 9.2                  | >= 396.26              | >= 3.0 (Kepler)                                                                                         |
+| 10.0                 | >= 384.111, < 385.00   | [Tesla GPUs](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#flexible-upgrade-path) |
+| 10.0                 | >= 410.48              | >= 3.0 (Kepler)                                                                                         |
+| 10.1                 | >= 384.111, < 385.00   | [Tesla GPUs](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#flexible-upgrade-path) |
+| 10.1                 | >=410.72, < 411.00     | [Tesla GPUs](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#flexible-upgrade-path) |
+| 10.1                 | >= 418.39              | >= 3.0 (Kepler)                                                                                         |
+
 ## Get Started
 
 - [DCF-CLI](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md)
@@ -97,8 +117,6 @@ dcf:
   - [STFT; Short Time Fourier Transform](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/stft)
   - [Streaming](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/streaming)
     - [Web Cam & Video Fileo](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/streaming/video)
-
-
 
 #### TODO
 
