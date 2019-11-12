@@ -16,7 +16,7 @@ DCF-CLI는 터미널을 이용해서 DCF와 다음과 같은 작업을 할 수 �
 
 | CPU                                                                                                                                                                            | GPU                                                                                                                                                                                                                                                                           |
 |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| [Docker 19.03 설치](https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/ubuntu/) | [Docker 19.03 설치](https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/ubuntu/), [Nvidia-Docker 2 설치]([https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0) |
+| [Docker 19.03 설치](https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/ubuntu/) | [Docker 19.03 설치](https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/ubuntu/), [Nvidia-Docker 2 설치](https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0)) |
 
 또한, local nvidia-docker2에서 `GPU`를 구동하기 위해선 아래와 같이 확인 사항이 필요합니다. 
 
