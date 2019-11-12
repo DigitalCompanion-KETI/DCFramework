@@ -10,6 +10,34 @@ DCF-CLI는 터미널을 이용해서 DCF와 다음과 같은 작업을 할 수 �
 - 함수 호출
 - 함수 로그 확인
 
+## prerequesit
+
+플랫폼 구동 환경(CPU, GPU)의 설치 사항은 다음의 표에서 확인 할 수 있습니다. 
+
+| CPU                                                                                                                                                                            | GPU                                                                                                                                                                                                                                                                           |
+|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| [Docker 19.03 설치](%5Bhttps://docs.docker.com/v17.09/engine/installation/linux/docker-ce/ubuntu/%5D(https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/ubuntu/) | [Docker 19.03 설치](%5Bhttps://docs.docker.com/v17.09/engine/installation/linux/docker-ce/ubuntu/%5D(https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/ubuntu/), [Nvidia-Docker 2 설치]([https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0) |
+
+또한, local nvidia-docker2에서 `GPU`를 구동하기 위해선 아래와 같이 확인 사항이 필요합니다. 
+
+* [CUDA toolkit 을 사용하기 위해 요구되는 최소 Driver 버전과 GPU 아키텍쳐 요구버전 확인]([https://github.com/NVIDIA/nvidia-docker/wiki/CUDA#requirements](https://github.com/NVIDIA/nvidia-docker/wiki/CUDA#requirements)
+  
+  | CUDA toolkit version | Driver version         | GPU architecture                                                                                        |
+  | -------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------- |
+  | 6.5                  | >= 340.29              | >= 2.0 (Fermi)                                                                                          |
+  | 7.0                  | >= 346.46              | >= 2.0 (Fermi)                                                                                          |
+  | 7.5                  | >= 352.39              | >= 2.0 (Fermi)                                                                                          |
+  | 8.0                  | == 361.93 or >= 375.51 | == 6.0 (P100)                                                                                           |
+  | 8.0                  | >= 367.48              | >= 2.0 (Fermi)                                                                                          |
+  | 9.0                  | >= 384.81              | >= 3.0 (Kepler)                                                                                         |
+  | 9.1                  | >= 387.26              | >= 3.0 (Kepler)                                                                                         |
+  | 9.2                  | >= 396.26              | >= 3.0 (Kepler)                                                                                         |
+  | 10.0                 | >= 384.111, < 385.00   | [Tesla GPUs](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#flexible-upgrade-path) |
+  | 10.0                 | >= 410.48              | >= 3.0 (Kepler)                                                                                         |
+  | 10.1                 | >= 384.111, < 385.00   | [Tesla GPUs](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#flexible-upgrade-path) |
+  | 10.1                 | >=410.72, < 411.00     | [Tesla GPUs](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#flexible-upgrade-path) |
+  | 10.1                 | >= 418.39              | >= 3.0 (Kepler)                                                                                         |
+
 ## 1 Installation
 
 DCF-CLI를 설치하는 방법은 아래와 같이 두가지 방법으로 설치할 수 있다.
@@ -64,6 +92,7 @@ $ go env
 ##### 1.2.2.1 pb Clone from Github
 
 먼저 해당 디렉토리가 없는지 확인하고 디렉토리를 생성한다.
+
 ```bash
 $ mkdir -p $GOPATH/src/github.com/digitalcompanion-keti
 ```
@@ -77,8 +106,6 @@ $ unzip pb-master.zip
 $ mv pb-master pb
 ```
 
-
-
 ##### 1.2.2.2 DCF-CLI Clone from Github
 
 디지털 동반자 프레임워크 DCF-CLI 저장소를 다운받는다.
@@ -90,8 +117,6 @@ $ unzip dcf-cli-master.zip
 $ mv dcf-cli-master dcf-cli
 ```
 
-
-
 ##### 1.2.2.3 Build DCF-CLI
 
 아래 명령어를 이용하여 DCF-CLI를 빌드한다.
@@ -102,13 +127,9 @@ $ go build
 $ go install
 ```
 
-
-
 ### 1.3 Docker Private Registry Configuration
 
 디지털 동반자 프레임워크의 도커 저장소에 로그인하기 위한 설정을 진행한다
-
-
 
 #### 1.3.1 Insecure Registry
 
@@ -124,15 +145,11 @@ $ sudo vim /etc/docker/daemon.json
 }
 ```
 
-
-
 작성한 후 Docker를 재시작한다
 
 ```bash
 $ sudo service docker restart
 ```
-
-
 
 Insecure registry 등록이 잘 되어있는지 아래 명령어로 확인한다
 
@@ -142,8 +159,6 @@ $ sudo docker info
 Insecure Registries:
  keti.asuscomm.com:5001
 ```
-
-
 
 #### 1.3.2 Docker Login
 
@@ -155,8 +170,6 @@ $ docker login keti.asuscomm.com:5001
 Username: elwlxjfehdqkswk
 Password: elwlxjfehdqkswk
 ```
-
-
 
 ## 2 Inquire runtime list
 
