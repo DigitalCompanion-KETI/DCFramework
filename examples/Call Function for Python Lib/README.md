@@ -1,7 +1,14 @@
 # Call Function for Python Lib
 
-해당 예제는 `python` 으로 클라이언트를 생성하여 DCF 함수를 호출하는 예제이다.  또한, 통신할 DCF 함수를 서버에 미리 배포해야 하며 본 예제에서는 앞 예제 함수 중 `echo` 함수를 호출한다.  
+해당 예제는 `python` 으로 DCF 클라이언트를 생성하여 DCF 함수를 호출하는 예제이다.  
 
+
+###  prerequisit
+
+클라이언트를 생성하기 전, 통신할 DCF 함수를 서버에 미리 배포해야 하며 
+
+본 예제에서는 앞 예제 중 [DCF-CLI](https://github.com/DigitalCompanion-KETI/DCFramework/blob/master/dcf-cli.md
+) 에서 생성한 `echo` 함수를 사용한다. 
 
 
 ### Install Python library
