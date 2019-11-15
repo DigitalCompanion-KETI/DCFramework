@@ -10,6 +10,8 @@
 
 - [STFT; Short Time Fourier Transform](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/stft)
 
+- [Call Function for Python Lib](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/Call_Function_for_Python_Lib)
+
 - [Streaming](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/streaming)
 
   - [Web Cam & Video Fileo](https://github.com/DigitalCompanion-KETI/DCFramework/tree/master/examples/streaming/video)

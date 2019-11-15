@@ -144,8 +144,8 @@ $ python3 client.py streaming 0
 
 ![dcf-streaming](https://user-images.githubusercontent.com/46108451/66360467-31c7ad00-e9b6-11e9-9e8a-bd34b769aab0.PN)![dcfstreaming](https://user-images.githubusercontent.com/46108451/66360467-31c7ad00-e9b6-11e9-9e8a-bd34b769aab0.PNG)
 
-다음 명령어는 폴더내 동영상을 읽어 streaming 함수로 처리하는 명령어이다.
+다음 명령어는 함수 디렉토리 내 동영상을 읽어 streaming 함수로 처리하는 명령어이다. 
 
 ```python
-$ python client.py streaming fancy.mp4
+$ python client.py streaming --video wild.mp4
 ```
