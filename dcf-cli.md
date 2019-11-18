@@ -277,6 +277,128 @@ Handler request: Hello
 Handler reply: Hello
 ```
 
+
+
+### 6.1 debugging
+
+`dcf-cli function run <function name>`은 함수를 배포하기 전에 작성한 함수가 정상적으로 작동하는지 확인할 수 있는 기능을 제공한다.
+
+
+
+#### 6.1.1 Create function
+
+`function-test`라는 이름의 함수를 생성한다.
+
+```bash
+$ dcf-cli function init function-test -r python
+>>>
+Directory: function-test is created.
+Function handler created in directory: function-test/src
+Rewrite the function handler code in function-test/src directory
+Config file written: config.yaml
+```
+
+
+
+#### 6.1.2 Make error
+
+`handler.py`에 `numpy`패키지를 추가하지 않은 후, numpy array를 생성한다.
+
+또한 `requirements.txt`파일에는 numpy를 입력하지 않는다.
+
+```python
+class Handler:
+    def __init__(self):
+        self.x = numpy.array([[1,2,3], [4,5,6], [7,8,9]])
+
+    def __call__(self, req):
+        return req.input
+```
+
+
+
+#### 6.1.3 Build function
+
+함수를 빌드한다
+
+```bash
+$ dcf-cli function build -f config.yaml -v
+>>>
+Building function (function-test) ...
+Sending build context to Docker daemon  8.192kB
+Step 1/46 : ARG ADDITIONAL_PACKAGE
+Step 2/46 : ARG REGISTRY
+Step 3/46 : ARG PYTHON_VERSION
+Step 4/46 : ARG GRPC_PYTHON_VERSION=1.4.0
+Step 5/46 : ARG WATCHER_VERSION=0.1.0
+...
+
+```
+
+
+
+#### 6.1.4 Run function
+
+함수를 실행하면 아래와 같이 요청은 들어갔으나 반환값이 나오지 않은 상태로 오랫동안 대기하는 것을 확인할 수 있다.
+
+이럴 경우 `ctrl+c` 눌러서 함수 실행을 종료한다.
+
+```bash
+$ echo "Hello" | dcf-cli function run function-test
+>>>
+Checking VGA Card...
+01:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM206GL [Quadro M2000] [10de:1430] (rev a1)
+01:00.1 Audio device [0403]: NVIDIA Corporation Device [10de:0fba] (rev a1)
+...
+...
+...
+Running image (keti.asuscomm.com:5001/function-test) in local
+Starting [dcf-watcher] server ...
+Call function-test in user's local
+Handler request: Hello
+
+```
+
+
+
+`docker ps -a` 명령어를 사용하여 중단된 `function-test` 컨테이너의 ID를 확인한다.
+
+```bash
+$ docker ps -a
+>>>
+CONTAINER ID        IMAGE                                  COMMAND                  CREATED              STATUS                          PORTS               NAMES
+b19d36c18a53        keti.asuscomm.com:5001/function-test   "python3 server.py"      About a minute ago   Exited (1) About a minute ago                       function-testst
+```
+
+
+
+`docker logs <container id>` 명령어를 사용하여 도커 컨테이너의 로그를 확인한다.
+
+로그 확인 결과 `NameError: name 'numpy' is not defined`라는 메세지를 확인할 수 있다.
+
+```bash
+$ docker logs b19d36c18a53
+>>>
+Traceback (most recent call last):
+  File "server.py", line 125, in <module>
+    serve()
+  File "server.py", line 108, in serve
+    WatcherServicer(), server)
+  File "server.py", line 22, in __init__
+    self.user_cls = self._load_custom_callable_cls()
+  File "server.py", line 77, in _load_custom_callable_cls
+    return self._get_callable_object_from(module, cls_name)
+  File "server.py", line 53, in _get_callable_object_from
+    return getattr(module, cls_name)()
+  File "/dcf/handler/src/handler.py", line 4, in __init__
+    self.x = numpy.array([[1,2,3], [4,5,6], [7,8,9]])
+NameError: name 'numpy' is not defined
+```
+
+
+
+
+
 ## 7 Deploy function
 
 사용자 컴퓨터 환경에서 함수를 테스트했다면, `deply`라는 명령어를 이용해서 디지털 동반자 프레임워크 환경에 함수를 배포할 수 있다. `-v`옵션을 사용하면 만든 도커 이미지가 디지털 동반자 프레임워크의 도커 레지스트리 서버로 전송하며 출력하는 메세지를 확인할 수 있다.
