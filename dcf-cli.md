@@ -55,7 +55,7 @@ DCF-CLI를 설치하는 방법은 아래와 같이 두가지 방법으로 설치
 ### 1.1 Download Binary
 
 ```bash
-$ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v1.0.0/dcf-cli
+$ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v1.0.1/dcf-cli
 $ mv dcf-cli /usr/bin
 ```
 
@@ -108,7 +108,7 @@ $ mkdir -p $GOPATH/src/github.com/digitalcompanion-keti
 
 ```bash
 $ cd $GOPATH/src/github.com/digitalcompanion-keti
-$ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v1.0.0/pb-master.zip
+$ wget https://github.com/DigitalCompanion-KETI/DCFramework/releases/download/v1.0.1/dcf-cli-master.zip
 $ unzip pb-master.zip
 $ mv pb-master pb
 ```
